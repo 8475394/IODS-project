@@ -1,4 +1,16 @@
 
-# About the project
+---
+title: RStudio Exercise 1"
+author: "Heidimaa"
+---
 
-*Write a short description about the course and add a link to your github repository here. This is an R markdown (.Rmd) file so you can use R markdown syntax. See the 'Useful links' page in the mooc area (chapter 1) for instructions.*
+# Description about the IODS-course
+
+This course is about open data science and the purpose is to get familiar with open data, open science and data science. If you are interested in these topics here is some additional information: [open data](https://en.wikipedia.org/wiki/Open_data), [open access](https://en.wikipedia.org/wiki/Open_access) and [data science](https://en.wikipedia.org/wiki/Data_science).
+
+## Tools and rules
+
+We are going to use the R language for statistical computing, see [R as a tool](https://cran.r-project.org/index.html). Also worth mentioning that we can accomplish the whole course in web. That why it's called a MOOC. 
+
+__my Github respitory__
+You can find it [here](https://github.com/8475394/IODS-project)
