@@ -4,7 +4,7 @@ title: RStudio Exercise 1
 author: Heidimaa
 ---
 
-# Description about the IODS-course
+# Chapter 1: Description about the IODS-course
 
 This course is about open data science and the purpose is to get familiar with open data, open science and data science. If you are interested in these topics here is some additional information: [open data](https://en.wikipedia.org/wiki/Open_data), [open access](https://en.wikipedia.org/wiki/Open_access) and [data science](https://en.wikipedia.org/wiki/Data_science).
 
