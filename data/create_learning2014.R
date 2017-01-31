@@ -44,7 +44,10 @@ setwd("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIEDE/INTRODUCTION TO OPEN DATA
 getwd()
 
 write.csv(learning2014, file = "learning2014.csv")
-read.csv("learning2014.csv", sep = "\t", header = TRUE)
+read.csv("learning2014.csv", header = TRUE)
 
 str(learning2014)
 head(learning2014)
+
+write.table(learning2014, file = "learning2014.txt")
+read.table("learning2014.txt", header = TRUE)
