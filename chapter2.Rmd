@@ -16,16 +16,15 @@ You can find some basic information about the variables [here](http://www.helsin
 
 I'm going to use partly the above mentioned data which still contains the different learning orientations and attitudes towars statistics. In addition the data variables consist students' age, gender and course exam points.  
 
-***
 
-**Here you can find the data set what I'm going to use in this analysis**
+**[Here]("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt) you can find the data set what I'm going to use in this analysis**
 
 ```{r}
 students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", header = TRUE, sep = ",")
 ```
 
-***
-**Then I explore what kind of material the students' data set contains**
+
+**Next I'm going to explore what kind of material the students' data set contains**
 
 As you can see below, there is 166 observations i.e. students and 7 variables. The variables contains the age and gender of the students. The genders can be recogniced **F** as woman and **M** as man. 
 
@@ -33,20 +32,20 @@ The attitudes and learning orientations were measured on the Likert scale from 1
 
 Under the structure table you can see there is no missing data (False = 1162). 
 
-***
+
 
 ```{r}
 str(students2014)
 table(is.na(students2014))
 ```
 
-***
+
 
 ## Summaries and graphs 
 
 Underneath you can see the data summary. It tells there are 110 (66 %) women and 56 (34 %) men. Furthermore the students' age range between 17 and 55 where the mean age is around 25 and median is 22. KAIKKI MUUTTUJAT PITÄÄ KUVAILLA! 
 
-***
+
 
 ```{r}
 summary(students2014)
@@ -58,7 +57,7 @@ library(ggplot2)
 library(GGally)
 ```
 
-***
+
 
 **First you can see scatter plot matrix with every pair in the data besides gender**
 
@@ -69,7 +68,7 @@ TÄHÄN VIELÄ TEKSTIÄ
 pairs(students2014[-1], col = students2014$gender)
 ```
 
-***
+
 
 **Next I take couple examples to explore more closely some scatter plots**
 
@@ -80,7 +79,7 @@ attitude <- students2014$attitude
 points <- students2014$points
 gender <- students2014$gender
 ggplot(students2014, aes(x = attitude, y = points, col = gender)) + geom_point() + xlab("Attitudes towards statistics") + ylab("Exam points") + ggtitle("Attitudes vs. Exam points")
-ggplot()
+
 ```
 
 
