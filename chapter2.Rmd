@@ -5,12 +5,6 @@ In this section I'm going to analyze the data set of students who participated t
 You can find some basic information about the variables [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt)  
 
 
-*Describe the work you have done this week and summarize your learning.*
-
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using  
-
 
 ## Introducing the data set
 
@@ -161,7 +155,7 @@ summary(Regression_model_3)
 
 First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). 
 
-Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: β = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = α+βx to y(hat) = 11.64 + 3.5x. 
+Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: B = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = a + Bx to y(hat) = 11.64 + 3.5x. 
 
 We can also note that the attitude explains around 19 % from the variation of the exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model. 
 
@@ -176,9 +170,15 @@ First we take a look the figure of **Residuals vs. Fitted (also predicted) value
 
 Before making any final conclusions lets take a look the plot that is **Normal QQ-plot** of the residuals. Here we try to define if the residuals are sufficiently normally distributed. The residuals should fit to the line as smoothly as possible. Based on the graph there is some deviation from the line but I think we can assume that residuals are still sufficiently normally distributed. 
 
-Finally we are going to explore the plot of **Residuals vs. Leverage**.
+Finally we are going to analyse the plot of **Residuals vs. Leverage**. This plot helps to conclude if there are some influential outliers in our regression model. First we can see there is no outlying values at the upper right or lower right corner considering the scale also. This suggests that  there are no influential cases against our regression line since we can assume our leverage is low. On the other hand we have to analyse if there are any cases outside the Cook's distance which we can see underneath the plot. It seems that some of our cases are close to this line with a large negative standardized residual. This means that some of our cases can be influential outliers against our regression line. 
+
 
 ```{r}
 plot(Regression_model_3, which = c(1, 2, 5))
 ```
 
+## Conclusions and comments about my own learning
+
+The correlation matrixes showed there could be some kind of relationship between attitude to statistics and course exam points. Other relatioships did not seem as possible. This comes evident after running three different regression models where the MODEL 3 seems to be the only significant one. The final model suggests that attitudes towards statistics can explain around 19 % from the variation of the exam points concluding there might be other meaningful factors to better explain the exam results. 
+
+The graphical outputs of the model validation suggest that there are no major problems with residual diagnostics exept some cases which could be influential in terms of Cook's distance. 
