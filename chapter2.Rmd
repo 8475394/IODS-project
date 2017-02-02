@@ -98,7 +98,7 @@ The last matrix you can see a set of scatter plots and distributions including t
 ```{r}
 library(ggplot2)
 library(GGally)
-pairs(students2014[-1], col = students2014$gender)
+pairs(students2014[-1], col = students2014$gender, main = "Scatter plot matrix")
 ```
 
 
@@ -116,6 +116,7 @@ stra <- students2014$stra
 ggplot(students2014, aes(x = stra, y = points, col = gender)) + geom_point() + xlab("Strategic learning orientation") + ylab("Exam points") + ggtitle("Strategic learning vs. Exam points") + geom_smooth(method = "lm")
 ```
 
+
 **Matrix of scatter plots and distributions including the correlations**
 
 ```{r}
@@ -123,6 +124,40 @@ ggpairs(students2014, mapping = aes(col = gender), lower = list(combo = wrap("fa
 ```
 
 
-## Regression models
+## Multiple regression model
 
+Now I'm going to choose three variables to explain the exam points and to adjust linear regression model. I'm choosing the variables at this point based on the highest correlation values with respect to exam points. Explanatory variables will be attitude (r = .437), strategic learning (r = .146) and surface approach (r = -.144).
+
+
+**MODEL 1**
+
+```{r}
+Regression_model_1 <- lm(points ~ attitude + stra + surf, data = students2014)
+summary(Regression_model_1)
+```
+
+As you can immediately see the regression model doesn't fit to the data because of the high p values with our explanatory variables strategic learning (p > .05) and surface learning (p > .05). This means I have to exclude these variables and either choose other variables from the data set or run the model only with attitude since it's the only significance variable at this point (p < .001). 
+
+I am too curious to see other variables to explain the exam points even if the correlation matrix suggests there might not be any significant variable left to explain the exam points.
+
+Beneath you can see that my hunch was correct because of the high p values with age and deep. In both cases p > .05. It seems I have to run one more model with attitude as an only explanatory variable.
+
+
+**MODEL 2**
+
+```{r}
+Regression_model_2 <- lm(points ~ attitude + age + deep, data = students2014)
+summary(Regression_model_2)
+```
+
+**MODEL 3**
+
+```{r}
+Regression_model_3 <- lm(points ~ attitude, data = students2014)
+summary(Regression_model_3)
+```
+
+This is better :)
+
+Our overall model seems to be significant: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: ?? = 3.5, p < .001. We can also note that the attitude explains around 19 % from the variation of the exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model.  
 
