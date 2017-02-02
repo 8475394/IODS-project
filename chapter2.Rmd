@@ -159,5 +159,18 @@ summary(Regression_model_3)
 
 This is better :)
 
-Our overall model seems to be significant: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: ?? = 3.5, p < .001. We can also note that the attitude explains around 19 % from the variation of the exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model.  
+First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). 
+
+Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: β = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = α+βx to y(hat) = 11.64 + 3.5x. 
+
+We can also note that the attitude explains around 19 % from the variation of the exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model. 
+
+In our model we don't have to worry about [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) since we have only one predictor.
+
+## Graphical model validation
+
+
+```{r}
+plot(Regression_model_3, which = c(1, 2, 5))
+```
 
