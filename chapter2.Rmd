@@ -1,6 +1,6 @@
 # Regression and model validation
 
-In this section I'm going to analyze the data set of students who participated to the course called **Introduction to Social Statistics** at Helsinki University in the fall 2014. These 183 students were asked to participate to the survey about their Learning Approaches consisting deep, strategic and surface orientated learning. In addition the students were asked to evaluate their attitude towars statistics.
+In this section I'm going to analyze the data set of students who participated to the course called **Introduction to Social Statistics** at Helsinki University in the fall 2014. These 183 students were asked to participate to the survey about their learning approaches consisting deep, strategic and surface orientated learning. In addition the students were asked to evaluate their attitude towars statistics.
 
 You can find some basic information about the variables [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt)  
 
@@ -24,13 +24,13 @@ students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/producti
 ```
 
 
-**Next I'm going to explore what kind of material the students' data set contains**
+**Next I'm going to explore what kind of material the students2014 data set contains**
 
 As you can see below, there is 166 observations i.e. students and 7 variables. The variables contains the age and gender of the students. The genders can be recogniced **F** as woman and **M** as man. 
 
-The attitudes and learning orientations were measured on the Likert scale from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course.
+The attitudes and learning orientations were measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course.
 
-Under the structure table you can see there is no missing data (False = 1162). 
+Under the structure table you can see there is no missing data (False = 1162). This is useful information considering the regression modeling. 
 
 
 
@@ -43,47 +43,86 @@ table(is.na(students2014))
 
 ## Summaries and graphs 
 
-Underneath you can see the data summary. It tells there are 110 (66 %) women and 56 (34 %) men. Furthermore the students' age range between 17 and 55 where the mean age is around 25 and median is 22. KAIKKI MUUTTUJAT PITÄÄ KUVAILLA! 
+Underneath you can see the data summaries and histograms of the variables (excluding gender). The data contains 110 (66 %) women and 56 (34 %) men. The students' age range between 17 and 55 where the mean age is around 25 and median is 22. The histogram of age shows that there is some skewness in the distribution. 
 
+As mentioned earlier the attitudes towards statistics and the learning orientations were measured on the Likert scale from 1 to 5. You can see that especially the deep learning orientation seems to be quite high among students whereas other learning orientations seems to distribute somewhat normally which is the case also with attitude. 
 
+The exam points seems to vary to some extent. THe points range between 7 and 33 where the mean points are around 23. 
 
 ```{r}
 summary(students2014)
 ```
 
-
 ```{r}
 library(ggplot2)
-library(GGally)
+qplot(students2014$age, geom = "histogram", binwidth = 1, main = "Histogram for students' age", xlab = "age", col = I("grey"), fill = I("chartreuse3"))
 ```
 
 
 
-**First you can see scatter plot matrix with every pair in the data besides gender**
+```{r}
+qplot(students2014$attitude, geom = "histogram", binwidth = 0.3, main = "Histogram for attitudes towards statistics", xlab = "attitude", col = I("grey"), fill = I("orange"))
+```
 
-TÄHÄN VIELÄ TEKSTIÄ
+```{r}
+qplot(students2014$deep, geom = "histogram", binwidth = 0.3, main = "Histogram for deep learning orientation", xlab = "deep", col = I("grey"), fill = I("mediumorchid"))
+```
+
+```{r}
+qplot(students2014$stra, geom = "histogram", binwidth = 0.3, main = "Histogram for strategic learning orientation", xlab = "strategic", col = I("grey"), fill = I("blue"))
+```
 
 
 ```{r}
+qplot(students2014$surf, geom = "histogram", binwidth = 0.3, main = "Histogram for surface learning orientation", xlab = "surface", col = I("grey"), fill = I("coral"))
+```
+
+
+```{r}
+qplot(students2014$points, geom = "histogram", binwidth = 1, main = "Histogram for exam points", xlab = "Exam points", col = I("grey"), fill = I("yellow"))
+```
+
+
+
+**Next I'm going to show the scatter plots of our data variables to see if there could be any relationships between them.**
+
+Later on I'm going to formulate the regression model to explain the exam points so we can concentrate at this point also on the relationships between other variables and points. 
+
+First you can see the scatter plot matrix with every pair in the data (excluding gender). It seems that there could be some relationship between the attitude towards statistics and exam points. Because of this I printed a scatter plot where you can take a closer look for these variables coloured with gender.
+
+In the pair matrix it seems that there could be some relationship also between strategic learning and exam points. But when you take a closer look to the separate scatter plot the dots seems to vary more. This is why I think you can "see more" from the bigger picture.
+
+The last matrix you can see a set of scatter plots and distributions including the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146.
+
+
+```{r}
+library(ggplot2)
+library(GGally)
 pairs(students2014[-1], col = students2014$gender)
 ```
 
 
 
-**Next I take couple examples to explore more closely some scatter plots**
-
-TÄHÄN TEKSTIÄ YKSITTÄISISTÄ SCATTER PLOTEISTA
-
 ```{r}
 attitude <- students2014$attitude
 points <- students2014$points
 gender <- students2014$gender
-ggplot(students2014, aes(x = attitude, y = points, col = gender)) + geom_point() + xlab("Attitudes towards statistics") + ylab("Exam points") + ggtitle("Attitudes vs. Exam points")
-
+ggplot(students2014, aes(x = attitude, y = points, col = gender)) + geom_point() + xlab("Attitudes towards statistics") + ylab("Exam points") + ggtitle("Attitudes vs. Exam points") + geom_smooth(method = "lm")
 ```
 
 
+```{r}
+stra <- students2014$stra
+ggplot(students2014, aes(x = stra, y = points, col = gender)) + geom_point() + xlab("Strategic learning orientation") + ylab("Exam points") + ggtitle("Strategic learning vs. Exam points") + geom_smooth(method = "lm")
+```
+
+**Matrix of scatter plots and distributions including the correlations**
+
+```{r}
+ggpairs(students2014, mapping = aes(col = gender), lower = list(combo = wrap("facethist", bins = 20)))
+```
 
 
+## Regression models
 
 
