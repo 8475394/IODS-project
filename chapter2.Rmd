@@ -157,7 +157,7 @@ Regression_model_3 <- lm(points ~ attitude, data = students2014)
 summary(Regression_model_3)
 ```
 
-This is better :)
+**This seems better :)**
 
 First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). 
 
@@ -167,8 +167,16 @@ We can also note that the attitude explains around 19 % from the variation of th
 
 In our model we don't have to worry about [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) since we have only one predictor.
 
+
 ## Graphical model validation
 
+Finally I'm going to explore the validity of the model assumption with graphical outputs including "Residuals vs. Fitted values", "Normal QQ-plot" and "Residuals vs Leverage". 
+
+First we take a look the figure of **Residuals vs. Fitted (also predicted) values**. Ideally this plot will show no discernible pattern and the residuals should be centered on zero throughout the range of fitted value. The red line assists to observe any distracting trends. From the first plot we can perceive that there is no bigger patterns or trends suggesting that we could use our regression model.
+
+Before making any final conclusions lets take a look the plot that is **Normal QQ-plot** of the residuals. Here we try to define if the residuals are sufficiently normally distributed. The residuals should fit to the line as smoothly as possible. Based on the graph there is some deviation from the line but I think we can assume that residuals are still sufficiently normally distributed. 
+
+Finally we are going to explore the plot of **Residuals vs. Leverage**.
 
 ```{r}
 plot(Regression_model_3, which = c(1, 2, 5))
