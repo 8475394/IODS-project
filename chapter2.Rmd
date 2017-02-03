@@ -1,17 +1,24 @@
 # Regression and model validation
 
+&nbsp;
+
 In this section I'm going to analyze the data set of students who participated to the course called **Introduction to Social Statistics** at Helsinki University in the fall 2014. These 183 students were asked to participate to the survey about their learning approaches consisting deep, strategic and surface orientated learning. In addition the students were asked to evaluate their attitude towars statistics.
 
 You can find some basic information about the variables [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt)  
 
-
+&nbsp;
 
 ## Introducing the data set
 
+&nbsp;
+
 I'm going to use partly the above mentioned data which still contains the different learning orientations and attitudes towars statistics. In addition the data variables consist students' age, gender and course exam points.  
 
+&nbsp;
 
-**[Here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt) you can find the data set what I'm going to use in this analysis** which is the same address than inside the code below.
+> [Here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt) you can find the data set what I'm going to use in this analysis which is the same address than inside the code below.
+
+&nbsp;
 
 ```{r}
 students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", header = TRUE, sep = ",")
@@ -247,6 +254,8 @@ plot(Regression_model_3, which = c(1, 2, 5))
 
 ## Conclusions and comments about my own learning
 
-The correlation matrixes showed there could be some kind of relationship between attitude to statistics and course exam points. Other relatioships did not seem as possible. This comes evident after running three different regression models where the MODEL 3 seems to be the only significant one. The final model suggests that attitudes towards statistics can explain around 19 % from the variation of the exam points concluding there might be other meaningful factors to better explain the exam results. 
+The correlation matrixes showed there could be some kind of relationship between attitude to statistics and course exam points. Other relatioships did not seem as possible. This comes evident after running three different regression models where the MODEL 3 seemed to be the only significant one. The final model suggests that attitudes towards statistics can explain around 19 % from the variation of the exam points concluding there might be other meaningful factors to better explain the exam results. 
 
 The graphical outputs of the model validation suggest that there are no major problems with residual diagnostics exept some cases which could be influential in terms of Cook's distance. 
+
+I have to say that this journey has been challenging but fun. I'm very greedy to learn more especially about the R coding. If you asked me some years ago would I do some coding in the future I would have said no to you. But here we are thanks to the new course of open data science and our fantastic docent and assistants. So thank you guys.   
