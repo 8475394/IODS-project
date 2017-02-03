@@ -20,11 +20,11 @@ students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/producti
 
 **Next I'm going to explore what kind of material the students2014 data set contains**
 
-As you can see below, there is 166 observations i.e. students and 7 variables. The variables contains the age and gender of the students. The genders can be recogniced **F** as woman and **M** as man. 
+As you can see below, there is 166 observations i.e. students and 7 variables. This also suggests that not all participants of the course did take a part of this survey as there were initially 183 students. Nevertheless the available data variables contains the age and gender of the students. The genders can be recogniced **F** as female and **M** as male. 
 
-The attitudes and learning orientations were measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course.
+The attitudes and learning orientations were measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course i.e. exam results.
 
-Under the structure table you can see there is no missing data (False = 1162). This is useful information considering the regression modeling. 
+Under the structure table you can see there is no missing values (False = 1162). This is useful information considering the regression modeling and it means we don't have run the "Missing Value Analysis". 
 
 
 
@@ -37,43 +37,74 @@ table(is.na(students2014))
 
 ## Summaries and graphs 
 
-Underneath you can see the data summaries and histograms of the variables (excluding gender). The data contains 110 (66 %) women and 56 (34 %) men. The students' age range between 17 and 55 where the mean age is around 25 and median is 22. The histogram of age shows that there is some skewness in the distribution. 
+Underneath you can see the summaries and histograms of the variables. There were no point to print histogram of gender since gender is not a continuous variable. Instead I was curious to see if there is any variation between genders and our variables therefore I formed boxplots to illustrate this. Additionally I printed the Normal QQ-plots to demonstrate the distributions of normality as the multivariate normality is one of the assumption of the linear regression. [Click to see additional information about the assumptions of linear regression](http://www.statisticssolutions.com/assumptions-of-linear-regression/). 
 
-As mentioned earlier the attitudes towards statistics and the learning orientations were measured on the Likert scale from 1 to 5. You can see that especially the deep learning orientation seems to be quite high among students whereas other learning orientations seems to distribute somewhat normally which is the case also with attitude. 
+The data contains 110 (66 %) women and 56 (34 %) men. The students' age range between 17 and 55 where the mean age is around 25 and median is 22. From the boxplot you can see that the average age of women is lower than the average age of men.  The histogram of age shows that there is some skewness in the distribution which is demonstrated in the QQ-plot as well.   
 
-The exam points seems to vary to some extent. THe points range between 7 and 33 where the mean points are around 23. 
+As mentioned earlier the attitudes towards statistics and the learning orientations were measured on the Likert scale from 1 to 5 and that the variables are sums of multiple items. This kind of variables are more likely to be normally distributed because of the [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem). You can notice in here too that all of these sums are quite normally distributed.
+
+If you look at the attitudes towards statistics you can notice the average mean is around 3. But it is interesting that male students seems to have somewhat higher mean than female students but it doesn't affect so much to the overall mean because the group of men is noteworthy smaller.
+
+When examining the learning orientation approaches you can perceive that the deep learning orientation seems to be predominant considering the average mean around 3.7 whereas the surface orientation seems to be lower with overall mean around 2.8. It seems there is not so much difference among deep orientation between genders even if the boxplot shows a slightly larger mean to males than females. However we can't be sure about the statistical significance of that difference without testing it. Instead the boxplot of surface orientation implies there could be some differences between genders. The mean of surface orientation seems to be lower among men but the deviation seems to be larger compared with the group of women. Then something about the strategic learning approach. If you look at the summary below you can perceive that the overall mean is around 3.1 implying it to be more popular than surface orientation but less popular comparing with deep orientation.  Surprisingly (for me) the strategic learning approach seems to bee more popular among female than male students. 
+
+
+The exam points seems to vary to some extent. The points range between 7 and 33 where the mean points are around 23. Check also the boxplot which implies that men have had higher points than women  even though the sample means don't deviate prominently. The histogram of age makes me wonder if we can assume the existence of the normal distribution but the QQ-plot suggests that the difference isn't that remarkable.  
+
+**SUMMARY**
+
 
 ```{r}
 summary(students2014)
 ```
 
+**STUDENTS' AGE**
+
 ```{r}
 library(ggplot2)
 qplot(students2014$age, geom = "histogram", binwidth = 1, main = "Histogram for students' age", xlab = "age", col = I("grey"), fill = I("chartreuse3"))
+qqnorm(students2014$age)
+qplot(gender, age, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and age")
 ```
 
+**STUDENTS' ATTITUDE TOWARDS STATISTICS**
 
 
 ```{r}
 qplot(students2014$attitude, geom = "histogram", binwidth = 0.3, main = "Histogram for attitudes towards statistics", xlab = "attitude", col = I("grey"), fill = I("orange"))
+qqnorm(students2014$attitude)
+qplot(gender, attitude, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and attitude")
 ```
+
+**DEEP LEARNING ORIENTATION**
 
 ```{r}
 qplot(students2014$deep, geom = "histogram", binwidth = 0.3, main = "Histogram for deep learning orientation", xlab = "deep", col = I("grey"), fill = I("mediumorchid"))
+qqnorm(students2014$deep)
+qplot(gender, deep, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and deep orientation")
 ```
+
+**STRATEGIC LEARNING ORIENTATION**
 
 ```{r}
 qplot(students2014$stra, geom = "histogram", binwidth = 0.3, main = "Histogram for strategic learning orientation", xlab = "strategic", col = I("grey"), fill = I("blue"))
+qqnorm(students2014$stra)
+qplot(gender, stra, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and strategic orientation")
 ```
 
+**SURFACE LEARNING ORIENTATION**
 
 ```{r}
 qplot(students2014$surf, geom = "histogram", binwidth = 0.3, main = "Histogram for surface learning orientation", xlab = "surface", col = I("grey"), fill = I("coral"))
+qqnorm(students2014$surf)
+qplot(gender, surf, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and surface orientation")
 ```
 
+**EXAM POINTS**
 
 ```{r}
 qplot(students2014$points, geom = "histogram", binwidth = 1, main = "Histogram for exam points", xlab = "Exam points", col = I("grey"), fill = I("yellow"))
+qqnorm(students2014$points)
+qplot(gender, points, data = students2014, geom = "boxplot", fill = gender, main = "Boxplot of gender and points")
 ```
 
 
@@ -87,6 +118,8 @@ First you can see the scatter plot matrix with every pair in the data (excluding
 In the pair matrix it seems that there could be some relationship also between strategic learning and exam points. But when you take a closer look to the separate scatter plot the dots seems to vary more. This is why I think you can "see more" from the bigger picture.
 
 The last matrix you can see a set of scatter plots and distributions including the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146.
+
+
 
 
 ```{r}
