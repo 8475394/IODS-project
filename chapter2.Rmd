@@ -108,6 +108,8 @@ qplot(gender, points, data = students2014, geom = "boxplot", fill = gender, main
 ```
 
 
+**SCATTER PLOTS**
+
 
 **Next I'm going to show the scatter plots of our data variables to see if there could be any relationships between them.**
 
