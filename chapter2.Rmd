@@ -108,18 +108,16 @@ qplot(gender, points, data = students2014, geom = "boxplot", fill = gender, main
 ```
 
 
-**SCATTER PLOTS**
+**SCATTER PLOTS FOR SEARCHING THE LINEAR RELATIONSHIPS**
 
 
-**Next I'm going to show the scatter plots of our data variables to see if there could be any relationships between them.**
+Next I'm going to print some scatter plots to see if there could be any linear relationships between above explored variables which is also one assumption of linear regression. Later in this diary it is meant to formulate the regression model to explain particularly the exam points. Considering this I'm going to concentrate on those variables which could have a linear relationship with exam points.
 
-Later on I'm going to formulate the regression model to explain the exam points so we can concentrate at this point also on the relationships between other variables and points. 
+First you can see the scatter plot matrix with every pair in the data (excluding gender). It seems that there could be some relationship between the attitude and exam points. Because of this I printed a scatter plot where you can take a closer look for these variables coloured with gender. Indeed the plot implies there could exist a linear relationships between the two variables. We'll come back to this within the next section.
 
-First you can see the scatter plot matrix with every pair in the data (excluding gender). It seems that there could be some relationship between the attitude towards statistics and exam points. Because of this I printed a scatter plot where you can take a closer look for these variables coloured with gender.
+The pair matrix suggests that to some extent there could be a linear relationship also between strategic learning and exam points. But when you take a closer look to the separate scatter plot the dots seems to vary more than they seemed to do on the smaller picture (pair matrix). This is why I wanted to print those separate plots.
 
-In the pair matrix it seems that there could be some relationship also between strategic learning and exam points. But when you take a closer look to the separate scatter plot the dots seems to vary more. This is why I think you can "see more" from the bigger picture.
-
-The last matrix you can see a set of scatter plots and distributions including the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146.
+In the last matrix you can see a set of scatter plots and distributions including the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146. So at this point we have more evidence that the attitude could be a better variable than attitude to explain the course exam points. We will see this also in the next section. 
 
 
 
@@ -146,55 +144,77 @@ ggplot(students2014, aes(x = stra, y = points, col = gender)) + geom_point() + x
 ```
 
 
-**Matrix of scatter plots and distributions including the correlations**
+
 
 ```{r}
-ggpairs(students2014, mapping = aes(col = gender), lower = list(combo = wrap("facethist", bins = 20)))
+library(ggplot2)
+library(GGally)
+ggpairs(students2014, mapping = aes(col = gender), lower = list(combo = wrap("facethist", bins = 20))) + ggtitle("Matrix of scatter plots and distributions")
 ```
 
 
-## Multiple regression model
+## Regression models
 
-Now I'm going to choose three variables to explain the exam points and to adjust linear regression model. I'm choosing the variables at this point based on the highest correlation values with respect to exam points. Explanatory variables will be attitude (r = .437), strategic learning (r = .146) and surface approach (r = -.144).
+Now I'm going to choose three variables to explain the exam points and to adjust a linear regression model. I'm choosing the variables based on the highest correlation values with respect to exam points. Explanatory variables will be attitude (r = .437), strategic learning (r = .146) and surface approach (r = -.144). Note that the earlier examination of correlations suggested that the linear relatioship between strategic learning and exam points might be negligible. 
 
 
-**MODEL 1**
+**REGRESSION MODEL 1**
+
+Below you can see that my overall model seems to be significant as a result of F-test: F(3,162) = 14.13, p < .001. However there are some problems with the explanatory variables stra (strategic learning) and surf (surface learning) with the p-values more than .05. This means I have to exclude these variables and either choose other variables from the data set or run the model only with attitude since it's the only significance variable at this point (p < .001).
+
+I am too curious to see other variables to explain the exam points even if the correlation matrix suggested there might not be any significant variables left to explain the exam points. Let's take a look the MODEL 2.
+
 
 ```{r}
 Regression_model_1 <- lm(points ~ attitude + stra + surf, data = students2014)
 summary(Regression_model_1)
 ```
 
-As you can immediately see the regression model doesn't fit to the data because of the high p values with our explanatory variables strategic learning (p > .05) and surface learning (p > .05). This means I have to exclude these variables and either choose other variables from the data set or run the model only with attitude since it's the only significance variable at this point (p < .001). 
-
-I am too curious to see other variables to explain the exam points even if the correlation matrix suggests there might not be any significant variable left to explain the exam points.
-
-Beneath you can see that my hunch was correct because of the high p values with age and deep. In both cases p > .05. It seems I have to run one more model with attitude as an only explanatory variable.
 
 
-**MODEL 2**
+**REGRESSION MODEL 2**
+
+Beneath you can see that my hunch was correct because of the high p values with age and deep learning orientation, in both cases p > .05. It seems that I have to run one more model with attitude as an only explanatory variable. So let's move on to the third model.
+
 
 ```{r}
 Regression_model_2 <- lm(points ~ attitude + age + deep, data = students2014)
 summary(Regression_model_2)
 ```
 
-**MODEL 3**
+**REGRESSION MODEL 3**
+
+
+**This seems better :)**
+
+First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). We are going to take a closer look of the residuals after the next chapter.
+
+Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: B = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = a + Bx to y(hat) = 11.64 + 3.5x. Note that a is denoted here as an intercept. 
+
+Additionally we can perceive that the attitude explains around 19 % from the variation of the course exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model. 
+
+In our model we don't have to worry about [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) since we have only one predictor.
+
 
 ```{r}
 Regression_model_3 <- lm(points ~ attitude, data = students2014)
 summary(Regression_model_3)
 ```
 
-**This seems better :)**
+## Interpreting the parameters of regression model 3
 
-First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). 
+I interpreted briefly the model parameters in the last chapter. Here the purpose is to interpret closely the relationship between the attitude and exam points including the multiple R-squared.
 
-Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: B = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = a + Bx to y(hat) = 11.64 + 3.5x. 
+A linear regression model with one predictor variable can be expressed with the following equation: Y = Bo + Bx + e. This is the same equation I used earlier with the expression of y(hat) = a + Bx without the residual error e which is an unmeasured variable. So considering our model parameters we have "Bo" or "a" which is the Y-intercept. Then we have B-coefficient (beta) which defines the slope of our regression line.
 
-We can also note that the attitude explains around 19 % from the variation of the exam points. We can interpret this with multiple R-squared coefficient instead of adjusted coefficient because we have only one predictor in our model. 
+Then we can take a look for the coefficients of above summary (model 3). It states that our intercept has the value around 11.6 which is the value we would predict for Exam points (Y) if the attitude towards statistics were 0. Then we can take a look the estimated regression coefficient (B) of attitude which seems to be around 3.5. This means that if the variable of attitude (x) differed by one unit the exam points will differ by 3.5 units on average.
 
-In our model we don't have to worry about [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) since we have only one predictor.
+Have a look the scatter plot below. With our equation and estimated coefficients we can express the following example. If some student had evaluated their attitude towards statistics to be 3 then we couls predict their exam points to be 11.6 + 3*3.5 = 22.1 by average.
+
+
+```{r}
+ggplot(students2014, aes(x = attitude, y = points)) + geom_point() + xlab("Attitudes towards statistics") + ylab("Exam points") + ggtitle("Attitudes vs. Exam points") + geom_smooth(method = "lm")
+```
 
 
 ## Graphical model validation
