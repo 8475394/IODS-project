@@ -11,7 +11,7 @@ You can find some basic information about the variables [here](http://www.helsin
 I'm going to use partly the above mentioned data which still contains the different learning orientations and attitudes towars statistics. In addition the data variables consist students' age, gender and course exam points.  
 
 
-**[Here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt) you can find the data set what I'm going to use in this analysis**
+**[Here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt) you can find the data set what I'm going to use in this analysis** which is the same address than inside the code below.
 
 ```{r}
 students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", header = TRUE, sep = ",")
@@ -203,6 +203,8 @@ summary(Regression_model_3)
 
 ## Interpreting the parameters of regression model 3
 
+**MODEL PARAMETERS**
+
 I interpreted briefly the model parameters in the last chapter. Here the purpose is to interpret closely the relationship between the attitude and exam points including the multiple R-squared.
 
 A linear regression model with one predictor variable can be expressed with the following equation: Y = Bo + Bx + e. This is the same equation I used earlier with the expression of y(hat) = a + Bx without the residual error e which is an unmeasured variable. So considering our model parameters we have "Bo" or "a" which is the Y-intercept. Then we have B-coefficient (beta) which defines the slope of our regression line.
@@ -215,6 +217,17 @@ Have a look the scatter plot below. With our equation and estimated coefficients
 ```{r}
 ggplot(students2014, aes(x = attitude, y = points)) + geom_point() + xlab("Attitudes towards statistics") + ylab("Exam points") + ggtitle("Attitudes vs. Exam points") + geom_smooth(method = "lm")
 ```
+
+**MULTIPLE R-SQUARED**
+
+After the evaluation of the parameters we have multiple R-squared to explore. Just to remind that in the MODEL 3 the attitude explained around 19 % from the variation of the course exam points. 
+
+We can interpret the R-squared as a statistical measure of how close the data are to the fitted regression line. After this information we can express that our coefficient is somewhat moderate. We can perceive the same thing from the above scatter plot where all of the observations do not fit to the regression line but are spread all over. Thus in general, the higher the R-squared, the better the model fits your data.
+
+However it is noteworthy that low R-squared value doesn't automatically mean that our model is bad. For example in the field of human behaviour the R-squared values can be quite low since there might be many other factors affecting to our actions.
+
+There are also some limitations of R-squared. It cannot determine whether the coefficient estimates and predictions are biased. This is the reason why we explore the residual plots in the next section. 
+
 
 
 ## Graphical model validation
