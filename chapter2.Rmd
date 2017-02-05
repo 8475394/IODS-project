@@ -12,7 +12,7 @@ You can find some basic information about the variables [here](http://www.helsin
 
 &nbsp;
 
-I'm going to use partly the above mentioned data which still contains the different learning orientations and attitudes towars statistics. In addition the data variables consist students' age, gender and course exam points.  
+I'm going to use partly the above mentioned data which still contains the different learning orientations and attitude towars statistics. In addition the data variables consist students' age, gender and course exam points.  
 
 &nbsp;
 
@@ -28,11 +28,11 @@ students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/producti
 <p class="text-primary">Next I'm going to explore what kind of material the students2014 data set contains.</p>
 
 
-As you can see below, there is 166 observations i.e. students and 7 variables. This also suggests that not all participants of the course did take a part of this survey as there were initially 183 students. Nevertheless the available data variables contains the age and gender of the students. The genders can be recogniced **F** as female and **M** as male. 
+As you can see below, there are 166 observations i.e. students and 7 variables. This suggests that not all participants of the course did take a part of this survey as there were initially 183 students. Nevertheless the available data variables contain the age and gender of the students. The genders can be recogniced **F** as female and **M** as male. 
 
-The attitudes and learning orientations were measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course i.e. exam results.
+The attitude and learning orientations were measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) from 1 to 5. The attitude towards statistics is a sum of 10 questions, the deep orientation is 12, the strategic is 8 and the surface orientation is a sum of 12 question. Last but not least the data contains the exam points of the course i.e. exam results.
 
-Under the structure table you can see there is no missing values (False = 1162). This is useful information considering the regression modeling and it means we don't have run the "Missing Value Analysis". 
+Under the structure table you can see there are no missing values (False = 1162). This is useful information considering the regression modeling and that we don't have to run the "Missing Value Analysis". 
 
 &nbsp;
 
@@ -47,18 +47,18 @@ table(is.na(students2014))
 
 &nbsp;
 
-Underneath you can see the summaries and histograms of the variables. There were no point to print histogram of gender since gender is not a continuous variable. Instead I was curious to see if there is any variation between genders and our variables therefore I formed boxplots to illustrate this. Additionally I printed the Normal QQ-plots to demonstrate the distributions of normality as the multivariate normality is one of the assumption of the linear regression. [Click to see additional information about the assumptions of linear regression](http://www.statisticssolutions.com/assumptions-of-linear-regression/). 
+Underneath you can see the summaries and histograms of the variables. There were no point to print histogram of gender since gender is not a continuous variable. Instead I was curious to see if there is any variation between genders and our variables therefore I formed boxplots to illustrate this. Additionally I printed the Normal QQ-plots to demonstrate the distributions of normality as the multivariate normality is one of the assumptions of the linear regression. [Click to see additional information about the assumptions of linear regression](http://www.statisticssolutions.com/assumptions-of-linear-regression/). 
 
 The data contains 110 (66 %) women and 56 (34 %) men. The students' age range between 17 and 55 where the mean age is around 25 and median is 22. From the boxplot you can see that the average age of women is lower than the average age of men.  The histogram of age shows that there is some skewness in the distribution which is demonstrated in the QQ-plot as well.   
 
-As mentioned earlier the attitudes towards statistics and the learning orientations were measured on the Likert scale from 1 to 5 and that the variables are sums of multiple items. This kind of variables are more likely to be normally distributed because of the [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem). You can notice in here too that all of these sums are quite normally distributed.
+As mentioned earlier the attitude towards statistics and the learning orientations were measured on the Likert scale from 1 to 5 and that the variables are sums of multiple items. This kind of variables are more likely to be normally distributed because of the [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem). You can notice in here too that all of these sums are quite normally distributed.
 
-If you look at the attitudes towards statistics you can notice the average mean is around 3. But it is interesting that male students seems to have somewhat higher mean than female students but it doesn't affect so much to the overall mean because the group of men is noteworthy smaller.
+If you look at the attitude towards statistics you can notice that the average mean is around 3. But it is interesting that the male students seems to have somewhat higher mean than female students but it doesn't affect so much to the overall mean because the group of men is noteworthy smaller.
 
-When examining the learning orientation approaches you can perceive that the deep learning orientation seems to be predominant considering the average mean around 3.7 whereas the surface orientation seems to be lower with overall mean around 2.8. It seems there is not so much difference among deep orientation between genders even if the boxplot shows a slightly larger mean to males than females. However we can't be sure about the statistical significance of that difference without testing it. Instead the boxplot of surface orientation implies there could be some differences between genders. The mean of surface orientation seems to be lower among men but the deviation seems to be larger compared with the group of women. Then something about the strategic learning approach. If you look at the summary below you can perceive that the overall mean is around 3.1 implying it to be more popular than surface orientation but less popular comparing with deep orientation.  Surprisingly (for me) the strategic learning approach seems to bee more popular among female than male students. 
+When examining the learning orientation approaches you can perceive that the deep learning orientation seems to be predominant considering the average mean around 3.7 whereas the surface orientation seems to be lower with overall mean around 2.8. It seems that there isn't much difference among deep orientation between genders even if the boxplot shows a slightly larger mean to males than females. However we can't be sure about the statistical significance of that difference without testing it. Instead the boxplot of surface orientation implies there could be some differences between genders. The mean of surface orientation seems to be lower among men but the deviation seems to be larger compared with the group of women. Then something about the strategic learning approach. If you look at the summary below you can perceive that the overall mean is around 3.1 implying it to be more popular than surface orientation but less popular comparing with deep orientation.  Surprisingly (for me) the strategic learning approach seems to bee more popular among female than male students. 
 
 
-The exam points seems to vary to some extent. The points range between 7 and 33 where the mean points are around 23. Check also the boxplot which implies that men have had higher points than women  even though the sample means don't deviate prominently. The histogram of age makes me wonder if we can assume the existence of the normal distribution but the QQ-plot suggests that the difference isn't that remarkable.
+The exam points seem to vary to some extent. The points range between 7 and 33 where the mean points are around 23. Check also the boxplot which implies that men have had higher points than women  even though the sample means don't deviate prominently. The histogram of age makes me wonder if we can assume the existence of the normal distribution but the QQ-plot suggests that the difference isn't that remarkable.
 
 &nbsp;
 
@@ -138,11 +138,11 @@ qplot(gender, points, data = students2014, geom = "boxplot", fill = gender, main
 
 Next I'm going to print some scatter plots to see if there could be any linear relationships between above explored variables which is also one assumption of linear regression. Later in this diary it is meant to formulate the regression model to explain particularly the exam points. Considering this I'm going to concentrate on those variables which could have a linear relationship with exam points.
 
-First you can see the scatter plot matrix with every pair in the data (excluding gender). It seems that there could be some relationship between the attitude and exam points. Because of this I printed a scatter plot where you can take a closer look for these variables coloured with gender. Indeed the plot implies there could exist a linear relationships between the two variables. We'll come back to this within the next section.
+First you can see the scatter plot matrix with every pair in the data (excluding gender). It seems that there could be some relationship between the attitude and exam points. Because of this I printed a scatter plot where you can take a closer look at these variables coloured by gender. Indeed the plot implies there could exist a linear relationship between the two variables. We'll come back to this within the next section.
 
-The pair matrix suggests that to some extent there could be a linear relationship also between strategic learning and exam points. But when you take a closer look to the separate scatter plot the dots seems to vary more than they seemed to do on the smaller picture (pair matrix). This is why I wanted to print those separate plots.
+The pair matrix suggests that to some extent there could be a linear relationship also between strategic learning and exam points. But when you take a closer look at the separate scatter plot the dots seems to vary more than they seemed to do on the smaller picture (pair matrix). This is why I wanted to print those separate plots.
 
-In the last matrix you can see a set of scatter plots and distributions including the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146. So at this point we have more evidence that the attitude could be a better variable than attitude to explain the course exam points. We will see this also in the next section. 
+In the last matrix you can see a set of scatter plots including the distributions and the correlations between different variables. The matrix shows for example that the correlation between attitude and exam points is .437 whereas the correlation between strategic learning and points is only .146. Thus we have more evidence that the attitude could be a better variable than attitude to explain the course exam points. We will also see this in the next section. 
 
 &nbsp;
 
@@ -190,7 +190,7 @@ Now I'm going to choose three variables to explain the exam points and to adjust
 
 Below you can see that my overall model seems to be significant as a result of F-test: F(3,162) = 14.13, p < .001. However there are some problems with the explanatory variables stra (strategic learning) and surf (surface learning) with the p-values more than .05. This means I have to exclude these variables and either choose other variables from the data set or run the model only with attitude since it's the only significance variable at this point (p < .001).
 
-I am too curious to see other variables to explain the exam points even if the correlation matrix suggested there might not be any significant variables left to explain the exam points. Let's take a look the MODEL 2.
+I am too curious to see other variables to explain the exam points even if the correlation matrix suggested there might not be any significant variables left to explain the exam points. Let's take a look at the MODEL 2.
 
 &nbsp;
 
@@ -203,7 +203,7 @@ summary(Regression_model_1)
 
 **REGRESSION MODEL 2**
 
-Beneath you can see that my hunch was correct because of the high p values with age and deep learning orientation, in both cases p > .05. It seems that I have to run one more model with attitude as an only explanatory variable. So let's move on to the third model.
+Beneath you can see that my hunch was correct because of the high p values with age and deep learning orientations, in both cases p > .05. It seems that I have to run one more model with attitude as an only explanatory variable. So let's move on to see the third model.
 
 &nbsp;
 
@@ -221,7 +221,7 @@ summary(Regression_model_2)
 
 &nbsp;
 
-First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). We are going to take a closer look of the residuals after the next chapter.
+First we can see some values of residuals which define the difference between the actual values and the predicted values of the exam points i.e. y - y(hat). We are going to take a closer look at the residuals after the next chapter.
 
 Our overall model seems to be significant as a result of F-test: F(1,164) = 38.61, p < .001. The attitude seems to be significant as a predictor or as an explanatory variable: B = 3.5, p < .001. So if we wanted to do some statistical predictions with our model we would adjust the formula y(hat) = a + Bx to y(hat) = 11.64 + 3.5x. Note that a is denoted here as an intercept. 
 
@@ -244,13 +244,13 @@ summary(Regression_model_3)
 
 **MODEL PARAMETERS**
 
-I interpreted briefly the model parameters in the last chapter. Here the purpose is to interpret closely the relationship between the attitude and exam points including the multiple R-squared.
+I interpreted briefly the model parameters in the last chapter. Here the purpose is to interpret more closely the relationship between the attitude and exam points including the multiple R-squared.
 
 A linear regression model with one predictor variable can be expressed with the following equation: Y = Bo + Bx + e. This is the same equation I used earlier with the expression of y(hat) = a + Bx without the residual error e which is an unmeasured variable. So considering our model parameters we have "Bo" or "a" which is the Y-intercept. Then we have B-coefficient (beta) which defines the slope of our regression line.
 
-Then we can take a look for the coefficients of above summary (model 3). It states that our intercept has the value around 11.6 which is the value we would predict for Exam points (Y) if the attitude towards statistics were 0. Then we can take a look the estimated regression coefficient (B) of attitude which seems to be around 3.5. This means that if the variable of attitude (x) differed by one unit the exam points will differ by 3.5 units on average.
+Then we can take a look at the coefficients of above summary (model 3). It states that our intercept has the value around 11.6 which is the value we would predict for Exam points (Y) if the attitude towards statistics was 0. Then we can take a look the estimated regression coefficient (B) of attitude which seems to be around 3.5. This means that if the variable of attitude (x) differed by one unit the exam points would differ by 3.5 units on average.
 
-Have a look the scatter plot below. With our equation and estimated coefficients we can express the following example. If some student had evaluated their attitude towards statistics to be 3 then we couls predict their exam points to be 11.6 + 3*3.5 = 22.1 by average.
+Have a look at the scatter plot below. With our equation and estimated coefficients we can express the following example. If some student had evaluated their attitude towards statistics to be 3 then we could predict their exam points to be 11.6 + 3*3.5 = 22.1 by average.
 
 &nbsp;
 
@@ -262,13 +262,13 @@ ggplot(students2014, aes(x = attitude, y = points)) + geom_point() + xlab("Attit
 
 **MULTIPLE R-SQUARED**
 
-After the evaluation of the parameters we have multiple R-squared to explore. Just to remind that in the MODEL 3 the attitude explained around 19 % from the variation of the course exam points. 
+After the evaluation of the parameters we have the multiple R-squared to explore. Just to remind that in the MODEL 3 the attitude explained around 19 % from the variation of the course exam points. 
 
-We can interpret the R-squared as a statistical measure of how close the data are to the fitted regression line. After this information we can express that our coefficient is somewhat moderate. We can perceive the same thing from the above scatter plot where all of the observations do not fit to the regression line but are spread all over. Thus in general, the higher the R-squared, the better the model fits your data.
+We can interpret the R-squared as a statistical measure of how close the data are to the fitted regression line. After this information we can express that our coefficient is somewhat moderate. We can perceive the same thing from the above scatter plot where all the observations do not fit to the regression line but instead are spread all over. Thus in general, the higher the R-squared, the better the model fits your data.
 
-However it is noteworthy that low R-squared value doesn't automatically mean that our model is bad. For example in the field of human behaviour the R-squared values can be quite low since there might be many other factors affecting to our actions.
+However it is noteworthy that the low R-squared value doesn't automatically mean that our model is bad. For example in the field of human behaviour the R-squared values can be quite low since there might be many other factors affecting to our actions.
 
-There are also some limitations of R-squared. It cannot determine whether the coefficient estimates and predictions are biased. This is the reason why we explore the residual plots in the next section. 
+There are also some limitations considering the R-squared. For example it cannot determine whether the coefficient estimates and further predictions are biased. This is the reason why we explore the residual plots in the next section. 
 
 &nbsp;
 
@@ -276,13 +276,13 @@ There are also some limitations of R-squared. It cannot determine whether the co
 
 &nbsp;
 
-Finally I'm going to explore the validity of the model assumption with graphical outputs including "Residuals vs. Fitted values", "Normal QQ-plot" and "Residuals vs Leverage". 
+Finally I'm going to explore the validity of the model assumptions with graphical outputs including "Residuals vs. Fitted values", "Normal QQ-plot" and "Residuals vs Leverage". 
 
-First we take a look the figure of **Residuals vs. Fitted (also predicted) values**. Ideally this plot will show no discernible pattern and the residuals should be centered on zero throughout the range of fitted value. The red line assists to observe any distracting trends. From the first plot we can perceive that there is no bigger patterns or trends suggesting that we could use our regression model.
+First we take a look at the figure called **Residuals vs. Fitted (also predicted) values**. Ideally this plot doesn't show any discernible patterns and the residuals should be centered on zero throughout the range of fitted value. The red line assists to observe if there are any distracting trends. From the first plot we can perceive that there is no bigger patterns or trends suggesting that we could use our regression model.
 
-Before making any final conclusions lets take a look the plot that is **Normal QQ-plot** of the residuals. Here we try to define if the residuals are sufficiently normally distributed. The residuals should fit to the line as smoothly as possible. Based on the graph there is some deviation from the line but I think we can assume that residuals are still sufficiently normally distributed. 
+Before making any final conclusions lets take a look at the plot that is **Normal QQ-plot** of the residuals. Here we are trying to define if the residuals are sufficiently normally distributed. The residuals should fit to the line as smoothly as possible. Based on the graph there seems to be some deviation from the line but I think we can assume that residuals are still sufficiently normally distributed. 
 
-Finally we are going to analyse the plot of **Residuals vs. Leverage**. This plot helps to conclude if there are some influential outliers in our regression model. First we can see there is no outlying values at the upper right or lower right corner considering the scale also. This suggests that  there are no influential cases against our regression line since we can assume our leverage is low. On the other hand we have to analyse if there are any cases outside the Cook's distance which we can see underneath the plot. It seems that some of our cases are close to this line with a large negative standardized residual. This means that some of our cases can be influential outliers against our regression line. 
+Finally we are going to analyse the plot called **Residuals vs. Leverage**. This plot helps to conclude if there are some influential outliers in our regression model. First we can see that there are not outlying values at the upper right or lower right corner considering the scale also. This suggests that there are no influential cases against our regression line thus we can assume that our leverage is low. On the other hand we have to analyse if there are any cases outside the Cook's distance which we can perceive underneath the plot. It seems that some of our cases are close to this line with a large negative standardized residual. This means that some of our cases can be influential outliers against our regression line. 
 
 &nbsp;
 
@@ -296,11 +296,11 @@ plot(Regression_model_3, which = c(1, 2, 5))
 
 &nbsp;
 
-The correlation matrixes showed there could be some kind of relationship between attitude to statistics and course exam points. Other relatioships did not seem as possible. This comes evident after running three different regression models where the MODEL 3 seemed to be the only significant one. The final model suggests that attitudes towards statistics can explain around 19 % from the variation of the exam points concluding there might be other meaningful factors to better explain the exam results. 
+The correlation matrixes showed that there could be a relationship between attitude to statistics and course exam points. Other relatioships did not seem as possible. This comes evident after running the three different regression models where the MODEL 3 seemed to be the only significant one. The final model suggests that the attitude towards statistics can explain around 19 % from the variation of the course exam points concluding there might be other meaningful factors to better explain the exam results. 
 
 The graphical outputs of the model validation suggest that there are no major problems with residual diagnostics exept some cases which could be influential in terms of Cook's distance. 
 
-I have to say that this journey has been challenging but fun. I'm very greedy to learn more especially about the R coding. If you asked me some years ago would I do some coding in the future I would have said no to you. But here we are thanks to the new course of open data science and our fantastic docent and assistants. So thank you guys.
+I have to say that this journey has been challenging but fun. I'm very greedy to learn more especially about the R coding. If you had asked me some years ago, if I would do some coding in the future, I would had said no. But here we are thanks to the new course of open data science and our fantastic docent and assistants. So thank you guys.
 
 &nbsp;
 
