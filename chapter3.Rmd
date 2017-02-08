@@ -1,1 +1,86 @@
 # Logistic Regression
+
+&nbsp;
+
+SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER
+
+&nbsp;
+
+
+## Data description 
+
+&nbsp;
+
+I'm going to use a dataset of **Student alcohol consumption** from UCI Machine Learning Repository. The purpose of the data have been to predict secondary school student alcohol comsumption in Portugal. The actual material contains two separate datasets of math and Portuguese language courses but the questionnaires have been identical. 
+
+===========================================
+
+You can find more detailed information  [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
+
+In this analysis the purpose is to use joined dataset.
+
+the actual data is [here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt).
+
+
+============================================
+
+ASSIGNMENT DESCRIPTION
+
+The joined data set used in the analysis  exercise combines the two student alcohol consumption data sets. The following adjustments have been made:
+The variables not used for joining the two data have been combined by averaging (including the grade variables)
+'alc_use' is the average of 'Dalc' and 'Walc'
+'high_use' is TRUE if 'alc_use' is higher than 2 and FALSE otherwise
+
+Print out the names of the variables in the data and describe the data set briefly, assuming the reader has no previous knowledge of it.
+
+================================================
+
+
+
+================================================
+
+&nbsp;
+
+```{r}
+joined_alcohol <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep = ",", header = TRUE)
+```
+
+
+```{r}
+colnames(joined_alcohol)
+```
+
+&nbsp;
+
+```{r}
+str(joined_alcohol)
+```
+
+
+
+## Initial hypothesis 
+
+&nbsp;
+
+================================
+
+The purpose of your analysis is to study the relationships between high/low alcohol consumption and some of the other variables in the data. To do this, choose 4 interesting variables in the data and for each of them, present your personal hypothesis about their relationships with alcohol consumption. (1 point)
+
+=================================
+
+&nbsp;
+
+
+## Relationships between chosen variables in terms of initial hypothesis
+
+&nbsp;
+
+===================================
+
+Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)
+
+===================================
+
+&nbsp;
+
+

@@ -121,6 +121,23 @@ $(document).ready(function () {
 
 <div id="logistic-regression" class="section level1">
 <h1>Logistic Regression</h1>
+<p> </p>
+<p>===========================================</p>
+<p>SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER</p>
+<p>ASSIGNMENT DESCRIPTION</p>
+<p>The joined data set used in the analysis exercise combines the two student alcohol consumption data sets. The following adjustments have been made: The variables not used for joining the two data have been combined by averaging (including the grade variables) ‘alc_use’ is the average of ‘Dalc’ and ‘Walc’ ‘high_use’ is TRUE if ‘alc_use’ is higher than 2 and FALSE otherwise</p>
+<p>Print out the names of the variables in the data and describe the data set briefly, assuming the reader has no previous knowledge of it. There is information related to the data</p>
+<p>================================================</p>
+<p>You can find more information related to the data <a href="https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION">here</a>.</p>
+<pre class="r"><code>joined_alcohol &lt;- read.table(&quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt&quot;, sep = &quot;,&quot;, header = TRUE)</code></pre>
+<pre class="r"><code>colnames(joined_alcohol)</code></pre>
+<pre><code>##  [1] &quot;school&quot;     &quot;sex&quot;        &quot;age&quot;        &quot;address&quot;    &quot;famsize&quot;   
+##  [6] &quot;Pstatus&quot;    &quot;Medu&quot;       &quot;Fedu&quot;       &quot;Mjob&quot;       &quot;Fjob&quot;      
+## [11] &quot;reason&quot;     &quot;nursery&quot;    &quot;internet&quot;   &quot;guardian&quot;   &quot;traveltime&quot;
+## [16] &quot;studytime&quot;  &quot;failures&quot;   &quot;schoolsup&quot;  &quot;famsup&quot;     &quot;paid&quot;      
+## [21] &quot;activities&quot; &quot;higher&quot;     &quot;romantic&quot;   &quot;famrel&quot;     &quot;freetime&quot;  
+## [26] &quot;goout&quot;      &quot;Dalc&quot;       &quot;Walc&quot;       &quot;health&quot;     &quot;absences&quot;  
+## [31] &quot;G1&quot;         &quot;G2&quot;         &quot;G3&quot;         &quot;alc_use&quot;    &quot;high_use&quot;</code></pre>
 </div>
 
 
