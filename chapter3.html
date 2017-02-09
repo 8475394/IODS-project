@@ -282,40 +282,118 @@ $(document).ready(function () {
 <pre class="r"><code>sex &lt;- joined_alcohol$sex
 alc_use &lt;- joined_alcohol$alc_use
 high_use &lt;- joined_alcohol$high_use
-joined_alcohol %&gt;% group_by(sex) %&gt;% summarise(count = n())</code></pre>
-<pre><code>## # A tibble: 2 × 2
-##      sex count
-##   &lt;fctr&gt; &lt;int&gt;
-## 1      F   198
-## 2      M   184</code></pre>
+joined_alcohol %&gt;% count(sex) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##      sex     n     freq
+##   &lt;fctr&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      F   198 51.83246
+## 2      M   184 48.16754</code></pre>
 <p> </p>
 <p>Im writing</p>
 <p> </p>
-<pre class="r"><code>joined_alcohol %&gt;% group_by(sex, high_use) %&gt;% summarise(count = n())</code></pre>
-<pre><code>## Source: local data frame [4 x 3]
-## Groups: sex [?]
+<pre class="r"><code>joined_alcohol %&gt;% count(sex, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## Source: local data frame [4 x 4]
+## Groups: sex [2]
 ## 
-##      sex high_use count
-##   &lt;fctr&gt;    &lt;lgl&gt; &lt;int&gt;
-## 1      F    FALSE   157
-## 2      F     TRUE    41
-## 3      M    FALSE   113
-## 4      M     TRUE    71</code></pre>
+##      sex high_use     n     freq
+##   &lt;fctr&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      F    FALSE   157 79.29293
+## 2      F     TRUE    41 20.70707
+## 3      M    FALSE   113 61.41304
+## 4      M     TRUE    71 38.58696</code></pre>
 <p> </p>
 <p class="text-warning">
 <strong>WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION</strong>.
 </p>
 <p>Writing here</p>
 <p> </p>
+<pre class="r"><code>studytime &lt;- joined_alcohol$studytime
+joined_alcohol %&gt;% count(studytime) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   studytime     n      freq
+##       &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1         1   103 26.963351
+## 2         2   190 49.738220
+## 3         3    62 16.230366
+## 4         4    27  7.068063</code></pre>
+<pre class="r"><code>joined_alcohol %&gt;% count(studytime, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## Source: local data frame [8 x 4]
+## Groups: studytime [4]
+## 
+##   studytime high_use     n     freq
+##       &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1         1    FALSE    60 58.25243
+## 2         1     TRUE    43 41.74757
+## 3         2    FALSE   133 70.00000
+## 4         2     TRUE    57 30.00000
+## 5         3    FALSE    54 87.09677
+## 6         3     TRUE     8 12.90323
+## 7         4    FALSE    23 85.18519
+## 8         4     TRUE     4 14.81481</code></pre>
+<p> </p>
 <p class="text-warning">
 <strong>GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION</strong>.
 </p>
 <p>Writing here</p>
 <p> </p>
+<pre class="r"><code>goout &lt;- joined_alcohol$goout
+joined_alcohol %&gt;% count(goout) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## # A tibble: 5 × 3
+##   goout     n      freq
+##   &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1     1    24  6.282723
+## 2     2    99 25.916230
+## 3     3   123 32.198953
+## 4     4    82 21.465969
+## 5     5    54 14.136126</code></pre>
+<pre class="r"><code>joined_alcohol %&gt;% count(goout, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## Source: local data frame [10 x 4]
+## Groups: goout [5]
+## 
+##    goout high_use     n     freq
+##    &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      1    FALSE    21 87.50000
+## 2      1     TRUE     3 12.50000
+## 3      2    FALSE    84 84.84848
+## 4      2     TRUE    15 15.15152
+## 5      3    FALSE   100 81.30081
+## 6      3     TRUE    23 18.69919
+## 7      4    FALSE    43 52.43902
+## 8      4     TRUE    39 47.56098
+## 9      5    FALSE    22 40.74074
+## 10     5     TRUE    32 59.25926</code></pre>
+<p> </p>
 <p class="text-warning">
 <strong>FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION</strong>.
 </p>
 <p>Writing here</p>
+<p> </p>
+<pre class="r"><code>famrel &lt;- joined_alcohol$famrel
+joined_alcohol %&gt;% count(famrel) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## # A tibble: 5 × 3
+##   famrel     n      freq
+##    &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1      1     9  2.356021
+## 2      2    18  4.712042
+## 3      3    66 17.277487
+## 4      4   183 47.905759
+## 5      5   106 27.748691</code></pre>
+<pre class="r"><code>joined_alcohol %&gt;% count(famrel, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre><code>## Source: local data frame [10 x 4]
+## Groups: famrel [5]
+## 
+##    famrel high_use     n     freq
+##     &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1       1    FALSE     7 77.77778
+## 2       1     TRUE     2 22.22222
+## 3       2    FALSE     9 50.00000
+## 4       2     TRUE     9 50.00000
+## 5       3    FALSE    40 60.60606
+## 6       3     TRUE    26 39.39394
+## 7       4    FALSE   131 71.58470
+## 8       4     TRUE    52 28.41530
+## 9       5    FALSE    83 78.30189
+## 10      5     TRUE    23 21.69811</code></pre>
 <p> </p>
 <p>===================================</p>
 <p>Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)</p>

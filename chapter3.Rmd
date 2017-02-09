@@ -174,7 +174,7 @@ As you can see from the table below there are 198 females and 184 males in the d
 sex <- joined_alcohol$sex
 alc_use <- joined_alcohol$alc_use
 high_use <- joined_alcohol$high_use
-joined_alcohol %>% group_by(sex) %>% summarise(count = n())
+joined_alcohol %>% count(sex) %>% mutate(freq = n / sum(n) * 100)
 ```
 
 &nbsp;
@@ -184,7 +184,7 @@ Im writing
 &nbsp;
 
 ```{r}
-joined_alcohol %>% group_by(sex, high_use) %>% summarise(count = n())
+joined_alcohol %>% count(sex, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
 &nbsp;
@@ -198,9 +198,11 @@ Writing here
 
 ```{r}
 studytime <- joined_alcohol$studytime
-joined_alcohol %>% group_by(studytime) %>% summarise(count = n())
+joined_alcohol %>% count(studytime) %>% mutate(freq = n / sum(n) * 100)
+joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
+&nbsp;
 
 <p class="text-warning">**GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION**.</p>
 
@@ -210,9 +212,11 @@ Writing here
 
 ```{r}
 goout <- joined_alcohol$goout
-joined_alcohol %>% group_by(goout) %>% summarise(count = n())
+joined_alcohol %>% count(goout) %>% mutate(freq = n / sum(n) * 100)
+joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
+&nbsp;
 
 <p class="text-warning">**FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION**.</p>
 
@@ -222,9 +226,11 @@ Writing here
 
 ```{r}
 famrel <- joined_alcohol$famrel
-joined_alcohol %>% group_by(famrel) %>% summarise(count = n())
+joined_alcohol %>% count(famrel) %>% mutate(freq = n / sum(n) * 100)
+joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
+&nbsp;
 
 
 
