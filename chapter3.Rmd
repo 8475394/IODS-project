@@ -109,7 +109,7 @@ str(joined_alcohol)
 
 &nbsp;
 
-## Initial hypotheses 
+## My initial hypotheses 
 
 &nbsp;
 
@@ -153,9 +153,80 @@ I believe there can be a relationship between family relationships and alcohol c
 
 &nbsp;
 
+In this section I'm going to explore the distributions of the variables which were introduced in the previous chapter. The second purpose is to explore the possible relationships between alcohol consumption and the chosen variables. 
+
+&nbsp;
+
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
-library(tidyr); library(dplyr); library(ggplot2)
+library(tidyr); library(dplyr); library(ggplot2); library(knitr)
 ```
+
+&nbsp;
+
+<p class="text-warning">**SEX AND ALCOHOL CONSUMPTION**.</p>
+
+
+As you can see from the table below there are 198 females and 184 males in the dataset thus the groups seem to be nearly same size. Furthermore there are 382 students in the dataset.
+
+&nbsp;
+
+```{r}
+sex <- joined_alcohol$sex
+alc_use <- joined_alcohol$alc_use
+high_use <- joined_alcohol$high_use
+joined_alcohol %>% group_by(sex) %>% summarise(count = n())
+```
+
+&nbsp;
+
+Im writing
+
+&nbsp;
+
+```{r}
+joined_alcohol %>% group_by(sex, high_use) %>% summarise(count = n())
+```
+
+&nbsp;
+
+
+<p class="text-warning">**WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION**.</p>
+
+Writing here
+
+&nbsp;
+
+```{r}
+studytime <- joined_alcohol$studytime
+joined_alcohol %>% group_by(studytime) %>% summarise(count = n())
+```
+
+
+<p class="text-warning">**GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION**.</p>
+
+Writing here
+
+&nbsp;
+
+```{r}
+goout <- joined_alcohol$goout
+joined_alcohol %>% group_by(goout) %>% summarise(count = n())
+```
+
+
+<p class="text-warning">**FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION**.</p>
+
+Writing here
+
+&nbsp;
+
+```{r}
+famrel <- joined_alcohol$famrel
+joined_alcohol %>% group_by(famrel) %>% summarise(count = n())
+```
+
+
+
 
 
 ===================================

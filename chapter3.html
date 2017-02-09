@@ -238,8 +238,8 @@ $(document).ready(function () {
 ##  $ high_use  : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...</code></pre>
 <p> </p>
 </div>
-<div id="initial-hypotheses" class="section level2">
-<h2>Initial hypotheses</h2>
+<div id="my-initial-hypotheses" class="section level2">
+<h2>My initial hypotheses</h2>
 <p> </p>
 <p>The purpose of this analysis is to study the relationships between high/low alcohol consumption and 4 variables of my own interest in the data. I think there are many interesting variables which might have the relationship with the alcohol consumption.</p>
 <p> </p>
@@ -270,7 +270,53 @@ $(document).ready(function () {
 <div id="relationships-between-the-variables-in-terms-of-my-initial-hypotheses" class="section level2">
 <h2>Relationships between the variables in terms of my initial hypotheses</h2>
 <p> </p>
-<pre class="r"><code>library(tidyr); library(dplyr); library(ggplot2)</code></pre>
+<p>In this section I’m going to explore the distributions of the variables which were introduced in the previous chapter. The second purpose is to explore the possible relationships between alcohol consumption and the chosen variables.</p>
+<p> </p>
+<pre class="r"><code>library(tidyr); library(dplyr); library(ggplot2); library(knitr)</code></pre>
+<p> </p>
+<p class="text-warning">
+<strong>SEX AND ALCOHOL CONSUMPTION</strong>.
+</p>
+<p>As you can see from the table below there are 198 females and 184 males in the dataset thus the groups seem to be nearly same size. Furthermore there are 382 students in the dataset.</p>
+<p> </p>
+<pre class="r"><code>sex &lt;- joined_alcohol$sex
+alc_use &lt;- joined_alcohol$alc_use
+high_use &lt;- joined_alcohol$high_use
+joined_alcohol %&gt;% group_by(sex) %&gt;% summarise(count = n())</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##      sex count
+##   &lt;fctr&gt; &lt;int&gt;
+## 1      F   198
+## 2      M   184</code></pre>
+<p> </p>
+<p>Im writing</p>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% group_by(sex, high_use) %&gt;% summarise(count = n())</code></pre>
+<pre><code>## Source: local data frame [4 x 3]
+## Groups: sex [?]
+## 
+##      sex high_use count
+##   &lt;fctr&gt;    &lt;lgl&gt; &lt;int&gt;
+## 1      F    FALSE   157
+## 2      F     TRUE    41
+## 3      M    FALSE   113
+## 4      M     TRUE    71</code></pre>
+<p> </p>
+<p class="text-warning">
+<strong>WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION</strong>.
+</p>
+<p>Writing here</p>
+<p> </p>
+<p class="text-warning">
+<strong>GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION</strong>.
+</p>
+<p>Writing here</p>
+<p> </p>
+<p class="text-warning">
+<strong>FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION</strong>.
+</p>
+<p>Writing here</p>
+<p> </p>
 <p>===================================</p>
 <p>Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)</p>
 <p>===================================</p>
