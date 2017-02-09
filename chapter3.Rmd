@@ -11,33 +11,52 @@ SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER
 
 &nbsp;
 
-I'm going to use a dataset of **Student alcohol consumption** from UCI Machine Learning Repository. The purpose of the data have been to predict secondary school student alcohol comsumption in Portugal. The actual material contains two separate datasets of math and Portuguese language courses but the questionnaires have been identical. 
+I'm going to use a dataset of **Student alcohol consumption** from UCI Machine Learning Repository. The purpose of the original data have been to predict secondary school student alcohol comsumption in Portugal. This material contains two separate datasets of math and Portuguese language courses but to note that the questionnaires have been identical. There are also students who have answered both questionnaires. 
 
-===========================================
+&nbsp;
 
-You can find more detailed information  [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
+=====================================
 
-In this analysis the purpose is to use joined dataset.
-
-the actual data is [here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt).
+**You can find more detailed information about those two datasets**   [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
 
 
-============================================
+**Data reference**: Using Data Mining To Predict Secondary School Student Alcohol Consumption. Fabio Pagnotta, Hossain Mohammad Amran. Department of Computer Science,University of Camerino.
 
-ASSIGNMENT DESCRIPTION
+======================================
 
-The joined data set used in the analysis  exercise combines the two student alcohol consumption data sets. The following adjustments have been made:
-The variables not used for joining the two data have been combined by averaging (including the grade variables)
-'alc_use' is the average of 'Dalc' and 'Walc'
-'high_use' is TRUE if 'alc_use' is higher than 2 and FALSE otherwise
+&nbsp;
 
-Print out the names of the variables in the data and describe the data set briefly, assuming the reader has no previous knowledge of it.
+**In this analysis** the purpose is to use combined datset where we have those students who have answered these two questionnaires i.e. students who have participated both in the math and the Portuguese language courses. To combine the two datasets we have utilized some of the backround questions including: 
 
-================================================
+* school (student's school)
+* sex (F as female or M as a male)
+* age (student's age)
+* address (U as urban or R as rural)
+* famsize (family size)
+* Pstatus (parent's cohabitation status)
+* Medu (mother's education)
+* Fedu (father's education)
+* Mjob (mother's job)
+* Fjob (father's job)
+* reason (reason to choose this school)
+* nursery (attended nursery school)
+* internet (Internet access at home)
+
+&nbsp;
+
+======================================
+
+**You can find the dataset which is utilized in this analysis** [here](http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt).
+
+======================================
+
+&nbsp;
+
+**Underneath you can see all the variables of the combined dataset** consisting 382 observations and 35 variables. 
+
+The following adjustments have also been made: The variables not used for joining the two data have been combined by averaging (including the grade variables). "alc_use"" is the average of "Dalc" (workday alcohol consumption) and "Walc" (weekend alcohol consumption). "high_use"" is TRUE if "alc_use" is higher than 2 and the scale ranges between 1 and 5 (from 1 - very low to 5 - very high). 
 
 
-
-================================================
 
 &nbsp;
 
@@ -45,6 +64,7 @@ Print out the names of the variables in the data and describe the data set brief
 joined_alcohol <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep = ",", header = TRUE)
 ```
 
+&nbsp;
 
 ```{r}
 colnames(joined_alcohol)
@@ -56,7 +76,7 @@ colnames(joined_alcohol)
 str(joined_alcohol)
 ```
 
-
+&nbsp;
 
 ## Initial hypothesis 
 

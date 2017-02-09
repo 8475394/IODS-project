@@ -122,14 +122,44 @@ $(document).ready(function () {
 <div id="logistic-regression" class="section level1">
 <h1>Logistic Regression</h1>
 <p> </p>
-<p>===========================================</p>
 <p>SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER</p>
-<p>ASSIGNMENT DESCRIPTION</p>
-<p>The joined data set used in the analysis exercise combines the two student alcohol consumption data sets. The following adjustments have been made: The variables not used for joining the two data have been combined by averaging (including the grade variables) ‘alc_use’ is the average of ‘Dalc’ and ‘Walc’ ‘high_use’ is TRUE if ‘alc_use’ is higher than 2 and FALSE otherwise</p>
-<p>Print out the names of the variables in the data and describe the data set briefly, assuming the reader has no previous knowledge of it. There is information related to the data</p>
-<p>================================================</p>
-<p>You can find more information related to the data <a href="https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION">here</a>.</p>
+<p> </p>
+<div id="data-description" class="section level2">
+<h2>Data description</h2>
+<p> </p>
+<p>I’m going to use a dataset of <strong>Student alcohol consumption</strong> from UCI Machine Learning Repository. The purpose of the original data have been to predict secondary school student alcohol comsumption in Portugal. This material contains two separate datasets of math and Portuguese language courses but to note that the questionnaires have been identical. There are also students who have answered both questionnaires.</p>
+<p> </p>
+<p>=====================================</p>
+<p><strong>You can find more detailed information about those two datasets</strong> <a href="https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION">here</a>.</p>
+<p><strong>Data reference</strong>: Using Data Mining To Predict Secondary School Student Alcohol Consumption. Fabio Pagnotta, Hossain Mohammad Amran. Department of Computer Science,University of Camerino.</p>
+<p>======================================</p>
+<p> </p>
+<p><strong>In this analysis</strong> the purpose is to use combined datset where we have those students who have answered these two questionnaires i.e. students who have participated both in the math and the Portuguese language courses. To combine the two datasets we have utilized some of the backround questions including:</p>
+<ul>
+<li>school (student’s school)</li>
+<li>sex (F as female or M as a male)</li>
+<li>age (student’s age)</li>
+<li>address (U as urban or R as rural)</li>
+<li>famsize (family size)</li>
+<li>Pstatus (parent’s cohabitation status)</li>
+<li>Medu (mother’s education)</li>
+<li>Fedu (father’s education)</li>
+<li>Mjob (mother’s job)</li>
+<li>Fjob (father’s job)</li>
+<li>reason (reason to choose this school)</li>
+<li>nursery (attended nursery school)</li>
+<li>internet (Internet access at home)</li>
+</ul>
+<p> </p>
+<p>======================================</p>
+<p><strong>You can find the dataset which is utilized in this analysis</strong> <a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt">here</a>.</p>
+<p>======================================</p>
+<p> </p>
+<p><strong>Underneath you can see all the variables of the combined dataset</strong> consisting 382 observations and 35 variables.</p>
+<p>The following adjustments have also been made: The variables not used for joining the two data have been combined by averaging (including the grade variables). “alc_use”&quot; is the average of “Dalc” (workday alcohol consumption) and “Walc” (weekend alcohol consumption). “high_use”&quot; is TRUE if “alc_use” is higher than 2 and the scale ranges between 1 and 5 (from 1 - very low to 5 - very high).</p>
+<p> </p>
 <pre class="r"><code>joined_alcohol &lt;- read.table(&quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt&quot;, sep = &quot;,&quot;, header = TRUE)</code></pre>
+<p> </p>
 <pre class="r"><code>colnames(joined_alcohol)</code></pre>
 <pre><code>##  [1] &quot;school&quot;     &quot;sex&quot;        &quot;age&quot;        &quot;address&quot;    &quot;famsize&quot;   
 ##  [6] &quot;Pstatus&quot;    &quot;Medu&quot;       &quot;Fedu&quot;       &quot;Mjob&quot;       &quot;Fjob&quot;      
@@ -138,6 +168,62 @@ $(document).ready(function () {
 ## [21] &quot;activities&quot; &quot;higher&quot;     &quot;romantic&quot;   &quot;famrel&quot;     &quot;freetime&quot;  
 ## [26] &quot;goout&quot;      &quot;Dalc&quot;       &quot;Walc&quot;       &quot;health&quot;     &quot;absences&quot;  
 ## [31] &quot;G1&quot;         &quot;G2&quot;         &quot;G3&quot;         &quot;alc_use&quot;    &quot;high_use&quot;</code></pre>
+<p> </p>
+<pre class="r"><code>str(joined_alcohol)</code></pre>
+<pre><code>## 'data.frame':    382 obs. of  35 variables:
+##  $ school    : Factor w/ 2 levels &quot;GP&quot;,&quot;MS&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ sex       : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 1 1 1 2 2 1 2 2 ...
+##  $ age       : int  18 17 15 15 16 16 16 17 15 15 ...
+##  $ address   : Factor w/ 2 levels &quot;R&quot;,&quot;U&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ famsize   : Factor w/ 2 levels &quot;GT3&quot;,&quot;LE3&quot;: 1 1 2 1 1 2 2 1 2 1 ...
+##  $ Pstatus   : Factor w/ 2 levels &quot;A&quot;,&quot;T&quot;: 1 2 2 2 2 2 2 1 1 2 ...
+##  $ Medu      : int  4 1 1 4 3 4 2 4 3 3 ...
+##  $ Fedu      : int  4 1 1 2 3 3 2 4 2 4 ...
+##  $ Mjob      : Factor w/ 5 levels &quot;at_home&quot;,&quot;health&quot;,..: 1 1 1 2 3 4 3 3 4 3 ...
+##  $ Fjob      : Factor w/ 5 levels &quot;at_home&quot;,&quot;health&quot;,..: 5 3 3 4 3 3 3 5 3 3 ...
+##  $ reason    : Factor w/ 4 levels &quot;course&quot;,&quot;home&quot;,..: 1 1 3 2 2 4 2 2 2 2 ...
+##  $ nursery   : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 1 2 2 2 2 2 2 2 2 ...
+##  $ internet  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 2 2 2 1 2 2 1 2 2 ...
+##  $ guardian  : Factor w/ 3 levels &quot;father&quot;,&quot;mother&quot;,..: 2 1 2 2 1 2 2 2 2 2 ...
+##  $ traveltime: int  2 1 1 1 1 1 1 2 1 1 ...
+##  $ studytime : int  2 2 2 3 2 2 2 2 2 2 ...
+##  $ failures  : int  0 0 3 0 0 0 0 0 0 0 ...
+##  $ schoolsup : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 1 2 1 1 1 1 2 1 1 ...
+##  $ famsup    : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 2 1 2 2 2 1 2 2 2 ...
+##  $ paid      : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 2 2 2 2 1 1 2 2 ...
+##  $ activities: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 2 1 2 1 1 1 2 ...
+##  $ higher    : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ romantic  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 2 1 1 1 1 1 1 ...
+##  $ famrel    : int  4 5 4 3 4 5 4 4 4 5 ...
+##  $ freetime  : int  3 3 3 2 3 4 4 1 2 5 ...
+##  $ goout     : int  4 3 2 2 2 2 4 4 2 1 ...
+##  $ Dalc      : int  1 1 2 1 1 1 1 1 1 1 ...
+##  $ Walc      : int  1 1 3 1 2 2 1 1 1 1 ...
+##  $ health    : int  3 3 3 5 5 5 3 1 1 5 ...
+##  $ absences  : int  6 4 10 2 4 10 0 6 0 0 ...
+##  $ G1        : int  5 5 7 15 6 15 12 6 16 14 ...
+##  $ G2        : int  6 5 8 14 10 15 12 5 18 15 ...
+##  $ G3        : int  6 6 10 15 10 15 11 6 19 15 ...
+##  $ alc_use   : num  1 1 2.5 1 1.5 1.5 1 1 1 1 ...
+##  $ high_use  : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...</code></pre>
+<p> </p>
+</div>
+<div id="initial-hypothesis" class="section level2">
+<h2>Initial hypothesis</h2>
+<p> </p>
+<p>================================</p>
+<p>The purpose of your analysis is to study the relationships between high/low alcohol consumption and some of the other variables in the data. To do this, choose 4 interesting variables in the data and for each of them, present your personal hypothesis about their relationships with alcohol consumption. (1 point)</p>
+<p>=================================</p>
+<p> </p>
+</div>
+<div id="relationships-between-chosen-variables-in-terms-of-initial-hypothesis" class="section level2">
+<h2>Relationships between chosen variables in terms of initial hypothesis</h2>
+<p> </p>
+<p>===================================</p>
+<p>Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)</p>
+<p>===================================</p>
+<p> </p>
+</div>
 </div>
 
 
