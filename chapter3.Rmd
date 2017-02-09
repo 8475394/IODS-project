@@ -28,19 +28,19 @@ I'm going to use a dataset of **Student alcohol consumption** from UCI Machine L
 
 **In this analysis** the purpose is to use combined datset where we have those students who have answered these two questionnaires i.e. students who have participated both in the math and the Portuguese language courses. To combine the two datasets we have utilized some of the backround questions including: 
 
-* school (student's school)
-* sex (F as female or M as a male)
-* age (student's age)
-* address (U as urban or R as rural)
-* famsize (family size)
-* Pstatus (parent's cohabitation status)
-* Medu (mother's education)
-* Fedu (father's education)
-* Mjob (mother's job)
-* Fjob (father's job)
-* reason (reason to choose this school)
-* nursery (attended nursery school)
-* internet (Internet access at home)
+* school (student's school: GB - Gabriel Pereira or MS - Mousinho da Silveira)
+* sex (F - female or M - male)
+* age (student's age:  from 15 to 22)
+* address (U - urban or R - rural)
+* famsize (family size: LE3 - less or equal to 3 or GT3 - greater than 3)
+* Pstatus (parent's cohabitation status: T - living together or A - apart)
+* Medu (mother's education:  0 - none, 1 - primary education (4th grade), 2 - 5th to 9th grade, 3 - secondary education or 4 - higher education)
+* Fedu (father's education: 0 - none, 1 - primary education (4th grade), 2 - 5th to 9th grade, 3 - secondary education or 4 - higher education)
+* Mjob (mother's job: 'teacher', 'health' care related, civil 'services' (e.g. administrative or police), 'at_home' or 'other')
+* Fjob (father's job: 'teacher', 'health' care related, civil 'services' (e.g. administrative or police), 'at_home' or 'other')
+* reason (reason to choose this school: close to 'home', school 'reputation', 'course' preference or 'other)
+* nursery (attended nursery school: yes or no)
+* internet (Internet access at home: yes or no)
 
 &nbsp;
 
@@ -66,34 +66,97 @@ joined_alcohol <- read.table("http://s3.amazonaws.com/assets.datacamp.com/produc
 
 &nbsp;
 
+<p class="text-danger">**NAMES OF DATA VARIABLES**</p>
+
+
 ```{r}
 colnames(joined_alcohol)
 ```
 
 &nbsp;
 
+**Underneath you can take a closer look at the content of the data variables.** The variables which i haven't introduce yet includes:
+
+* guardian (student's guardian: 'mother', 'father' or 'other')
+* traveltime (home to school travel time: 1 - <15 min., 2 - 15 to 30 min., 3 - 30 min. to 1 hour, or 4 - >1 hour) 
+* studytime (weekly study time: 1 - <2 hours, 2 - 2 to 5 hours, 3 - 5 to 10 hours, or 4 - >10 hours) 
+* failures (number of past class failures: n if 1 <= n < 3, else 4) 
+* schoolsup (extra educational support: yes or no)
+* famsup (family educational support: yes or no) 
+* paid (extra paid classes within the course subject (Math or Portuguese): yes or no) 
+* activities (extra-curricular activities: yes or no) 
+* higher (wants to take higher education: yes or no) 
+* romantic (with a romantic relationship: yes or no) 
+* famrel (quality of family relationships: from 1 - very bad to 5 - excellent) 
+* freetime (free time after school: from 1 - very low to 5 - very high)
+* goout (going out with friends: from 1 - very low to 5 - very high) 
+* Dalc (workday alcohol consumption: from 1 - very low to 5 - very high) 
+* Walc (weekend alcohol consumption: from 1 - very low to 5 - very high) 
+* health (current health status: from 1 - very bad to 5 - very good) 
+* absences (number of school absences: from 0 to 93) 
+* G1 (first period grade: from 0 to 20) 
+* G2 (second period grade: from 0 to 20) 
+* G3 (final grade: from 0 to 20, output target) 
+
+&nbsp;
+
+<p class="text-danger">**STRUCTURE OF THE DATA VARIABLES**</p>
+
 ```{r}
 str(joined_alcohol)
 ```
 
-&nbsp;
-
-## Initial hypothesis 
 
 &nbsp;
 
-================================
+## Initial hypotheses 
 
-The purpose of your analysis is to study the relationships between high/low alcohol consumption and some of the other variables in the data. To do this, choose 4 interesting variables in the data and for each of them, present your personal hypothesis about their relationships with alcohol consumption. (1 point)
+&nbsp;
 
-=================================
+The purpose of this analysis is to study the relationships between high/low alcohol consumption and 4 variables of my own interest in the data. I think there are many interesting variables which might have the relationship with the alcohol consumption. 
+
+&nbsp;
+
+<p class="text-success">**HYPOTHESIS 1**</p>
+
+First variable will be **sex** i.e. female or male. I believe the gender has a relationship with alcohol consumption but it is impossible to say which gender type has a bigger probability to be a "high user" or "low user". One of the reasons are that I'm unfamiliar with the culture of Portugal and their habits of alcohol consumption. 
+
+&nbsp;
+
+<p class="text-success">**HYPOTHESIS 2**</p>
+
+The second interesting variable will be the weekly **studytime** which has the possible outcomes of 1 (less than 2 hours), 2 (2 to 5 hours), 3 (5 to 10 hours) or 4 (more than 10 hours). 
+
+I believe that the weekly studytime and alcohol consumption have a relationship in the way that the less a student studies the bigger is the probability to be an alcohol "high user" and vice versa. 
+
+&nbsp;
+
+<p class="text-success">**HYPOTHESIS 3**</p>
+
+The third variable which I'm going to choose is **goout** as going out with friends. This variable has the possible values from 1 (very low) to 5 (very high). 
+
+The variable of going out with friends doesn't tell us which kind of activities it consists but I believe that the more one goes out the bigger probability is to use alcohol. That is the more the student goes out the greater might be the probability to be an alcohol "high user" and vice versa. 
+
+&nbsp;
+
+<p class="text-success">**HYPOTHESIS 4**</p>
+
+The last variable which interest me is **famrel** as quality of family relationships which ranges from 1 (very bad) to 5 (excellent).
+
+I believe there can be a relationship between family relationships and alcohol consumption in such a way that the worse these relationships are the bigger is the probability to be a "high user" of alcohol. Of course in a bigger picture the other relevant aspect could be the overall importance of these family relationships which can define if these relationships affect to the student's alcohol consumption at all.   
+
 
 &nbsp;
 
 
-## Relationships between chosen variables in terms of initial hypothesis
+## Relationships between the variables in terms of my initial hypotheses
 
 &nbsp;
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyr); library(dplyr); library(ggplot2)
+```
+
 
 ===================================
 
