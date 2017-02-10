@@ -255,7 +255,7 @@ joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100
 The first 3 tables illustrate the variable of going out with friends. The measurement scale varies between 1 (very low) and 5 (very high) and I assume that the scale means to count going out often or not so often. 
 
 
-The first table discribes the total amount of going out between students and the summary table indicates that the mean of going out is around 3. 
+The first table describes the total amounts of going out between students and the summary table indicates that the mean of going out is around 3. 
 
 The third table divides the mean of the going out between genders and it suggests that there might not be any differences between genders. 
 
@@ -289,7 +289,12 @@ joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n) * 100)
 
 <p class="text-warning">**FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION**.</p>
 
-Writing here
+The first 3 tables illustrate the variable of quality of family relationships. This variable has been measured from 1 to 5 describing the family relationships to vary between very bad and excellent.
+
+The first table describes the total amounts of qualities in each category and it unfortunately suggests that these family relationships are somewhat bad by average. According the second table indicates that the mean quality is around 4 which I interpreted to illustrate bad quality of family relationships. 
+
+
+The third table divides the above mentioned mean on to categories of different genders. These results implies that there might not be any differences between genders considering the quality of family relationships.
 
 &nbsp;
 
@@ -304,8 +309,19 @@ joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(famrel))
 
 &nbsp;
 
+The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).
+
+The table compares the high use of alcohol between different qualities of family relationships. Again the frequencies (%) have adjusted to count the percentages inside each category since in this way it is easier to compare relative frequencies between different quality categories. 
+
+It seems that high use is more common somewhere in the  middle between bad and average kind of family relationships and the extreme values (very bad and excellent) don't seem differ from eac other. Thus these results may not correspond with my hypothesis 4 where I suggested that the worse the relatioships are the higher is theprobability to be an alcohol high user.
+
+
+
+
+&nbsp;
+
 ```{r}
-joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
 

@@ -367,7 +367,7 @@ joined_alcohol %&gt;% count(studytime) %&gt;% mutate(freq = n / sum(n) * 100)</c
 <strong>GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION</strong>.
 </p>
 <p>The first 3 tables illustrate the variable of going out with friends. The measurement scale varies between 1 (very low) and 5 (very high) and I assume that the scale means to count going out often or not so often.</p>
-<p>The first table discribes the total amount of going out between students and the summary table indicates that the mean of going out is around 3.</p>
+<p>The first table describes the total amounts of going out between students and the summary table indicates that the mean of going out is around 3.</p>
 <p>The third table divides the mean of the going out between genders and it suggests that there might not be any differences between genders.</p>
 <p> </p>
 <pre class="r"><code>goout &lt;- joined_alcohol$goout
@@ -413,7 +413,9 @@ joined_alcohol %&gt;% count(goout) %&gt;% mutate(freq = n / sum(n) * 100)</code>
 <p class="text-warning">
 <strong>FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION</strong>.
 </p>
-<p>Writing here</p>
+<p>The first 3 tables illustrate the variable of quality of family relationships. This variable has been measured from 1 to 5 describing the family relationships to vary between very bad and excellent.</p>
+<p>The first table describes the total amounts of qualities in each category and it unfortunately suggests that these family relationships are somewhat bad by average. According the second table indicates that the mean quality is around 4 which I interpreted to illustrate bad quality of family relationships.</p>
+<p>The third table divides the above mentioned mean on to categories of different genders. These results implies that there might not be any differences between genders considering the quality of family relationships.</p>
 <p> </p>
 <pre class="r"><code>famrel &lt;- joined_alcohol$famrel
 joined_alcohol %&gt;% count(famrel) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
@@ -435,22 +437,26 @@ joined_alcohol %&gt;% count(famrel) %&gt;% mutate(freq = n / sum(n) * 100)</code
 ## 1      F   198 3.878788
 ## 2      M   184 4.005435</code></pre>
 <p> </p>
-<pre class="r"><code>joined_alcohol %&gt;% count(famrel, high_use) %&gt;% mutate(freq = n / sum(n = 382) * 100)</code></pre>
+<p>The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).</p>
+<p>The table compares the high use of alcohol between different qualities of family relationships. Again the frequencies (%) have adjusted to count the percentages inside each category since in this way it is easier to compare relative frequencies between different quality categories.</p>
+<p>It seems that high use is more common somewhere in the middle between bad and average kind of family relationships and the extreme values (very bad and excellent) don’t seem differ from eac other. Thus these results may not correspond with my hypothesis 4 where I suggested that the worse the relatioships are the higher is theprobability to be an alcohol high user.</p>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% count(famrel, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
 <pre><code>## Source: local data frame [10 x 4]
 ## Groups: famrel [5]
 ## 
-##    famrel high_use     n       freq
-##     &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;      &lt;dbl&gt;
-## 1       1    FALSE     7  1.8324607
-## 2       1     TRUE     2  0.5235602
-## 3       2    FALSE     9  2.3560209
-## 4       2     TRUE     9  2.3560209
-## 5       3    FALSE    40 10.4712042
-## 6       3     TRUE    26  6.8062827
-## 7       4    FALSE   131 34.2931937
-## 8       4     TRUE    52 13.6125654
-## 9       5    FALSE    83 21.7277487
-## 10      5     TRUE    23  6.0209424</code></pre>
+##    famrel high_use     n     freq
+##     &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1       1    FALSE     7 77.77778
+## 2       1     TRUE     2 22.22222
+## 3       2    FALSE     9 50.00000
+## 4       2     TRUE     9 50.00000
+## 5       3    FALSE    40 60.60606
+## 6       3     TRUE    26 39.39394
+## 7       4    FALSE   131 71.58470
+## 8       4     TRUE    52 28.41530
+## 9       5    FALSE    83 78.30189
+## 10      5     TRUE    23 21.69811</code></pre>
 <p> </p>
 <p>===================================</p>
 <p>Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)</p>
