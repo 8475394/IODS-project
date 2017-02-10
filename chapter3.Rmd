@@ -2,7 +2,7 @@
 
 &nbsp;
 
-SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER
+The purpose of this chapter is to get familiar with the logistic regression. 
 
 &nbsp;
 
@@ -407,6 +407,8 @@ summary(my_model)
 Here the coefficients of the above regression model are exponentiated and therefore we can interpret them as odds-ratios (OR). Additionally the table below contain the confidence intervals (CI) of the odds-ratios.
 
 &nbsp;
+
+The confidence intervals of the table below suggest that the results of my logistic regression model can be considered as significant. This is because all of the coefficients are positive and their variations don't cross the zero.  
 
 ```{r, message=FALSE, warning=FALSE}
 OR <- coef(my_model) %>% exp

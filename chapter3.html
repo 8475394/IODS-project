@@ -122,7 +122,7 @@ $(document).ready(function () {
 <div id="logistic-regression" class="section level1">
 <h1>Logistic Regression</h1>
 <p> </p>
-<p>SOMETHING HERE, WHAT IM GOING TO DO IN THIS CHAPTER</p>
+<p>The purpose of this chapter is to get familiar with the logistic regression.</p>
 <p> </p>
 <div id="data-description" class="section level2">
 <h2>Data description</h2>
@@ -534,6 +534,7 @@ summary(my_model)</code></pre>
 </p>
 <p>Here the coefficients of the above regression model are exponentiated and therefore we can interpret them as odds-ratios (OR). Additionally the table below contain the confidence intervals (CI) of the odds-ratios.</p>
 <p> </p>
+<p>The confidence intervals of the table below suggest that the results of my logistic regression model can be considered as significant. This is because all of the coefficients are positive and their variations don’t cross the zero.</p>
 <pre class="r"><code>OR &lt;- coef(my_model) %&gt;% exp
 CI &lt;- confint(my_model) %&gt;% exp
 cbind(OR, CI)</code></pre>
