@@ -486,12 +486,20 @@ g4 + geom_boxplot() + ggtitle(&quot;High use consumption vs family relationships
 <p class="text-danger">
 <strong>TABLE OF THE MISSING VALUES</strong>
 </p>
+<pre class="r"><code>table(is.na(joined_alcohol))</code></pre>
+<pre><code>## 
+## FALSE 
+## 13370</code></pre>
+<p> </p>
+<p class="text-danger">
 <strong>SUMMARY OF THE FITTED MODEL</strong>
 </p>
 <p>My model contains both categorical (i.e. “sex”) and continuous variables (i.e. other variables) as independent variables.</p>
 <p>First we can see that all the coefficients of independent variables are significant. The variable of the sex suggests a significant association of the sex of the student with the probability of the high use alcohol consumption. The positive coefficient for this predictor suggests that all other variables being equal, the male student is more likely to be a high user of alcohol compared to females. In my first hypothesis I suggested that the sex might have a relatioship with alcohol consumption but I couldn’t state if there are any differencies between genders.</p>
-<p>Then we have the significant variable of weekly studytime suggesting an association of studytime with the probability of the high use of alcohol. The negative coefficient for this predictor implies that if the studytime increases, the probability (log odds) of being high user of alcohol decreases if all other variables remain constant. This result corresponds with my second hypothesis where I suggested that the weekly studytime and alcohol consumption have a relationship in the way that the less a student studies the higher is the probability to be a high user and vice versa.</p>
-<p>The variable of going out with friends (“goout”) has the lowest p-value suggesting a strong association of the going out with the probability of being high user</p>
+<p>Then we have the significant variable of weekly studytime suggesting an association of studytime with the probability of the high use of alcohol. The negative coefficient for this predictor implies that if the studytime increases, the probability (log odds) of being a high user of alcohol decreases if all other variables remain constant. This result corresponds with my second hypothesis where I suggested that the weekly studytime and alcohol consumption have a relationship in the way that the less a student studies the higher is the probability to be a high user and vice versa.</p>
+<p>The variable of going out with friends (“goout”) has the lowest p-value suggesting a strong association of the going out with the probability of being an alcohol high user. The positive coefficient for the predictor suggests if one goes out more, the probability (log odds) of being a high user increases. This result is significant if all other variables remain constant. This corresponds with my third hypothesis where I suggested that the more the student goes out with her/his friends the higher may be the probability to be a high user and vice versa.</p>
+<p>The last variable is the famrel which represents the quality of family relationhips. The significance of the factor suggests an association of the family relationships with the probability of being an alcohol high user. The negative coefficient implies that the better these relatinships are the higher is the probability (log odds) to be a low user of alcohol. Thus somewhat surprisingly this corresponds with fourth hypothesis. The surprising part comes from the chapter 3.3 after exploring the data structure of alcohol high use together with family relationships. After reading the summaries I started to doubt the possible relationship between these variables.</p>
+<p> </p>
 <pre class="r"><code>my_model &lt;- glm(high_use ~ sex + studytime + goout + famrel, data = joined_alcohol, family = &quot;binomial&quot;)
 summary(my_model)</code></pre>
 <pre><code>## 
