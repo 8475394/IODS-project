@@ -366,7 +366,9 @@ joined_alcohol %&gt;% count(studytime) %&gt;% mutate(freq = n / sum(n) * 100)</c
 <p class="text-warning">
 <strong>GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION</strong>.
 </p>
-<p>Writing here</p>
+<p>The first 3 tables illustrate the variable of going out with friends. The measurement scale varies between 1 (very low) and 5 (very high) and I assume that the scale means to count going out often or not so often.</p>
+<p>The first table discribes the total amount of going out between students and the summary table indicates that the mean of going out is around 3.</p>
+<p>The third table divides the mean of the going out between genders and it suggests that there might not be any differences between genders.</p>
 <p> </p>
 <pre class="r"><code>goout &lt;- joined_alcohol$goout
 joined_alcohol %&gt;% count(goout) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
@@ -388,22 +390,25 @@ joined_alcohol %&gt;% count(goout) %&gt;% mutate(freq = n / sum(n) * 100)</code>
 ## 1      F   198 3.045455
 ## 2      M   184 3.184783</code></pre>
 <p> </p>
-<pre class="r"><code>joined_alcohol %&gt;% count(goout, high_use) %&gt;% mutate(freq = n / sum(n = 382) * 100)</code></pre>
+<p>The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).</p>
+<p>The table compares the high use of alcohol between different frequencies (i.e. not going out often vs. going out often) of going out with friends. If you look at column of frequencies (%), which are adjusted to count the percentages inside the category of going out, you can perceive that the relative frequencies of alcohol high use are somewhat growing the more the student goes out with her/his friends. This may correspond with my hypothesis 3 where I suggested that the more the student goes out the greater might be the probability to be an alcohol high user and vice versa.</p>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% count(goout, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
 <pre><code>## Source: local data frame [10 x 4]
 ## Groups: goout [5]
 ## 
-##    goout high_use     n       freq
-##    &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;      &lt;dbl&gt;
-## 1      1    FALSE    21  5.4973822
-## 2      1     TRUE     3  0.7853403
-## 3      2    FALSE    84 21.9895288
-## 4      2     TRUE    15  3.9267016
-## 5      3    FALSE   100 26.1780105
-## 6      3     TRUE    23  6.0209424
-## 7      4    FALSE    43 11.2565445
-## 8      4     TRUE    39 10.2094241
-## 9      5    FALSE    22  5.7591623
-## 10     5     TRUE    32  8.3769634</code></pre>
+##    goout high_use     n     freq
+##    &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      1    FALSE    21 87.50000
+## 2      1     TRUE     3 12.50000
+## 3      2    FALSE    84 84.84848
+## 4      2     TRUE    15 15.15152
+## 5      3    FALSE   100 81.30081
+## 6      3     TRUE    23 18.69919
+## 7      4    FALSE    43 52.43902
+## 8      4     TRUE    39 47.56098
+## 9      5    FALSE    22 40.74074
+## 10     5     TRUE    32 59.25926</code></pre>
 <p> </p>
 <p class="text-warning">
 <strong>FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION</strong>.

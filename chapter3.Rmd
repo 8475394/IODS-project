@@ -252,7 +252,13 @@ joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100
 
 <p class="text-warning">**GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION**.</p>
 
-Writing here
+The first 3 tables illustrate the variable of going out with friends. The measurement scale varies between 1 (very low) and 5 (very high) and I assume that the scale means to count going out often or not so often. 
+
+
+The first table discribes the total amount of going out between students and the summary table indicates that the mean of going out is around 3. 
+
+The third table divides the mean of the going out between genders and it suggests that there might not be any differences between genders. 
+
 
 &nbsp;
 
@@ -267,8 +273,15 @@ joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(goout))
 
 &nbsp;
 
+
+The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).
+
+The table compares the high use of alcohol between different frequencies (i.e. not going out often vs. going out often) of going out with friends. If you look at column of frequencies (%),  which are adjusted to count the percentages inside the category of going out, you can perceive that the relative frequencies of alcohol high use are somewhat growing the more the student goes out with her/his friends. This may correspond with my hypothesis 3 where I suggested that the more the student goes out the greater might be the probability to be an alcohol high user and vice versa.
+
+&nbsp;
+
 ```{r}
-joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
 
