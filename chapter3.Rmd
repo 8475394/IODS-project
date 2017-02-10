@@ -400,5 +400,54 @@ my_model <- glm(high_use ~ sex + studytime + goout + famrel, data = joined_alcoh
 summary(my_model)
 ```
 
+&nbsp;
 
+<p class="text-danger">**ODDS RATIOS**</p>
+
+Here the coefficients of the above regression model are exponentiated and therefore we can interpret them as odds-ratios (OR). Additionally the table below contain the confidence intervals (CI) of the odds-ratios.
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+OR <- coef(my_model) %>% exp
+CI <- confint(my_model) %>% exp
+cbind(OR, CI)
+```
+
+
+&nbsp;
+
+## The predictive power of my logistic model
+
+&nbsp;
+
+
+```{r}
+probabilities <- predict(my_model, type = "response")
+joined_alcohol <- mutate(joined_alcohol, probability = probabilities)
+joined_alcohol <- mutate(joined_alcohol, prediction = probability > 0.5)
+
+table(high_use, prediction = probabilities > 0.5)
+```
+
+&nbsp;
+
+```{r}
+library(dplyr)
+g5 <- ggplot(joined_alcohol, aes(x = probability, y = high_use, col = prediction))
+g5 + geom_point()
+```
+
+
+&nbsp;
+
+```{r}
+table(high_use, prediction = joined_alcohol$prediction)
+
+table(high_use, prediction = joined_alcohol$prediction) %>% prop.table()
+```
+
+
+
+&nbsp;
 
