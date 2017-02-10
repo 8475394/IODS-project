@@ -210,12 +210,18 @@ g2 + geom_bar() + ggtitle("Alcohol high use between genders")
 
 <p class="text-warning">**WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION**.</p>
 
-The first 3 tables illustrate the weekly studytime in general and between genders. To recall the measurement scale ranges between 1 and 4 where 
+The first 3 tables illustrate the weekly studytime in general and between genders. To recall the measurement scale which ranges between 1 and 4, where 
 
 * 1 = less than 2 hours per week
 * 2 = 2 to 5 hours per week
 * 3 = 5 to 10 hours per week
 * 4 = more than 10 hours per week
+
+&nbsp;
+
+The first table discribes the total amount of studytime between students and as seen the popular studytime seems to vary from 2 to 5 hours per week considering the course. The same emphasis can be seen from the second table which indicates that the mean studytime is around 2 (2 to 5 hours per week).
+
+The third table divides the mean of the studytime between genders and it suggests that female may spend more time to study than do males. 
 
 &nbsp;
 
@@ -230,8 +236,15 @@ joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(studytim
 
 &nbsp;
 
+The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).
+
+The table also compares the high use of alcohol between different amount of studytime. If you look at the frequencies (%), which are adjusted to count the percentages inside the unit of studytime, you can perceive that the frequencies of high use are somewhat lower inside the units of 3 and 4 and somewhat higher inside the units of 1 and 2. I think this may correspond with my hyothesis 2 where i suggested that the less a student studies the higher might be the probability to be a high user of alcohol. 
+
+
+&nbsp;
+
 ```{r}
-joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
 
@@ -246,8 +259,18 @@ Writing here
 ```{r}
 goout <- joined_alcohol$goout
 joined_alcohol %>% count(goout) %>% mutate(freq = n / sum(n) * 100)
-joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n) * 100)
+
+summary(goout)
+
+joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(goout))
 ```
+
+&nbsp;
+
+```{r}
+joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+```
+
 
 &nbsp;
 
@@ -260,8 +283,19 @@ Writing here
 ```{r}
 famrel <- joined_alcohol$famrel
 joined_alcohol %>% count(famrel) %>% mutate(freq = n / sum(n) * 100)
-joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n) * 100)
+
+summary(famrel)
+
+joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(famrel))
 ```
+
+&nbsp;
+
+```{r}
+joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+```
+
+
 
 &nbsp;
 

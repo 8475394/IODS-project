@@ -315,13 +315,16 @@ g2 + geom_bar() + ggtitle(&quot;Alcohol high use between genders&quot;)</code></
 <p class="text-warning">
 <strong>WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION</strong>.
 </p>
-<p>The first 3 tables illustrate the weekly studytime in general and between genders. To recall the measurement scale ranges between 1 and 4 where</p>
+<p>The first 3 tables illustrate the weekly studytime in general and between genders. To recall the measurement scale which ranges between 1 and 4, where</p>
 <ul>
 <li>1 = less than 2 hours per week</li>
 <li>2 = 2 to 5 hours per week</li>
 <li>3 = 5 to 10 hours per week</li>
 <li>4 = more than 10 hours per week</li>
 </ul>
+<p> </p>
+<p>The first table discribes the total amount of studytime between students and as seen the popular studytime seems to vary from 2 to 5 hours per week considering the course. The same emphasis can be seen from the second table which indicates that the mean studytime is around 2 (2 to 5 hours per week).</p>
+<p>The third table divides the mean of the studytime between genders and it suggests that female may spend more time to study than do males.</p>
 <p> </p>
 <pre class="r"><code>studytime &lt;- joined_alcohol$studytime
 joined_alcohol %&gt;% count(studytime) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
@@ -342,20 +345,23 @@ joined_alcohol %&gt;% count(studytime) %&gt;% mutate(freq = n / sum(n) * 100)</c
 ## 1      F   198 2.272727
 ## 2      M   184 1.777174</code></pre>
 <p> </p>
-<pre class="r"><code>joined_alcohol %&gt;% count(studytime, high_use) %&gt;% mutate(freq = n / sum(n = 382) * 100)</code></pre>
+<p>The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 OR higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).</p>
+<p>The table also compares the high use of alcohol between different amount of studytime. If you look at the frequencies (%), which are adjusted to count the percentages inside the unit of studytime, you can perceive that the frequencies of high use are somewhat lower inside the units of 3 and 4 and somewhat higher inside the units of 1 and 2. I think this may correspond with my hyothesis 2 where i suggested that the less a student studies the higher might be the probability to be a high user of alcohol.</p>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% count(studytime, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
 <pre><code>## Source: local data frame [8 x 4]
 ## Groups: studytime [4]
 ## 
-##   studytime high_use     n      freq
-##       &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;     &lt;dbl&gt;
-## 1         1    FALSE    60 15.706806
-## 2         1     TRUE    43 11.256545
-## 3         2    FALSE   133 34.816754
-## 4         2     TRUE    57 14.921466
-## 5         3    FALSE    54 14.136126
-## 6         3     TRUE     8  2.094241
-## 7         4    FALSE    23  6.020942
-## 8         4     TRUE     4  1.047120</code></pre>
+##   studytime high_use     n     freq
+##       &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1         1    FALSE    60 58.25243
+## 2         1     TRUE    43 41.74757
+## 3         2    FALSE   133 70.00000
+## 4         2     TRUE    57 30.00000
+## 5         3    FALSE    54 87.09677
+## 6         3     TRUE     8 12.90323
+## 7         4    FALSE    23 85.18519
+## 8         4     TRUE     4 14.81481</code></pre>
 <p> </p>
 <p class="text-warning">
 <strong>GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION</strong>.
@@ -372,22 +378,32 @@ joined_alcohol %&gt;% count(goout) %&gt;% mutate(freq = n / sum(n) * 100)</code>
 ## 3     3   123 32.198953
 ## 4     4    82 21.465969
 ## 5     5    54 14.136126</code></pre>
-<pre class="r"><code>joined_alcohol %&gt;% count(goout, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre class="r"><code>summary(goout)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   2.000   3.000   3.113   4.000   5.000</code></pre>
+<pre class="r"><code>joined_alcohol %&gt;% group_by(sex) %&gt;% summarise(count = n(), mean = mean(goout))</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##      sex count     mean
+##   &lt;fctr&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      F   198 3.045455
+## 2      M   184 3.184783</code></pre>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% count(goout, high_use) %&gt;% mutate(freq = n / sum(n = 382) * 100)</code></pre>
 <pre><code>## Source: local data frame [10 x 4]
 ## Groups: goout [5]
 ## 
-##    goout high_use     n     freq
-##    &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
-## 1      1    FALSE    21 87.50000
-## 2      1     TRUE     3 12.50000
-## 3      2    FALSE    84 84.84848
-## 4      2     TRUE    15 15.15152
-## 5      3    FALSE   100 81.30081
-## 6      3     TRUE    23 18.69919
-## 7      4    FALSE    43 52.43902
-## 8      4     TRUE    39 47.56098
-## 9      5    FALSE    22 40.74074
-## 10     5     TRUE    32 59.25926</code></pre>
+##    goout high_use     n       freq
+##    &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1      1    FALSE    21  5.4973822
+## 2      1     TRUE     3  0.7853403
+## 3      2    FALSE    84 21.9895288
+## 4      2     TRUE    15  3.9267016
+## 5      3    FALSE   100 26.1780105
+## 6      3     TRUE    23  6.0209424
+## 7      4    FALSE    43 11.2565445
+## 8      4     TRUE    39 10.2094241
+## 9      5    FALSE    22  5.7591623
+## 10     5     TRUE    32  8.3769634</code></pre>
 <p> </p>
 <p class="text-warning">
 <strong>FAMILY RELATIONSHIPS AND ALCOHOL CONSUMPTION</strong>.
@@ -404,22 +420,32 @@ joined_alcohol %&gt;% count(famrel) %&gt;% mutate(freq = n / sum(n) * 100)</code
 ## 3      3    66 17.277487
 ## 4      4   183 47.905759
 ## 5      5   106 27.748691</code></pre>
-<pre class="r"><code>joined_alcohol %&gt;% count(famrel, high_use) %&gt;% mutate(freq = n / sum(n) * 100)</code></pre>
+<pre class="r"><code>summary(famrel)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    4.00    4.00    3.94    5.00    5.00</code></pre>
+<pre class="r"><code>joined_alcohol %&gt;% group_by(sex) %&gt;% summarise(count = n(), mean = mean(famrel))</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##      sex count     mean
+##   &lt;fctr&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1      F   198 3.878788
+## 2      M   184 4.005435</code></pre>
+<p> </p>
+<pre class="r"><code>joined_alcohol %&gt;% count(famrel, high_use) %&gt;% mutate(freq = n / sum(n = 382) * 100)</code></pre>
 <pre><code>## Source: local data frame [10 x 4]
 ## Groups: famrel [5]
 ## 
-##    famrel high_use     n     freq
-##     &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
-## 1       1    FALSE     7 77.77778
-## 2       1     TRUE     2 22.22222
-## 3       2    FALSE     9 50.00000
-## 4       2     TRUE     9 50.00000
-## 5       3    FALSE    40 60.60606
-## 6       3     TRUE    26 39.39394
-## 7       4    FALSE   131 71.58470
-## 8       4     TRUE    52 28.41530
-## 9       5    FALSE    83 78.30189
-## 10      5     TRUE    23 21.69811</code></pre>
+##    famrel high_use     n       freq
+##     &lt;int&gt;    &lt;lgl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1       1    FALSE     7  1.8324607
+## 2       1     TRUE     2  0.5235602
+## 3       2    FALSE     9  2.3560209
+## 4       2     TRUE     9  2.3560209
+## 5       3    FALSE    40 10.4712042
+## 6       3     TRUE    26  6.8062827
+## 7       4    FALSE   131 34.2931937
+## 8       4     TRUE    52 13.6125654
+## 9       5    FALSE    83 21.7277487
+## 10      5     TRUE    23  6.0209424</code></pre>
 <p> </p>
 <p>===================================</p>
 <p>Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)</p>
