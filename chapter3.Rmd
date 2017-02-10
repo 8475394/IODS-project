@@ -250,6 +250,17 @@ joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100
 
 &nbsp;
 
+The boxplot below compares the high alcohol consumption to students' weekly studytime between genders. 
+
+&nbsp;
+
+```{r}
+g2 <- ggplot(data = joined_alcohol, aes(x = high_use, y = studytime, col = sex))
+g2 + geom_boxplot() + ggtitle("High use consumption vs weekly studytime")
+```
+
+&nbsp;
+
 <p class="text-warning">**GOING OUT WITH FRIENDS AND ALCOHOL CONSUMPTION**.</p>
 
 The first 3 tables illustrate the variable of going out with friends. The measurement scale varies between 1 (very low) and 5 (very high) and I assume that the scale means to count going out often or not so often. 
@@ -282,6 +293,17 @@ The table compares the high use of alcohol between different frequencies (i.e. n
 
 ```{r}
 joined_alcohol %>% count(goout, high_use) %>% mutate(freq = n / sum(n) * 100)
+```
+
+&nbsp;
+
+The boxplot below compares the high alcohol consumption to frequency to go out with friends between genders. 
+
+&nbsp;
+
+```{r}
+g3 <- ggplot(data = joined_alcohol, aes(x = high_use, y = goout, col = sex))
+g3 + geom_boxplot() + ggtitle("High use consumption vs going out with friends")
 ```
 
 
@@ -324,19 +346,27 @@ It seems that high use is more common somewhere in the  middle between bad and a
 joined_alcohol %>% count(famrel, high_use) %>% mutate(freq = n / sum(n) * 100)
 ```
 
+&nbsp;
 
+The boxplot below compares the high alcohol consumption to qualities of family relationships between genders.
+
+&nbsp;
+
+```{r}
+g4 <- ggplot(data = joined_alcohol, aes(x = high_use, y = famrel, col = sex))
+g4 + geom_boxplot() + ggtitle("High use consumption vs family relationships")
+```
+
+&nbsp;
+
+
+## Logistic regression model
 
 &nbsp;
 
 
 
 
-===================================
 
-Numerically and graphically explore the distributions of your chosen variables and their relationships with alcohol consumption (use for example cross-tabulations, bar plots and box plots). Comment on your findings and compare the results of your exploration to your previously stated hypotheses. (5 points)
-
-===================================
-
-&nbsp;
 
 
