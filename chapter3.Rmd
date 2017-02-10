@@ -179,28 +179,61 @@ joined_alcohol %>% count(sex) %>% mutate(freq = n / sum(n) * 100)
 
 &nbsp;
 
-Im writing
+The table below is created to show the amount of students who have evaluated their alcohol consumption lower or exactly equal to 2 **OR** higher than 2. The former suggests that the high use of alcohol consumption is false and the latter implies that the high use is true. Remember that the scale varies from 1 (very low) to 5 (very high).
+
+The table also compares the alcohol consumption between genders and it suggests that there are somewhat more "high users" among men (n = 71) than women (n = 41). Other way round the table suggests that there are somewhat more "low users" among women (n = 157) than men (n = 113. These results suggest that there could be a relationship between sex and alcohol consumption.  
+
+ 
 
 &nbsp;
 
 ```{r}
-joined_alcohol %>% count(sex, high_use) %>% mutate(freq = n / sum(n) * 100)
+joined_alcohol %>% count(sex, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
 ```
 
 &nbsp;
 
+The first bar chart illustrates the alcohol consumption between genders wheras the second chart clarifies the high use of alcohol between genders. Thus you can see the same results as described above. 
+
+&nbsp;
+
+```{r}
+g1 <- ggplot(data = joined_alcohol, aes(x = alc_use, fill = sex))
+g1 + geom_bar() + ggtitle("Alcohol consuption between genders")
+g2 <- ggplot(data = joined_alcohol, aes(x = high_use, fill = sex))
+g2 + geom_bar() + ggtitle("Alcohol high use between genders")
+```
+
+
+
+&nbsp;
 
 <p class="text-warning">**WEEKLY STUDYTIME AND ALCOHOL CONSUMPTION**.</p>
 
-Writing here
+The first 3 tables illustrate the weekly studytime in general and between genders. To recall the measurement scale ranges between 1 and 4 where 
+
+* 1 = less than 2 hours per week
+* 2 = 2 to 5 hours per week
+* 3 = 5 to 10 hours per week
+* 4 = more than 10 hours per week
 
 &nbsp;
 
 ```{r}
 studytime <- joined_alcohol$studytime
 joined_alcohol %>% count(studytime) %>% mutate(freq = n / sum(n) * 100)
-joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n) * 100)
+
+summary(studytime)
+
+joined_alcohol %>% group_by(sex) %>% summarise(count = n(), mean = mean(studytime))
 ```
+
+&nbsp;
+
+```{r}
+joined_alcohol %>% count(studytime, high_use) %>% mutate(freq = n / sum(n = 382) * 100)
+```
+
 
 &nbsp;
 
