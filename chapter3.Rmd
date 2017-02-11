@@ -366,7 +366,7 @@ g4 + geom_boxplot() + ggtitle("High use consumption vs family relationships")
 
 In this chapter the purpose is to use logistic regression and find out if the previously chose variables are related to the high use of alcohol consumption and if the earlier suggested hypotheses can be considered as appropriate. 
 
-Before fitting the model I will inspect if there are any missing values in the combined data of alcohol consumption. The table below indicates that there are missing values since the false is 13 370. 
+Before fitting the model I will inspect if there are any missing values in the combined data of alcohol consumption. The table below indicates that there are no missing values since the false is 13 370. 
 
 &nbsp;
 
