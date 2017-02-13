@@ -1,0 +1,81 @@
+# Clustering and classification
+
+&nbsp;
+
+## Brief description of the dataset
+
+&nbsp;
+
+In this chapter the purpose is to get familiar with clustering and classification. I'm going to use a dataset called **Boston** which contains information collected by the U.S Census Service concerning housing in the area of Boston Mass. The data was originally published by Harrison, D. and Rubinfeld, D.L. `Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978. You can find some additional information [here](http://www.clemson.edu/economics/faculty/wilson/R-tutorial/analyzing_data.html)
+
+This dataset is actually already loaded into R thus let's take a look at some details.
+
+&nbsp;
+
+<p class="text-danger">**DATA VARIABLES**</p>
+
+* crim - per capita crime rate by town
+* zn - proportion of residential land zoned for lots over 25,000 sq.ft.
+* indus - proportion of non-retail business acres per town
+* chas - Charles River dummy variable (= 1 if tract bounds river; 0 otherwise) 
+* nox - nitrogen oxides concentration (parts per 10 million)
+* rm - average number of rooms per dwelling
+* age - proportion of owner-occupied units built prior to 1940
+* dis - weighted mean of distances to five Boston employment centres
+* rad - index of accessibility to radial highways
+* tax - full-value property-tax rate per \$10,000
+* ptratio - pupil-teacher ratio by town
+* black - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+* lstat - lower status of the population (percent)
+* medv - median value of owner-occupied homes in \$1000s
+
+
+&nbsp;
+
+<p class="text-danger">**STRUCTURE OFTHE BOSTON DATASET**</p>
+
+From the structure table you can notice that there are 506 observation and 14 variables.
+
+&nbsp;
+
+```{r}
+library(MASS)
+data("Boston")
+str(Boston)
+```
+
+&nbsp;
+
+## Summaries and graphs
+
+&nbsp;
+
+<p class="text-success">**SUMMARY TABLE**</p>
+
+
+
+```{r}
+summary(Boston)
+```
+
+&nbsp;
+
+xx
+
+
+
+```{r, message=FALSE, warning=FALSE}
+install.packages("corrplot")
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(corrplot); library(tidyverse)
+cor_matrix <- cor(Boston) %>% round(digits = 2)
+cor_matrix
+```
+
+&nbsp;
+
+
+&nbsp;
+
