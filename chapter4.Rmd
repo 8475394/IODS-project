@@ -6,7 +6,7 @@
 
 &nbsp;
 
-In this chapter the purpose is to get familiar with clustering and classification. I'm going to use a dataset called **Boston** which contains information collected by the U.S Census Service concerning housing in the area of Boston Mass. The data was originally published by Harrison, D. and Rubinfeld, D.L. `Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978. You can find some additional information [here](http://www.clemson.edu/economics/faculty/wilson/R-tutorial/analyzing_data.html)
+In this chapter the purpose is to get familiar with clustering and classification. I'm going to use a dataset called **Boston** which contains information collected by the U.S Census Service concerning housing in the area of Boston Mass. The data was originally published by Harrison, D. and Rubinfeld, D.L. "Hedonic prices and the demand for clean air", J. Environ. Economics & Management, vol.5, 81-102, 1978. You can find some additional information [here](http://www.clemson.edu/economics/faculty/wilson/R-tutorial/analyzing_data.html)
 
 This dataset is actually already loaded into R thus let's take a look at some details.
 
@@ -64,17 +64,24 @@ xx
 
 
 
-```{r, message=FALSE, warning=FALSE}
-install.packages("corrplot")
-```
+
 
 ```{r, message=FALSE, warning=FALSE}
-library(corrplot); library(tidyverse)
+library(tidyverse)
 cor_matrix <- cor(Boston) %>% round(digits = 2)
 cor_matrix
 ```
 
 &nbsp;
+
+
+
+
+```{r, fig.width=10, fig.height=10}
+library(corrplot); library(dygraphs)
+corrplot(cor_matrix, method = "circle", main = "Correlation matrix of Boston variables", tl.cex = 1, addCoef.col = "black")
+
+```
 
 
 &nbsp;
