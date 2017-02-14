@@ -75,6 +75,9 @@ cor_matrix
 &nbsp;
 
 
+ABOUT THE CORRELATION MATRIX
+
+Positive correlations are displayed in blue and negative correlations in red color. Color intensity and the size of the circle are proportional to the correlation coefficients. The legend color shows the correlation coefficients and the corresponding colors.
 
 
 ```{r, fig.width=10, fig.height=10}
@@ -86,3 +89,7 @@ corrplot(cor_matrix, method = "circle", main = "Correlation matrix of Boston var
 
 &nbsp;
 
+
+
+
+&nbsp;
