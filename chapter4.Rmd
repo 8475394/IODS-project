@@ -87,21 +87,22 @@ grid.arrange(hcrim, hzn, hindus, hnox, ncol=2, nrow =2)
 
 &nbsp;
 
-```{r, message=FALSE, warning=FALSE}
-library(ggplot2); library(gridExtra)
+```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
+library(ggplot2); library(gridExtra); library(dygraphs)
 
 # INITIALIZING THE PLOTS
 
-hrm <- qplot(Boston$rm, geom = "histogram", binwidth = 1, main = "average number of rooms per dwelling", xlab = "rm", col = I("grey"), fill = I("yellow"))
-hrm
+hrm <- qplot(Boston$rm, geom = "histogram", binwidth = 1, main = "Number of rooms", xlab = "rooms", col = I("grey"), fill = I("yellow"))
 
-hage <- qplot(Boston$age, geom = "histogram", binwidth = 10, main = "prop. of owner-occupied units built prior to 1940", xlab = "age", col = I("grey"), fill = I("brown"))
-hage
+hage <- qplot(Boston$age, geom = "histogram", binwidth = 10, main = "Owner-occupied units", xlab = "age of the unit", col = I("grey"), fill = I("chocolate"))
 
+hdis <- qplot(Boston$dis, geom = "histogram", binwidth = 1, main = "distances to 5 employment centres", xlab = "distance", col = I("grey"), fill = I("cornflowerblue"))
+
+hrad <- qplot(Boston$rad, geom = "histogram", binwidth = 1, main = "Access to radial highways", xlab = "radial highways", col = I("grey"), fill = I("coral"))
 
 # Combining the plots using the function grid.arrange() [in gridExtra] 
 
-grid.arrange(hrm, hage, ncol=2, nrow =2)
+grid.arrange(hrm, hage, hdis, hrad, ncol=2, nrow =2)
 
 ```
 
