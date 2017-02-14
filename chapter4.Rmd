@@ -74,7 +74,6 @@ summary(Boston)
 <p class="text-success">**HISTOGRAMS OF CRIM, ZN, INDUS AND NOX**</p>
 
 
-&nbsp;
 
 ```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra);library(dygraphs)
@@ -105,14 +104,13 @@ grid.arrange(hcrim, hzn, hindus, hnox, ncol=2, nrow =2)
 <p class="text-success">**HISTOGRAMS OF RM, AGE, DIS AND RAD**</p>
 
 
-&nbsp;
 
 ```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra); library(dygraphs)
 
 # INITIALIZING THE PLOTS
 
-hrm <- qplot(Boston$rm, geom = "histogram", binwidth = 1, main = "Number of rooms", xlab = "rooms", col = I("grey"), fill = I("yellow"))
+hrm <- qplot(Boston$rm, geom = "histogram", binwidth = 0.5, main = "Number of rooms", xlab = "rooms", col = I("grey"), fill = I("yellow"))
 
 hage <- qplot(Boston$age, geom = "histogram", binwidth = 10, main = "Owner-occupied units", xlab = "age of the unit", col = I("grey"), fill = I("chocolate"))
 
@@ -130,7 +128,6 @@ grid.arrange(hrm, hage, hdis, hrad, ncol=2, nrow =2)
 <p class="text-success">**HISTOGRAMS OF TAX, PTRATIO, LSTAT AND MEDV**</p>
 
 
-&nbsp;
 
 ```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra); library(dygraphs)
@@ -284,4 +281,62 @@ str(correct_classes)
 
 
 &nbsp;
+
+## Linear Discriminant Analysis, LDA
+
+&nbsp;
+
+Linear discriminant analysis is a classification technique and its preferred over Logistic regression if the target variable has more than two classes. LDA has some assumption about the data and one of these is that the input variables are normally distributed. It also assumes that each attribute has the same variance  [Reference](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/).
+
+Note that the data was standardized earlier in terms of the latter assumption. 
+
+&nbsp;
+
+<p class="text-warning">**FITTING THE LINEAR DISCRIMINANT ANALYSIS**</p>
+
+
+```{r, message=FALSE, warning=FALSE}
+library(MASS)
+lda.fit <- lda(crime~., data = train)
+lda.fit
+```
+
+
+&nbsp;
+
+```{r}
+# Creating a numeric vector of the train sets crime classes for plotting purposes
+classes <- as.numeric(train$crime)
+
+# the function for lda biplot arrows
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+
+# plotting the lda results
+plot(lda.fit, dimen = 2, col = classes, pch = classes)
+lda.arrows(lda.fit, myscale = 2)
+
+```
+
+
+&nbsp;
+
+
+## Predicting the classes with the Linear Discriminant Analysis, LDA 
+
+&nbsp;
+
+LDA makes predictions by estimating the probability that a new set of inputs belongs to each class. The class that gets the highest probability is the output class and a prediction is made.  [Reference](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/)
+
+
+&nbsp;
+
+
+
 
