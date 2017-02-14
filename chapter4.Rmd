@@ -80,6 +80,7 @@ hnox <- qplot(Boston$nox, geom = "histogram", binwidth = 0.02, main = "Nitrogen 
 # Combining the plots using the function grid.arrange() [in gridExtra] 
   
 # Additional information from (http://www.sthda.com/english/wiki/ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page-r-software-and-data-visualization)
+
 grid.arrange(hcrim, hzn, hindus, hnox, ncol=2, nrow =2)
 ```
 
@@ -103,14 +104,32 @@ hrad <- qplot(Boston$rad, geom = "histogram", binwidth = 1, main = "Access to ra
 # Combining the plots using the function grid.arrange() [in gridExtra] 
 
 grid.arrange(hrm, hage, hdis, hrad, ncol=2, nrow =2)
-
 ```
 
 
 &nbsp;
 
+```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
+library(ggplot2); library(gridExtra); library(dygraphs)
+
+# INITIALIZING THE PLOTS
+
+htax <- qplot(Boston$tax, geom = "histogram", binwidth = 30, main = "Property tax rate per $10,000", xlab = "tax rate", col = I("grey"), fill = I("red"))
+
+hptratio <- qplot(Boston$ptratio, geom = "histogram", binwidth = 1, main = "Pupil-teacher ratio by town", xlab = "pupil-teacher ratio", col = I("grey"), fill = I("purple"))
+
+hlstat <- qplot(Boston$lstat, geom = "histogram", binwidth = 2, main = "Lower status of the population %", xlab = "lower status", col = I("grey"), fill = I("palegreen4"))
+
+hmedv <- qplot(Boston$medv, geom = "histogram", binwidth = 4, main = "Owner-occupied homes in $1000s", xlab = "Owner-occupied homes", col = I("grey"), fill = I("violetred2"))
+
+# Combining the plots using the function grid.arrange() [in gridExtra] 
+
+grid.arrange(htax, hptratio, hlstat, hmedv, ncol=2, nrow =2)
+```
 
 
+
+&nbsp;
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
