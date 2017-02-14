@@ -50,13 +50,29 @@ str(Boston)
 
 &nbsp;
 
-<p class="text-success">**SUMMARY TABLE**</p>
+In this section I'm going to explore the distributions of data variables even further. First I show you a summary table which contains the distributions of each variable where the variables are divided into quartiles including the minimum and maximum values. 
 
+After this I'll show you the histograms of these variables excluding chas and black. Chas is a dummy variable concisting the values 1 or 0. The reason for me of dropping black is ethical. Remember that the current dataset is already "long in the tooth". However, from the histograms you can have a better understanding of the variation of each variable.
+
+At the end of this chapter I'll explore the correlations between the variables and demonstrate them by means of the the correlation matrix table and the correlation matrix plot.  
+
+&nbsp;
+
+<p class="text-success">**SUMMARY TABLE OF DATA VARIABLES**</p>
+
+From the summary table below you can perceive that all of the ditributions varies between very different scales.
+
+&nbsp;
 
 
 ```{r}
 summary(Boston)
 ```
+
+&nbsp;
+
+<p class="text-success">**HISTOGRAMS OF CRIM, ZN, INDUS AND NOX**</p>
+
 
 &nbsp;
 
@@ -84,6 +100,9 @@ hnox <- qplot(Boston$nox, geom = "histogram", binwidth = 0.02, main = "Nitrogen 
 grid.arrange(hcrim, hzn, hindus, hnox, ncol=2, nrow =2)
 ```
 
+&nbsp;
+
+<p class="text-success">**HISTOGRAMS OF RM, AGE, DIS AND RAD**</p>
 
 
 &nbsp;
@@ -106,6 +125,10 @@ hrad <- qplot(Boston$rad, geom = "histogram", binwidth = 1, main = "Access to ra
 grid.arrange(hrm, hage, hdis, hrad, ncol=2, nrow =2)
 ```
 
+&nbsp;
+
+<p class="text-success">**HISTOGRAMS OF TAX, PTRATIO, LSTAT AND MEDV**</p>
+
 
 &nbsp;
 
@@ -127,7 +150,9 @@ hmedv <- qplot(Boston$medv, geom = "histogram", binwidth = 4, main = "Owner-occu
 grid.arrange(htax, hptratio, hlstat, hmedv, ncol=2, nrow =2)
 ```
 
+&nbsp;
 
+<p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
 
 &nbsp;
 
@@ -139,11 +164,14 @@ cor_matrix
 
 &nbsp;
 
+<p class="text-success">**PLOTTING THE CORRELATION MATRIX**</p>
 
-ABOUT THE CORRELATION MATRIX
+
+
 
 Positive correlations are displayed in blue and negative correlations in red color. Color intensity and the size of the circle are proportional to the correlation coefficients. The legend color shows the correlation coefficients and the corresponding colors.
 
+&nbsp;
 
 ```{r, fig.width=10, fig.height=10}
 library(corrplot); library(dygraphs)
@@ -154,7 +182,82 @@ corrplot(cor_matrix, method = "circle", main = "Correlation matrix of Boston var
 
 &nbsp;
 
+## Scaling the Boston dataset
 
+&nbsp;
+
+In this chapter I'm going to scale or standardize the whole dataset. 
 
 
 &nbsp;
+
+
+<p class="text-primary">**SUMMARIES OF THE SCALED DATA**</p>
+
+As you can see from the table below, the distributions of the variables changed after stardardizing the dataset. Now the mean of every variable is zero and the observations varies on both sides of zero. This means that the different distributions are now more comparable for the further purpose.
+
+
+&nbsp;
+
+```{r}
+boston_scaled <- scale(Boston)
+summary(boston_scaled)
+```
+
+&nbsp;
+
+
+<p class="text-primary">**CATEGORIZING THE CRIME RATE AND DIVIDING THE DATASET TO TRAIN AND TEST SETS**</p>
+
+There are a lot of technicalities in this part thus I decided to describe the steps inside the r code chunks. the main point here is to create a new categorical variable based on the scaled crime rate and split it on to 4 categories by means of the its quantiles labelled as "low", "med_low", "med_high" and "high". After this I remove the "original" scaled crime rate from the dataset.
+
+
+&nbsp;
+
+```{r}
+# Converting the scaled data into a data frame
+boston_scaled <- as.data.frame(boston_scaled)
+
+scaled_crim <- boston_scaled$crim
+
+# Using the quantiles as the break points in the categorical variable of scaled_crim
+bins <- quantile(scaled_crim)
+bins
+
+# Creating a categorical variable "crime"
+boston_scaled$crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+
+crime <- boston_scaled$crime
+table(crime)
+
+# Veryfying the content
+colnames(boston_scaled)
+class(boston_scaled)
+
+```
+
+&nbsp;
+
+```{r}
+# Dropping the old crime rate from the dataset
+library(dplyr)
+boston_scaled <- dplyr::select(boston_scaled, -crim)
+
+# Veryfying the content
+colnames(boston_scaled)
+summary(boston_scaled)
+```
+
+
+&nbsp;
+
+<p class="text-primary">**CREATING THE TRAIN AND TEST SETS**</p>
+
+```{r}
+# 
+
+```
+
+
+&nbsp;
+
