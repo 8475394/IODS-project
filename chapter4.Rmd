@@ -6,7 +6,7 @@
 
 &nbsp;
 
-In this chapter the purpose is to get familiar with clustering and classification. I'm going to use a dataset called **Boston** which contains information collected by the U.S Census Service concerning housing in the area of Boston Mass. The data was originally published by Harrison, D. and Rubinfeld, D.L. "Hedonic prices and the demand for clean air", J. Environ. Economics & Management, vol.5, 81-102, 1978. You can find some additional information [here](http://www.clemson.edu/economics/faculty/wilson/R-tutorial/analyzing_data.html)
+In this chapter the purpose is to get familiar with clustering and classification. I'm going to use a dataset called **Boston** which contains information collected by the U.S Census Service concerning housing in the area of Boston Mass. The data was originally published by Harrison, D. and Rubinfeld, D.L. "Hedonic prices and the demand for clean air", J. Environ. Economics & Management, vol.5, 81-102, 1978. You can find some additional information [here](http://www.clemson.edu/economics/faculty/wilson/R-tutorial/analyzing_data.html) and [here](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/).
 
 This dataset is actually already loaded into R thus let's take a look at some details.
 
@@ -34,7 +34,7 @@ This dataset is actually already loaded into R thus let's take a look at some de
 
 <p class="text-danger">**STRUCTURE OFTHE BOSTON DATASET**</p>
 
-From the structure table you can notice that there are 506 observation and 14 variables.
+From the structure table you can notice that there are 506 observation and 14 variables including 13 continuous variables and 1 binary-valued variable "chas". 
 
 &nbsp;
 
@@ -60,8 +60,53 @@ summary(Boston)
 
 &nbsp;
 
-xx
+```{r, fig.width=8, fig.height=8, message=FALSE, warning=FALSE}
+library(ggplot2); library(gridExtra);library(dygraphs)
 
+# INITIALIZING THE PLOTS
+
+# Histogram of crim
+hcrim <- qplot(Boston$crim, geom = "histogram", binwidth = 6, main = "Crime rate by town", xlab = "crime rate", col = I("grey"), fill = I("chartreuse3"))
+
+# Histogram of zn
+hzn <- qplot(Boston$zn, geom = "histogram", binwidth = 6, main = "Prop. of residential land zoned", xlab = "zn", col = I("grey"), fill = I("orange"))
+
+# Histogram of indus
+hindus <- qplot(Boston$indus, geom = "histogram", binwidth = 3, main = "Prop. of non-retail business", xlab = "indus", col = I("grey"), fill = I("mediumorchid"))
+
+hnox <- qplot(Boston$nox, geom = "histogram", binwidth = 0.02, main = "Nitrogen oxides concentration", xlab = "nox", col = I("grey"), fill = I("blue"))
+
+
+# Combining the plots using the function grid.arrange() [in gridExtra] 
+  
+# Additional information from (http://www.sthda.com/english/wiki/ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page-r-software-and-data-visualization)
+grid.arrange(hcrim, hzn, hindus, hnox, ncol=2, nrow =2)
+```
+
+
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+library(ggplot2); library(gridExtra)
+
+# INITIALIZING THE PLOTS
+
+hrm <- qplot(Boston$rm, geom = "histogram", binwidth = 1, main = "average number of rooms per dwelling", xlab = "rm", col = I("grey"), fill = I("yellow"))
+hrm
+
+hage <- qplot(Boston$age, geom = "histogram", binwidth = 10, main = "prop. of owner-occupied units built prior to 1940", xlab = "age", col = I("grey"), fill = I("brown"))
+hage
+
+
+# Combining the plots using the function grid.arrange() [in gridExtra] 
+
+grid.arrange(hrm, hage, ncol=2, nrow =2)
+
+```
+
+
+&nbsp;
 
 
 
