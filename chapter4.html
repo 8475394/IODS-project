@@ -176,9 +176,15 @@ str(Boston)</code></pre>
 <div id="summaries-and-graphs" class="section level2">
 <h2>Summaries and graphs</h2>
 <p> </p>
+<p>In this section I’m going to explore the distributions of data variables even further. First I show you a summary table which contains the distributions of each variable where the variables are divided into quartiles including the minimum and maximum values.</p>
+<p>After this I’ll show you the histograms of these variables excluding chas and black. Chas is a dummy variable concisting the values 1 or 0. The reason for me of dropping black is ethical. Remember that the current dataset is already “long in the tooth”. However, from the histograms you can have a better understanding of the variation of each variable.</p>
+<p>At the end of this chapter I’ll explore the correlations between the variables and demonstrate them by means of the the correlation matrix table and the correlation matrix plot.</p>
+<p> </p>
 <p class="text-success">
 <strong>SUMMARY TABLE OF DATA VARIABLES</strong>
 </p>
+<p>From the summary table below you can perceive that all of the ditributions varies between very different scales.</p>
+<p> </p>
 <pre class="r"><code>summary(Boston)</code></pre>
 <pre><code>##       crim                zn             indus            chas        
 ##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  
@@ -368,10 +374,152 @@ summary(boston_scaled)</code></pre>
 ##  Max.   : 0.4406   Max.   : 3.5453   Max.   : 2.9865</code></pre>
 <p> </p>
 <p class="text-primary">
-<strong>CATEGORIZING THE CRIME RATE</strong>
+<strong>CATEGORIZING THE CRIME RATE AND DIVIDING THE DATASET TO TRAIN AND TEST SETS</strong>
 </p>
-<p>Writing</p>
+<p>There are a lot of technicalities in this part thus I decided to describe the steps inside the r code chunks. the main point here is to create a new categorical variable based on the scaled crime rate and split it on to 4 categories by means of the its quantiles labelled as “low”, “med_low”, “med_high” and “high”. After this I remove the “original” scaled crime rate from the dataset.</p>
 <p> </p>
+<pre class="r"><code># Converting the scaled data into a data frame
+boston_scaled &lt;- as.data.frame(boston_scaled)
+
+scaled_crim &lt;- boston_scaled$crim
+
+# Using the quantiles as the break points in the categorical variable of scaled_crim
+bins &lt;- quantile(scaled_crim)
+bins</code></pre>
+<pre><code>##           0%          25%          50%          75%         100% 
+## -0.419366929 -0.410563278 -0.390280295  0.007389247  9.924109610</code></pre>
+<pre class="r"><code># Creating a categorical variable &quot;crime&quot;
+boston_scaled$crime &lt;- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c(&quot;low&quot;, &quot;med_low&quot;, &quot;med_high&quot;, &quot;high&quot;))
+
+crime &lt;- boston_scaled$crime
+table(crime)</code></pre>
+<pre><code>## crime
+##      low  med_low med_high     high 
+##      127      126      126      127</code></pre>
+<pre class="r"><code># Verifying the content
+colnames(boston_scaled)</code></pre>
+<pre><code>##  [1] &quot;crim&quot;    &quot;zn&quot;      &quot;indus&quot;   &quot;chas&quot;    &quot;nox&quot;     &quot;rm&quot;      &quot;age&quot;    
+##  [8] &quot;dis&quot;     &quot;rad&quot;     &quot;tax&quot;     &quot;ptratio&quot; &quot;black&quot;   &quot;lstat&quot;   &quot;medv&quot;   
+## [15] &quot;crime&quot;</code></pre>
+<pre class="r"><code>class(boston_scaled)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<p> </p>
+<pre class="r"><code># Dropping the old crime rate from the dataset
+library(dplyr)
+boston_scaled &lt;- dplyr::select(boston_scaled, -crim)
+
+# Veryfying the content
+colnames(boston_scaled)</code></pre>
+<pre><code>##  [1] &quot;zn&quot;      &quot;indus&quot;   &quot;chas&quot;    &quot;nox&quot;     &quot;rm&quot;      &quot;age&quot;     &quot;dis&quot;    
+##  [8] &quot;rad&quot;     &quot;tax&quot;     &quot;ptratio&quot; &quot;black&quot;   &quot;lstat&quot;   &quot;medv&quot;    &quot;crime&quot;</code></pre>
+<pre class="r"><code>summary(boston_scaled)</code></pre>
+<pre><code>##        zn               indus              chas              nox         
+##  Min.   :-0.48724   Min.   :-1.5563   Min.   :-0.2723   Min.   :-1.4644  
+##  1st Qu.:-0.48724   1st Qu.:-0.8668   1st Qu.:-0.2723   1st Qu.:-0.9121  
+##  Median :-0.48724   Median :-0.2109   Median :-0.2723   Median :-0.1441  
+##  Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+##  3rd Qu.: 0.04872   3rd Qu.: 1.0150   3rd Qu.:-0.2723   3rd Qu.: 0.5981  
+##  Max.   : 3.80047   Max.   : 2.4202   Max.   : 3.6648   Max.   : 2.7296  
+##        rm               age               dis               rad         
+##  Min.   :-3.8764   Min.   :-2.3331   Min.   :-1.2658   Min.   :-0.9819  
+##  1st Qu.:-0.5681   1st Qu.:-0.8366   1st Qu.:-0.8049   1st Qu.:-0.6373  
+##  Median :-0.1084   Median : 0.3171   Median :-0.2790   Median :-0.5225  
+##  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+##  3rd Qu.: 0.4823   3rd Qu.: 0.9059   3rd Qu.: 0.6617   3rd Qu.: 1.6596  
+##  Max.   : 3.5515   Max.   : 1.1164   Max.   : 3.9566   Max.   : 1.6596  
+##       tax             ptratio            black             lstat        
+##  Min.   :-1.3127   Min.   :-2.7047   Min.   :-3.9033   Min.   :-1.5296  
+##  1st Qu.:-0.7668   1st Qu.:-0.4876   1st Qu.: 0.2049   1st Qu.:-0.7986  
+##  Median :-0.4642   Median : 0.2746   Median : 0.3808   Median :-0.1811  
+##  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+##  3rd Qu.: 1.5294   3rd Qu.: 0.8058   3rd Qu.: 0.4332   3rd Qu.: 0.6024  
+##  Max.   : 1.7964   Max.   : 1.6372   Max.   : 0.4406   Max.   : 3.5453  
+##       medv              crime    
+##  Min.   :-1.9063   low     :127  
+##  1st Qu.:-0.5989   med_low :126  
+##  Median :-0.1449   med_high:126  
+##  Mean   : 0.0000   high    :127  
+##  3rd Qu.: 0.2683                 
+##  Max.   : 2.9865</code></pre>
+<p> </p>
+<p class="text-primary">
+<strong>CREATING THE TRAIN AND TEST SETS</strong>
+</p>
+<pre class="r"><code># Choosing randomly 80 % of the row
+n &lt;- nrow(boston_scaled)
+ind &lt;- sample(n, size = n * 0.8)
+
+# Creating train and test sets
+train &lt;- boston_scaled[ind,]
+test &lt;- boston_scaled[-ind,]
+
+# Inspecting the content
+str(train)</code></pre>
+<pre><code>## 'data.frame':    404 obs. of  14 variables:
+##  $ zn     : num  0.0487 -0.4872 2.0854 -0.4872 -0.4872 ...
+##  $ indus  : num  -0.476 1.015 -1.196 1.015 1.015 ...
+##  $ chas   : num  -0.272 -0.272 -0.272 -0.272 -0.272 ...
+##  $ nox    : num  -0.265 1.366 -1.326 1.366 1.194 ...
+##  $ rm     : num  0.1315 0.0233 0.4545 -0.2898 0.1713 ...
+##  $ age    : num  0.914 0.537 -1.768 0.562 0.974 ...
+##  $ dis    : num  1.212 -0.481 1.151 -0.512 -1.006 ...
+##  $ rad    : num  -0.522 1.66 -0.982 1.66 1.66 ...
+##  $ tax    : num  -0.577 1.529 -0.85 1.529 1.529 ...
+##  $ ptratio: num  -1.504 0.806 -1.319 0.806 0.806 ...
+##  $ black  : num  0.393 -0.925 0.219 0.441 0.441 ...
+##  $ lstat  : num  1.092 0.501 -1.159 0.287 0.941 ...
+##  $ medv   : num  -0.819 -0.83 0.714 -0.275 -1.091 ...
+##  $ crime  : Factor w/ 4 levels &quot;low&quot;,&quot;med_low&quot;,..: 2 4 1 4 4 2 4 3 3 1 ...</code></pre>
+<pre class="r"><code>str(test)</code></pre>
+<pre><code>## 'data.frame':    102 obs. of  14 variables:
+##  $ zn     : num  0.0487 -0.4872 -0.4872 -0.4872 -0.4872 ...
+##  $ indus  : num  -0.476 -0.437 -0.437 -0.437 -0.437 ...
+##  $ chas   : num  -0.272 -0.272 -0.272 -0.272 -0.272 ...
+##  $ nox    : num  -0.265 -0.144 -0.144 -0.144 -0.144 ...
+##  $ rm     : num  -0.16 -0.478 -0.268 -0.419 -1.179 ...
+##  $ age    : num  0.978 -0.241 0.566 0.466 -1.136 ...
+##  $ dis    : num  1.023625 0.433325 0.31669 0.219811 0.000692 ...
+##  $ rad    : num  -0.522 -0.637 -0.637 -0.637 -0.637 ...
+##  $ tax    : num  -0.577 -0.601 -0.601 -0.601 -0.601 ...
+##  $ ptratio: num  -1.5 1.18 1.18 1.18 1.18 ...
+##  $ black  : num  0.441 0.441 0.256 0.329 -0.741 ...
+##  $ lstat  : num  0.91 -0.615 -0.335 0.282 -0.135 ...
+##  $ medv   : num  0.497 -0.232 -0.471 -0.547 -0.254 ...
+##  $ crime  : Factor w/ 4 levels &quot;low&quot;,&quot;med_low&quot;,..: 2 3 3 3 3 3 3 3 1 2 ...</code></pre>
+<pre class="r"><code>colnames(train)</code></pre>
+<pre><code>##  [1] &quot;zn&quot;      &quot;indus&quot;   &quot;chas&quot;    &quot;nox&quot;     &quot;rm&quot;      &quot;age&quot;     &quot;dis&quot;    
+##  [8] &quot;rad&quot;     &quot;tax&quot;     &quot;ptratio&quot; &quot;black&quot;   &quot;lstat&quot;   &quot;medv&quot;    &quot;crime&quot;</code></pre>
+<pre class="r"><code>colnames(test)</code></pre>
+<pre><code>##  [1] &quot;zn&quot;      &quot;indus&quot;   &quot;chas&quot;    &quot;nox&quot;     &quot;rm&quot;      &quot;age&quot;     &quot;dis&quot;    
+##  [8] &quot;rad&quot;     &quot;tax&quot;     &quot;ptratio&quot; &quot;black&quot;   &quot;lstat&quot;   &quot;medv&quot;    &quot;crime&quot;</code></pre>
+<pre class="r"><code># Saving crime classes from the test dat into correct_classes
+correct_classes &lt;- test$crime
+
+# Removing crime from the test set
+library(dplyr)
+test &lt;- dplyr::select(test, -crime)
+
+# Veryfying the content of test and correct_classes
+str(test)</code></pre>
+<pre><code>## 'data.frame':    102 obs. of  13 variables:
+##  $ zn     : num  0.0487 -0.4872 -0.4872 -0.4872 -0.4872 ...
+##  $ indus  : num  -0.476 -0.437 -0.437 -0.437 -0.437 ...
+##  $ chas   : num  -0.272 -0.272 -0.272 -0.272 -0.272 ...
+##  $ nox    : num  -0.265 -0.144 -0.144 -0.144 -0.144 ...
+##  $ rm     : num  -0.16 -0.478 -0.268 -0.419 -1.179 ...
+##  $ age    : num  0.978 -0.241 0.566 0.466 -1.136 ...
+##  $ dis    : num  1.023625 0.433325 0.31669 0.219811 0.000692 ...
+##  $ rad    : num  -0.522 -0.637 -0.637 -0.637 -0.637 ...
+##  $ tax    : num  -0.577 -0.601 -0.601 -0.601 -0.601 ...
+##  $ ptratio: num  -1.5 1.18 1.18 1.18 1.18 ...
+##  $ black  : num  0.441 0.441 0.256 0.329 -0.741 ...
+##  $ lstat  : num  0.91 -0.615 -0.335 0.282 -0.135 ...
+##  $ medv   : num  0.497 -0.232 -0.471 -0.547 -0.254 ...</code></pre>
+<pre class="r"><code>colnames(test)</code></pre>
+<pre><code>##  [1] &quot;zn&quot;      &quot;indus&quot;   &quot;chas&quot;    &quot;nox&quot;     &quot;rm&quot;      &quot;age&quot;     &quot;dis&quot;    
+##  [8] &quot;rad&quot;     &quot;tax&quot;     &quot;ptratio&quot; &quot;black&quot;   &quot;lstat&quot;   &quot;medv&quot;</code></pre>
+<pre class="r"><code>str(correct_classes)</code></pre>
+<pre><code>##  Factor w/ 4 levels &quot;low&quot;,&quot;med_low&quot;,..: 2 3 3 3 3 3 3 3 1 2 ...</code></pre>
 <p> </p>
 </div>
 </div>

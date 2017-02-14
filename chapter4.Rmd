@@ -230,7 +230,7 @@ boston_scaled$crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, la
 crime <- boston_scaled$crime
 table(crime)
 
-# Veryfying the content
+# Verifying the content
 colnames(boston_scaled)
 class(boston_scaled)
 
@@ -254,7 +254,31 @@ summary(boston_scaled)
 <p class="text-primary">**CREATING THE TRAIN AND TEST SETS**</p>
 
 ```{r}
-# 
+# Choosing randomly 80 % of the row
+n <- nrow(boston_scaled)
+ind <- sample(n, size = n * 0.8)
+
+# Creating train and test sets
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+# Inspecting the content
+str(train)
+str(test)
+colnames(train)
+colnames(test)
+
+# Saving crime classes from the test dat into correct_classes
+correct_classes <- test$crime
+
+# Removing crime from the test set
+library(dplyr)
+test <- dplyr::select(test, -crime)
+
+# Veryfying the content of test and correct_classes
+str(test)
+colnames(test)
+str(correct_classes)
 
 ```
 
