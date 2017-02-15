@@ -292,7 +292,7 @@ Note that the data was standardized earlier in terms of the latter assumption.
 
 <p class="text-warning">**FITTING THE LINEAR DISCRIMINANT ANALYSIS**</p>
 
-From the table below LDA output indicates for example that 24.3 % of the training observations correspond to the low crime rate. It also provides the group means which are the average of each predictor within each class.
+From the table below we can see for example that the model predicts 24.3% of crime rate in the training set correspond to the low crime rate. The output provides also the group means which are the average of each predictor within each class.
 
 LDA defines as many "discriminant functions" as the number of categories of the outcome minus one. I have four categories thus the LDA output shows three functions under the headline "Proportion of trace". These functions are ordered by the amount of variance that they explain. 
 
@@ -307,7 +307,7 @@ lda.fit
 
 &nbsp;
 
-```{r}
+```{r, fig.height=7, fig.width=10}
 # Creating a numeric vector of the train sets crime classes for plotting purposes
 classes <- as.numeric(train$crime)
 
@@ -323,7 +323,7 @@ lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0
 
 # plotting the lda results
 plot(lda.fit, dimen = 2, col = classes, pch = classes)
-lda.arrows(lda.fit, myscale = 2)
+lda.arrows(lda.fit, myscale = 1.5)
 
 ```
 
@@ -339,10 +339,10 @@ LDA makes predictions by estimating the probability that a new set of inputs bel
 
 First I'm going to save the four crime classes from the test set to "correct_classes" and then I remove the variable from test set, so that I can use the categorized crime as a target variable in LDA prediction when predicting the test data.  
 
-
 &nbsp;
 
 <p class="text-danger">**SAVING THE CRIME CATEGORIES**</p>
+
 
 ```{r, message=TRUE, warning=TRUE}
 # Saving the crime classes from the test data into correct_classes
@@ -369,18 +369,30 @@ summary(test)
 
 <p class="text-danger">**PREDICTING CLASSES WITH TEST DATA**</p>
 
+In this part I'm going to predict the classes with the test data. In addition to our exercises in DataCamp I used the actual command of confusionMatrix() to illustrate the results more clearly. And because of this the table of predicted values comes actually twice. I kept the first table because I wanted to be sure that I manged to code the confusion matrix correctly.
+
+From the confusion matrix we can see that the estimated accuracy on the final model is 73.5%. You can see the same result also from the table where the correct classes are against the predicted classes. And if you like you can count the accuracy % by hand: sum of correctly predicted values divided the total amount of values. 
+
+&nbsp;
+
+
 ```{r}
 # Predicting classes with the test data
 lda.pred <- predict(lda.fit, newdata = test)
 lda.pred$class
 
 # Cross tabulating the result
-table(correct = correct_classes, predicted = lda.pred$class)
+table1 <- table(correct = correct_classes, predicted = lda.pred$class)
+table1
+
+# Some of the packages can be irrelevant. Different sites proposed different packages and then R noted to require some other packages
+library(caret); library(lattice); library(mlbench); library(e1071)
+confusionMatrix(correct_classes, lda.pred$class)
 ```
 
 &nbsp;
 
-
+## Reload the Boston dataset etc
 
 &nbsp;
 
