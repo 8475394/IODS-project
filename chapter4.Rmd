@@ -204,7 +204,7 @@ summary(boston_scaled)
 &nbsp;
 
 
-<p class="text-primary">**CATEGORIZING THE CRIME RATE AND DIVIDING THE DATASET TO TRAIN AND TEST SETS**</p>
+<p class="text-primary">**CATEGORIZING THE CRIME RATE**</p>
 
 There are a lot of technicalities in this part thus I decided to describe the steps inside the r code chunks. the main point here is to create a new categorical variable based on the scaled crime rate and split it on to 4 categories by means of the its quantiles labelled as "low", "med_low", "med_high" and "high". After this I remove the "original" scaled crime rate from the dataset.
 
@@ -265,18 +265,6 @@ str(test)
 colnames(train)
 colnames(test)
 
-# Saving crime classes from the test dat into correct_classes
-correct_classes <- test$crime
-
-# Removing crime from the test set
-library(dplyr)
-test <- dplyr::select(test, -crime)
-
-# Veryfying the content of test and correct_classes
-str(test)
-colnames(test)
-str(correct_classes)
-
 ```
 
 
@@ -325,18 +313,60 @@ lda.arrows(lda.fit, myscale = 2)
 ```
 
 
-&nbsp;
 
+&nbsp;
 
 ## Predicting the classes with the Linear Discriminant Analysis, LDA 
 
 &nbsp;
 
-LDA makes predictions by estimating the probability that a new set of inputs belongs to each class. The class that gets the highest probability is the output class and a prediction is made.  [Reference](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/)
+LDA makes predictions by estimating the probability that a new set of inputs belongs to each class. The class that gets the highest probability is the output class and a prediction is made  [Reference](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/).
+
+First I'm going to save the four crime classes from the test set to "correct_classes" and then I remove the variable from test set, so that I can use the categorized crime as a target variable in LDA prediction when predicting the test data.  
 
 
 &nbsp;
 
+<p class="text-danger">**SAVING THE CRIME CATEGORIES**</p>
+
+```{r, message=TRUE, warning=TRUE}
+# Saving the crime classes from the test data into correct_classes
+correct_classes <- test$crime
+
+# Removing crime from the test set
+library(dplyr)
+test <- dplyr::select(test, -crime)
+
+# Veryfying the content of test and correct_classes
+str(test)
+colnames(test)
+str(correct_classes)
+```
+
+
+&nbsp;
+
+```{r}
+summary(test)
+```
+
+
+<p class="text-danger">**PREDICTING CLASSES WITH TEST DATA**</p>
+
+```{r}
+# Predicting classes with the test data
+lda.pred <- predict(lda.fit, newdata = test)
+lda.pred$class
+
+# Cross tabulating the result
+table(correct = correct_classes, predicted = lda.pred$class)
+```
+
+&nbsp;
+
+
+
+&nbsp;
 
 
 
