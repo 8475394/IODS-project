@@ -163,17 +163,27 @@ cor_matrix
 
 <p class="text-success">**PLOTTING THE CORRELATION MATRIX**</p>
 
+I used the corrplot() to better demonstrate the above correlation matrix. You can see this plot below and it is good to know that positive correlations are displayed in blue and negative correlations in red color. Color intensity and the size of the circle are proportional to the correlation coefficients. The legend color shows the correlation coefficients and the corresponding colors. I also added the values of correlations of each pair even though the plot is not so beautiful after this.
 
+You perceive that the highest correlations are between nox and indus as well as between tax and indus. This is kind of logical that nitrogen oxide levels and tax rates are higher in industrial areas.
 
+Within the next chapters I'm going to concentrate more on crime rates as a target variable thus its also convenient to explore here the relationships between crime rate and other variables. You can see the highest positive correlations are between crime rate and rad as well as crime rate and tax rate. I'm not sure what these are actuallyt telling us. An by this I mean that sometimes variables can correlate without any specific cause - effect impacts. Here the crime rate by town correlates positive with accessibility to radial highways but I can't figure out any "real" reasons why this is happening. Maybe the criminals do their crimes in towns from where they can get easily away :D :D 
 
-Positive correlations are displayed in blue and negative correlations in red color. Color intensity and the size of the circle are proportional to the correlation coefficients. The legend color shows the correlation coefficients and the corresponding colors.
+And maybe the positive correlation between crime rate and tax rate indicates that there are more crimes in those areas with bigger properties because bigger properties have bigger taxes. Also there might live wealthier people in bigger properties which may be more tempting for example to the thiefs. I'm not sure what kind of crimes the crime rate contains but I think you get my point. 
+
+Then there are more moderate negative correlations between crime rate and medv as well as between crime rate and dis. The medv indicates the median value of owner-occupied homes in $1000s and the correlation suggests that the crime rate is higher when the median value of owner-occupied homes is lower and vice versa. I don't try to interpret this unattached from the bigger picture because there can be several reasons fro this. The dis indicates the weighted mean of distances to five Boston employment centres. Thus the negative correlation tells us that the higher the crime rate, the lower the mean distance and vice versa. This may be logical in the way that there can more crimes near these centres (shorter distance) comparing the more rural areas (greater distance).  
+
+Note that under the corrplot you can find a pair (scatter plot) matrix which illustrates also the relationships between different variables.
 
 &nbsp;
 
-```{r, fig.width=10, fig.height=10}
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 library(corrplot); library(dygraphs)
 corrplot(cor_matrix, method = "circle", main = "Correlation matrix of Boston variables", tl.cex = 1, addCoef.col = "black")
 
+library(ggplot2)
+library(GGally)
+pairs(Boston [-4], main = "Scatter plot matrix")
 ```
 
 
@@ -282,6 +292,11 @@ Note that the data was standardized earlier in terms of the latter assumption.
 
 <p class="text-warning">**FITTING THE LINEAR DISCRIMINANT ANALYSIS**</p>
 
+From the table below LDA output indicates for example that 24.3 % of the training observations correspond to the low crime rate. It also provides the group means which are the average of each predictor within each class.
+
+LDA defines as many "discriminant functions" as the number of categories of the outcome minus one. I have four categories thus the LDA output shows three functions under the headline "Proportion of trace". These functions are ordered by the amount of variance that they explain. 
+
+&nbsp;
 
 ```{r, message=FALSE, warning=FALSE}
 library(MASS)
@@ -350,6 +365,7 @@ str(correct_classes)
 summary(test)
 ```
 
+&nbsp;
 
 <p class="text-danger">**PREDICTING CLASSES WITH TEST DATA**</p>
 
