@@ -397,9 +397,13 @@ confusionMatrix(correct_classes, lda.pred$class)
 
 &nbsp;
 
-In this chapter I'm going to reload the Boston dataset for the clustering purposes. First I'm going to scale the variables to get comparable distances between the observations. After this I'm going to run the k-means algorithm and investigate the optimal number of cluster.
-
 Clustering refers to a very broad set of techniques for finding subgroups, or clusters, in a dataset. When we cluster the observations of a dataset, we seek to partition them into distinct groups so that the observations within each group are quite similar to each other, while observations in different groups are quite different from each other.
+
+In this chapter I'm going to reload the Boston dataset for the clustering purposes. First I'm going to scale the variables to get comparable distances between the observations. After this I'm going to run the k-means algorithm and investigate the optimal number of clusters.
+
+K-means clustering is an unsupervised learning algorithm which means that there is no outcome to be predicted but instead tries to find patterns in the data.
+
+
 
 &nbsp;
 
@@ -433,35 +437,107 @@ summary(reboston_scaled)
 
 <p class="text-success">**CALCULATING THE DISTANCES**</p>
 
-First I'm going to calculate the Euclidean distance which is a very common ordinary or straight-line distance measure. It is used by measuring similarity or dissimilarity of objects
+Here I'm going to calculate the Euclidean distance which is a very common ordinary or straight-line distance measure. It is used by measuring similarity or dissimilarity of objects.
+
+&nbsp;
 
 ```{r}
 # Euclidean distance
 dist_eu <- dist(reboston_scaled)
 summary(dist_eu)
 
-# Manhattan distance
-dist_man <- dist(reboston_scaled, method = "manhattan")
-summary(dist_man)
 ```
 
 &nbsp;
 
 
-<p class="text-success">**K-MEANS CLUSTERING**</p>
+<p class="text-success">**K-MEANS AND INITIAL AMOUNT OF CLUSTERS**</p>
 
 K-means is one of the best-known clustering approaches whish is applied to partition the observations into a pre-specified number of clusters.
 
-Here the purpose is to find the optimal number of clusters. Idea behind the K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. 
+In this section I present some k-means pairplots adjusted with the euclidean distance and some random counts of centers. 
+
+ 
 
 &nbsp;
 
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
-km_eu <- kmeans(dist_eu, centers = 4)
-
 library(dygraphs)
-pairs(reboston_scaled, col = km_eu$cluster) # 4 centers
+
+set.seed(123)
+km_eu <- kmeans(dist_eu, centers = 2)
+pairs(reboston_scaled, col = km_eu$cluster, main = "Pairs with 2 clusters")
+
+km_eu2 <- kmeans(dist_eu, centers = 4)
+pairs(reboston_scaled, col = km_eu2$cluster, main = "Pairs with 4 clusters")
+
+km_eu3 <- kmeans(dist_eu, centers = 6)
+pairs(reboston_scaled, col = km_eu3$cluster, main = "Pairs with 6 clusters")
 ```
+
+
+
+&nbsp;
+
+
+<p class="text-success">**DETERMINING THE NUMBER OF CLUSTERS**</p>
+
+
+Here the purpose is to find the optimal number of clusters. Idea behind the K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. There are different methods to achieve this goal and I'm going to use total within sum of squares, WCSS, which can be calculated with a use of formula below:
+
+$WCSS = \sum_i^N (x_i - centroid)^2$
+
+&nbsp;
+
+
+The formula below is adopted from the DataCamp exercises as such. The task is to found an appropriate amount of clusters. The DC guidelines adviced to choose that number of clusters where the total WCSS drops radically. So if you look at the figure below, the most radical drop happens after the first number suggestings that the optimal amount could be 2 clusters. 
+
+On the other hand the statistical textbooks (e.g. http://www-bcf.usc.edu/~gareth/ISL/ISLR%20First%20Printing.pdf) suggest that the clustering "results" may be optimal when the within-cluster variation is as small as possible. 
+
+I thought I could somehow combine the above advices and this is what I concluded: The second "cluster point" doens't reflect the smallest variation even though there is a radical change after first "point. It seems that there are some drops between the second and sixth "point", but between the fifth and sixth the within-cluster variation doesn't seem be to be so different anymore. After this you may already guess that I'm suggesting 5 clusters. But I wouldn't say that this has to be a final decision without using other tools and methods.  
+
+
+&nbsp;
+
+```{r}
+set.seed(123) # keeping the results same
+k_max <- 10 # maximum number of clusters
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+plot(1:k_max, twcss, type='b', main = "Suggested number of clusters")
+```
+
+&nbsp;
+
+Then there is a so called Elbow Method which also uses the within-cluster variance. You can adopt the method and algorith [here](http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning). 
+
+
+&nbsp;
+
+```{r}
+set.seed(123)
+# Compute and plot wss for k = 2 to k = 10
+k.max <- 10 # Maximal number of clusters
+data <- reboston_scaled
+wss <- sapply(1:k.max, 
+        function(k){kmeans(data, k, nstart=10 )$tot.withinss})
+plot(1:k.max, wss,
+       type="b", pch = 1, frame = FALSE, 
+       xlab="Number of clusters K",
+       ylab="Total within-clusters sum of squares")
+abline(v = 4, lty =2)
+```
+
+
+&nbsp;
+
+
+```{r}
+head(reboston_scaled)
+```
+
+
+&nbsp;
+
 
 
 
