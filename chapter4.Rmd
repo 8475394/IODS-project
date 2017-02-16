@@ -464,15 +464,14 @@ In this section I present some k-means pairplots adjusted with the euclidean dis
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 library(dygraphs)
 
-set.seed(123)
+
 km_eu <- kmeans(dist_eu, centers = 2)
 pairs(reboston_scaled, col = km_eu$cluster, main = "Pairs with 2 clusters")
 
 km_eu2 <- kmeans(dist_eu, centers = 4)
 pairs(reboston_scaled, col = km_eu2$cluster, main = "Pairs with 4 clusters")
 
-km_eu3 <- kmeans(dist_eu, centers = 6)
-pairs(reboston_scaled, col = km_eu3$cluster, main = "Pairs with 6 clusters")
+
 ```
 
 
@@ -508,7 +507,11 @@ plot(1:k_max, twcss, type='b', main = "Suggested number of clusters")
 
 &nbsp;
 
-Then there is a so called Elbow Method which also uses the within-cluster variance. You can adopt the method and algorith [here](http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning). 
+<p class="text-success">**USING THE ELBOW METHOD TO DETERMINE THE NUMBER OF CLUSTERS**</p>
+
+Then there is a so called Elbow Method which also uses the within-cluster variance. You can adopt the method and algorith [here](http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning). In this site the author suggest that "the location of a bend (knee) in the plot is generally considered as an indicator of the appropriate number of clusters".
+
+Below you can perceive two plots with the Elbow method. I have to say that I'm not sure anymore what could be the "correct" number of clusters. Here I would rather say 3 than 5. Note that I draw the dashed line exactly to the third point.
 
 
 &nbsp;
@@ -523,16 +526,35 @@ wss <- sapply(1:k.max,
 plot(1:k.max, wss,
        type="b", pch = 1, frame = FALSE, 
        xlab="Number of clusters K",
-       ylab="Total within-clusters sum of squares")
-abline(v = 4, lty =2)
+       ylab="Total within-clusters sum of squares", main = "The amount of clusters")
+abline(v = 3, lty =2)
+
+# Another way, same method
+library(factoextra); require(ggplot2)
+fviz_nbclust(reboston_scaled, kmeans, method = "wss") +
+  geom_vline(xintercept = 3, linetype = 2)
+
+
 ```
 
 
 &nbsp;
 
-
 ```{r}
-head(reboston_scaled)
+
+```
+
+
+&nbsp;
+
+```{r, fig.height=10, fig.width=10}
+set.seed(123)
+
+km_eu3 <- kmeans(dist_eu, centers = 3)
+pairs(reboston_scaled, col = km_eu3$cluster, main = "Pairs with 3 clusters")
+
+km_eu4 <- kmeans(dist_eu, centers = 5)
+pairs(reboston_scaled, col = km_eu4$cluster, main = "Pairs with 5 clusters")
 ```
 
 
