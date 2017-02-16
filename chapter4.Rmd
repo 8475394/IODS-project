@@ -147,11 +147,12 @@ hmedv <- qplot(Boston$medv, geom = "histogram", binwidth = 4, main = "Owner-occu
 grid.arrange(htax, hptratio, hlstat, hmedv, ncol=2, nrow =2)
 ```
 
-&nbsp;
+<br>
+<br>
 
 <p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
 
-&nbsp;
+
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -371,12 +372,12 @@ summary(test)
 
 In this part I'm going to predict the classes with the test data. In addition to our exercises in DataCamp I used the actual command of confusionMatrix() to illustrate the results more clearly. And because of this the table of predicted values comes actually twice. I kept the first table because I wanted to be sure that I manged to code the confusion matrix correctly.
 
-From the confusion matrix we can see that the estimated accuracy on the final model is 73.5%. You can see the same result also from the table where the correct classes are against the predicted classes. And if you like you can count the accuracy % by hand: sum of correctly predicted values divided the total amount of values. 
+From the confusion matrix we can see that the estimated accuracy on the final model is 73.5%. You can see the same result also from the table where the correct classes are against the predicted classes. And if you like you can count the accuracy % by hand: sum of correctly predicted values divided with the total amount of values. 
 
 &nbsp;
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Predicting classes with the test data
 lda.pred <- predict(lda.fit, newdata = test)
 lda.pred$class
@@ -392,9 +393,77 @@ confusionMatrix(correct_classes, lda.pred$class)
 
 &nbsp;
 
-## Reload the Boston dataset etc
+## Clustering
 
 &nbsp;
+
+In this chapter I'm going to reload the Boston dataset for the clustering purposes. First I'm going to scale the variables to get comparable distances between the observations. After this I'm going to run the k-means algorithm and investigate the optimal number of cluster.
+
+Clustering refers to a very broad set of techniques for finding subgroups, or clusters, in a dataset. When we cluster the observations of a dataset, we seek to partition them into distinct groups so that the observations within each group are quite similar to each other, while observations in different groups are quite different from each other.
+
+&nbsp;
+
+<p class="text-success">**RELOADING THE BOSTON DATASET**</p>
+
+
+```{r}
+reboston <- Boston
+str(reboston)
+```
+
+&nbsp;
+
+<p class="text-success">**SUMMARY OF NOT SCALED BOSTON DATASET**</p>
+
+```{r}
+summary(reboston)
+```
+
+&nbsp;
+
+<p class="text-success">**SUMMARY OF SCALED BOSTON DATASET**</p>
+
+```{r}
+reboston_scaled <- scale(reboston)
+summary(reboston_scaled)
+```
+
+&nbsp;
+
+
+<p class="text-success">**CALCULATING THE DISTANCES**</p>
+
+First I'm going to calculate the Euclidean distance which is a very common ordinary or straight-line distance measure. It is used by measuring similarity or dissimilarity of objects
+
+```{r}
+# Euclidean distance
+dist_eu <- dist(reboston_scaled)
+summary(dist_eu)
+
+# Manhattan distance
+dist_man <- dist(reboston_scaled, method = "manhattan")
+summary(dist_man)
+```
+
+&nbsp;
+
+
+<p class="text-success">**K-MEANS CLUSTERING**</p>
+
+K-means is one of the best-known clustering approaches whish is applied to partition the observations into a pre-specified number of clusters.
+
+Here the purpose is to find the optimal number of clusters. Idea behind the K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. 
+
+&nbsp;
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+km_eu <- kmeans(dist_eu, centers = 4)
+
+library(dygraphs)
+pairs(reboston_scaled, col = km_eu$cluster) # 4 centers
+```
+
+
 
 
 
