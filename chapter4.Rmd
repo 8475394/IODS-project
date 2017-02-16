@@ -468,6 +468,7 @@ library(dygraphs)
 km_eu <- kmeans(dist_eu, centers = 2)
 pairs(reboston_scaled, col = km_eu$cluster, main = "Pairs with 2 clusters")
 
+
 km_eu2 <- kmeans(dist_eu, centers = 4)
 pairs(reboston_scaled, col = km_eu2$cluster, main = "Pairs with 4 clusters")
 
@@ -493,7 +494,7 @@ The formula below is adopted from the DataCamp exercises as such. The task is to
 
 On the other hand the statistical textbooks (e.g. http://www-bcf.usc.edu/~gareth/ISL/ISLR%20First%20Printing.pdf) suggest that the clustering "results" may be optimal when the within-cluster variation is as small as possible. 
 
-I thought I could somehow combine the above advices and this is what I concluded: The second "cluster point" doens't reflect the smallest variation even though there is a radical change after first "point. It seems that there are some drops between the second and sixth "point", but between the fifth and sixth the within-cluster variation doesn't seem be to be so different anymore. After this you may already guess that I'm suggesting 5 clusters. But I wouldn't say that this has to be a final decision without using other tools and methods.  
+I thought I could somehow combine the above advices and this is what I concluded: The second "cluster point" doens't reflect the smallest variation even though there is a radical change after first "point. It seems that there are some drops between the second and sixth "point", but between the fifth and sixth the within-cluster variation doesn't seem be to be so different anymore. After this you may already guess that I'm suggesting 5 clusters. But I wouldn't say that this has to be a final decision without using other tools and methods.    
 
 
 &nbsp;
@@ -502,7 +503,7 @@ I thought I could somehow combine the above advices and this is what I concluded
 set.seed(123) # keeping the results same
 k_max <- 10 # maximum number of clusters
 twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
-plot(1:k_max, twcss, type='b', main = "Suggested number of clusters")
+plot(1:k_max, twcss, type='b', main = "Number of proposed clusters")
 ```
 
 &nbsp;
@@ -511,14 +512,17 @@ plot(1:k_max, twcss, type='b', main = "Suggested number of clusters")
 
 Then there is a so called Elbow Method which also uses the within-cluster variance. You can adopt the method and algorith [here](http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning). In this site the author suggest that "the location of a bend (knee) in the plot is generally considered as an indicator of the appropriate number of clusters".
 
-Below you can perceive two plots with the Elbow method. I have to say that I'm not sure anymore what could be the "correct" number of clusters. Here I would rather say 3 than 5. Note that I draw the dashed line exactly to the third point.
+Below you can perceive two plots with the Elbow method. I have to say that I'm not sure anymore what could be the "correct" number of clusters. Here I would rather say 2 than 5. Note that I draw the dashed lines just to compare the results. 
+
+But I'm not happy yet with the results. So let's take a look at one more method after this.
 
 
 &nbsp;
 
 ```{r}
 set.seed(123)
-# Compute and plot wss for k = 2 to k = 10
+
+# Computing and plotting wss for k = 2 to k = 10
 k.max <- 10 # Maximal number of clusters
 data <- reboston_scaled
 wss <- sapply(1:k.max, 
@@ -527,34 +531,54 @@ plot(1:k.max, wss,
        type="b", pch = 1, frame = FALSE, 
        xlab="Number of clusters K",
        ylab="Total within-clusters sum of squares", main = "The amount of clusters")
-abline(v = 3, lty =2)
+abline(v = 2, lty =2)
 
-# Another way, same method
+# Another functions, same method
 library(factoextra); require(ggplot2)
 fviz_nbclust(reboston_scaled, kmeans, method = "wss") +
-  geom_vline(xintercept = 3, linetype = 2)
+  geom_vline(xintercept = 5, linetype = 2)
 
 
 ```
+
+
+&nbsp;
+
+<p class="text-success">**USING THE "ALL VALIDATION INDICES" TO DETERMINE THE NUMBER OF CLUSTERS**</p>
+
+This method is also adopted from the website I introduced above. This might be "heavy" method when it computes all the 30 indices for determining the optimal number of clusters (see ?NbClust for additional information). Note that the command "all" actually drops some indices for the sake of faster computing. 
+
+
+**So according to this method of majority rule, the best number of clusters is 2.**
 
 
 &nbsp;
 
 ```{r}
+library(NbClust)
 
+nb <- NbClust(reboston_scaled, distance = "euclidean", min.nc = 2,
+        max.nc = 10, method = "complete", index ="all")
+nb
+
+# Visualizing the results
+fviz_nbclust(nb) + theme_minimal()
 ```
 
 
 &nbsp;
 
-```{r, fig.height=10, fig.width=10}
-set.seed(123)
+Here you can look again the pair matrix of two clusters.
 
-km_eu3 <- kmeans(dist_eu, centers = 3)
-pairs(reboston_scaled, col = km_eu3$cluster, main = "Pairs with 3 clusters")
+&nbsp;
 
-km_eu4 <- kmeans(dist_eu, centers = 5)
-pairs(reboston_scaled, col = km_eu4$cluster, main = "Pairs with 5 clusters")
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+
+# Lets plot the pairs with two centers again
+
+library(dygraphs)
+
+pairs(reboston_scaled, col = km_eu$cluster, main = "Pairs with 2 clusters")
 ```
 
 
