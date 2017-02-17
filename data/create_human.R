@@ -1,6 +1,6 @@
 # Author: Heidi Maanonen
 # Date: 17.2.2017
-# File description:
+# File description: Data Wrangling for next week's exercise
 
 # Reading the "Human development" data
 hd <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human_development.csv", stringsAsFactors = F)
