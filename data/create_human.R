@@ -151,16 +151,24 @@ tail(human_, 10) # veryfying the tail
 
 # Defining the row names of the data by the country names 
 rownames(human_) <- human_$country
+rownames(human_)
 str(human_) # 155 observations and 9 variables 
 colnames(human_)
 
 # Removing the country name column from the data
 human_ <- dplyr::select(human_, -country)
 
+
 # Saving the Dataset
 write.csv(human_, file = "human_1.csv", row.names = TRUE)
+write.table(human_, file = "human_1.txt", row.names = TRUE)
+
 
 # Checking that data reading works and r can actually use the file
 human_1 <- read.csv("human_1.csv")
 str(human_1) # 155 observations and 9 variables 
 
+human_2 <- read.table("human_1.txt", header = TRUE)
+colnames(human_2)
+rownames(human_2)
+str(human_2) # Now there is actually 155 observations and 8 variables, since the country is a rowname
