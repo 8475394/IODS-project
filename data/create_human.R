@@ -162,5 +162,5 @@ write.csv(human_, file = "human_1.csv", row.names = TRUE)
 
 # Checking that data reading works and r can actually use the file
 human_1 <- read.csv("human_1.csv")
-str(human_1)
+str(human_1) # 155 observations and 9 variables 
 
