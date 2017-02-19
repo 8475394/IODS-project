@@ -1,8 +1,28 @@
-# Dimensionality reduction techniques
+# Dimensionality reduction techniques 
+
+&nbsp;
+
+## Brief description of the dataset
+
+&nbsp;
 
 
+```{r, message=FALSE, warning=FALSE}
+library(tidyr); library(readr)
+human_own <- read.table(file.path("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIEDE/INTRODUCTION TO OPEN DATA SCIENCE/IODS-project/data", "human_1.txt"), header = TRUE)
+
+str(human_own)
+colnames(human_own) 
+rownames(human_own) # veryfying that country is a rowname
+```
 
 ```{r}
+human_net <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep = ",", header = TRUE)
 
+str(human_net)
+colnames(human_net)
+rownames(human_net)
 ```
+
+
 
