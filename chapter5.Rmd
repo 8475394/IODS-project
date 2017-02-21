@@ -33,7 +33,7 @@ In this chapter I will be working with the **Data of Human Development approach*
     + SFedu - Females, Population with at least some secondary education (% ages 25 and older)
     + SMedu - Males, Population with at least some secondary education (% ages 25 and older)
 3. FMlabour = Flabour / Mlabour, where
-    + SMedu - Males, Population with at least some secondary education (% ages 25 and older)
+    + Mlabour - Males, Labour force participation rate (% ages 15 and older
     + Flabour - Females, Labour force participation rate (% ages 15 and older)
 4. Eedu - Expected years of schooling per country
 5. Elife - Expected life years at birth per country
@@ -41,6 +41,24 @@ In this chapter I will be working with the **Data of Human Development approach*
 7. mort_ratio - Maternal mortality ratio (deaths per 100,000 live births)
 8. ad_birth - Adolescent birth rate (births per 1,000 women ages 15-19)
 9. seats - Share of seats in parliament (% held by women)
+
+<br>
+
+**Note 1**, SFM_edu is a ratio of education where values less than 1 are signifying that males are more educated than females and values greater than 1 are implying that females are more educated than men.
+
+**Note 2**, FMlabour is a ratio of labour force participation where values less than 1 are signifying that males are more participated than females and values greater than 1 are implying that females are more participated than men.
+
+**Note 3**, variables from the Human Development Index data are Eedu, Elife and GNIpc while the other variables are from the Gender Inequality Index data.
+
+&nbsp;
+
+***
+
+For additional information you can find [here](http://hdr.undp.org/en/composite/HDI) the Human Development Index data and its components.
+
+For additional information you can find [here](http://hdr.undp.org/en/composite/GII) the Gender Inequality Index data and its components.
+
+***
 
 
 &nbsp;
@@ -52,21 +70,20 @@ You can find the combined dataset from my GutHub respitory: https://github.com/8
 &nbsp;
 
 ```{r, message=FALSE, warning=FALSE}
-library(tidyr); library(readr); library(knitr)
+library(tidyr); library(readr)
 human_own <- read.table(file.path("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIEDE/INTRODUCTION TO OPEN DATA SCIENCE/IODS-project/data", "human_1.txt"), header = TRUE)
 ```
 
 &nbsp;
 
-<p class="text-danger">**STRUCTURE OFTHE HUMAN DATASET**</p>
+<p class="text-danger">**STRUCTURE OF THE HUMAN DATASET**</p>
 
 From the structure table you can notice that there are 155 observation and 8 variables. Note that the country is a rowname and it doesn't appear to variable list.
 
 &nbsp;
 
 ```{r, message=FALSE, warning=FALSE}
-library(knitr)
-table(str(human_own))
+str(human_own)
 ```
 
 &nbsp;
@@ -76,28 +93,61 @@ table(str(human_own))
 
 &nbsp;
 
+
+In this section I'm going to explore the distributions of data variables even further. First I show you a summary table which contains the distributions of each variable where the variables are divided into quartiles including the minimum and maximum values. 
+
+After this I'll show you the histograms of these variables WHAT ...
+
+At the end of this chapter I'll explore WHAT... 
+
+&nbsp;
+
+<p class="text-success">**SUMMARY TABLE OF DATA VARIABLES**</p>
+
+You may see some intresting "phenomena" from the summary table. Both the ratio of education (SFM_edu) and labour force participation (FMlabour) suggest that males are more dominant in these fields. It seems that females are more equal in education than labour force participation. You can examine this visually from the histograms later in this chapter.
+
+According to the [Technical notes](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf) of the Human Development indices, the scale of expected years of schooling per country (Eedu) varies between 0 and 18 where the latter is equivalent to achieving a master's degree in most countries. However you can see that the actual maximum of the schooling distribution is a bit over 20. If I understood right the range of 0-18 is used when counting the overall Human Development Index. Nevertheless I think the average of expected schooling years is quite good even though these values don't tell us anything about specific countries.
+
+I can't help myself to wonder the minimum value of Expected life years at birth per country (Elife). 49 years seem so low even though the mean and median values are much greater. 
+
+
+
+&nbsp;
+
 ```{r, results='asis'}
 library(knitr)
-kable(summary(human_own), format = "pandoc", caption = "Summaries of Human Data", digits = 2,  align="l")
-
+kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
 ```
 
 &nbsp;
 
+<p class="text-success">**HISTOGRAMS OF SCHOOLING, LABOUR FORCE AND LIFESPAN**</p>
 
 
-```{r}
+```{r, fig.height=8, fig.width=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra);library(dygraphs)
 
 # INITIALIZING THE PLOTS
 
-qplot(human_own$SFM_edu, geom = "histogram", binwidth = 0.1, main = "kokeilu", xlab = "education", col = I("grey"), fill = I("chartreuse3"))
+h1 <- qplot(human_own$SFM_edu, geom = "histogram", binwidth = 0.1, main = "Population with at least sec. school", xlab = "education", col = I("grey"), fill = I("chartreuse3"))
 
-qplot(human_own$FMlabour, geom = "histogram", binwidth = 0.08, main = "kokeilu", xlab = "kokeilu", col = I("grey"), fill = I("orange"))
+h2 <- qplot(human_own$FMlabour, geom = "histogram", binwidth = 0.08, main = "Labour force participation rate", xlab = "labour", col = I("grey"), fill = I("orange"))
 
-qplot(human_own$Eedu, geom = "histogram", binwidth = 1, main = "Expected years of schooling per country", xlab = "schooling", col = I("grey"), fill = I("mediumorchid"))
+h3 <- qplot(human_own$Eedu, geom = "histogram", binwidth = 1.2, main = "Expected years of schooling per country", xlab = "schooling", col = I("grey"), fill = I("mediumorchid"))
+
+h4 <- qplot(human_own$Elife, geom = "histogram", binwidth = 4, main = "Expected life years at birth per country", xlab = "years", col = I("grey"), fill = I("blue"))
+
+# Combining the plots using the function grid.arrange()
+
+grid.arrange(h1, h2, h3, h4, ncol=2, nrow =2)
 ```
 
 
 &nbsp;
+
+
+```{r}
+
+```
+
 
