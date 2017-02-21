@@ -2,27 +2,102 @@
 
 &nbsp;
 
+In this chapter the purpose is to get familiar with some of the Dimensionality Reduction Techniques including Principal Component Analysis (PCA) and Multiple Correspondece Analysis (MCA). 
+
+Principal Component Analysis is way of identifying patterns in data, and expressing the data in such a way as to highlight their similarities and differences. PCA is a procedure After founding the patterns PCA has the tools of compressing the data by reducing the number of dimensions, without much loss of information. [Additional info of PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)
+
+Multiple Correspondence Analysis is used for the same purpose as PCA but it can be utilized if the data contains categorical variables. [Additional info of MCA](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis)
+
+
+&nbsp;
+
 ## Brief description of the dataset
+
+
+&nbsp;
+
+In this chapter I will be working with the **Data of Human Development approach** adopted from [United Nations Development programme, UNDP](http://hdr.undp.org/en/humandev). This programme has explored human development around the world with specific indices in each year since 1990, [Country List in 2015](http://hdr.undp.org/en/countries). The specified indices are: 
+
+1. the Human Development Index, HDI
+2. the Inequality-Adjusted Human Development Index, IHDI
+3. the Gender Development Index, GDI
+4. the Gender Inequality Index, GII
+5. the Multidimensional Poverty Index, MPI
+
+<br>
+
+**I'm going to work with HDI and GII indices by combining the datasets and using specific variables including:**
+
+1. country - technically a rowname
+2. SFM_edu = SFedu / SMedu, where
+    + SFedu - Females, Population with at least some secondary education (% ages 25 and older)
+    + SMedu - Males, Population with at least some secondary education (% ages 25 and older)
+3. FMlabour = Flabour / Mlabour, where
+    + SMedu - Males, Population with at least some secondary education (% ages 25 and older)
+    + Flabour - Females, Labour force participation rate (% ages 15 and older)
+4. Eedu - Expected years of schooling per country
+5. Elife - Expected life years at birth per country
+6. GNIpc - Gross national income per capita per country in PPP, (https://en.wikipedia.org/wiki/Purchasing_power_parity)
+7. mort_ratio - Maternal mortality ratio (deaths per 100,000 live births)
+8. ad_birth - Adolescent birth rate (births per 1,000 women ages 15-19)
+9. seats - Share of seats in parliament (% held by women)
+
+
+&nbsp;
+
+<p class="text-danger">**ACTUAL DATASET**</p>
+
+You can find the combined dataset from my GutHub respitory: https://github.com/8475394/IODS-project/blob/master/data/human_1.txt
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyr); library(readr); library(knitr)
+human_own <- read.table(file.path("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIEDE/INTRODUCTION TO OPEN DATA SCIENCE/IODS-project/data", "human_1.txt"), header = TRUE)
+```
+
+&nbsp;
+
+<p class="text-danger">**STRUCTURE OFTHE HUMAN DATASET**</p>
+
+From the structure table you can notice that there are 155 observation and 8 variables. Note that the country is a rowname and it doesn't appear to variable list.
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+library(knitr)
+table(str(human_own))
+```
+
+&nbsp;
+
+## Summaries and graphs
+
+
+&nbsp;
+
+```{r, results='asis'}
+library(knitr)
+kable(summary(human_own), format = "pandoc", caption = "Summaries of Human Data", digits = 2,  align="l")
+
+```
 
 &nbsp;
 
 
-```{r, message=FALSE, warning=FALSE}
-library(tidyr); library(readr)
-human_own <- read.table(file.path("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIEDE/INTRODUCTION TO OPEN DATA SCIENCE/IODS-project/data", "human_1.txt"), header = TRUE)
-
-str(human_own)
-colnames(human_own) 
-rownames(human_own) # veryfying that country is a rowname
-```
 
 ```{r}
-human_net <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep = ",", header = TRUE)
+library(ggplot2); library(gridExtra);library(dygraphs)
 
-str(human_net)
-colnames(human_net)
-rownames(human_net)
+# INITIALIZING THE PLOTS
+
+qplot(human_own$SFM_edu, geom = "histogram", binwidth = 0.1, main = "kokeilu", xlab = "education", col = I("grey"), fill = I("chartreuse3"))
+
+qplot(human_own$FMlabour, geom = "histogram", binwidth = 0.08, main = "kokeilu", xlab = "kokeilu", col = I("grey"), fill = I("orange"))
+
+qplot(human_own$Eedu, geom = "histogram", binwidth = 1, main = "Expected years of schooling per country", xlab = "schooling", col = I("grey"), fill = I("mediumorchid"))
 ```
 
 
+&nbsp;
 
