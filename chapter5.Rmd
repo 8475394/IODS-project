@@ -174,18 +174,54 @@ h8 <- qplot(human_own$seats, geom = "histogram", binwidth = 3, main = "Share of 
 grid.arrange(h5, h6, h7, h8, ncol=2, nrow =2)
 ```
 
-&nbsp;
-
-
-
-<p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
 
 &nbsp;
 
-```{r}
 
+&nbsp;
+
+<p class="text-success">**INITIAL RESULTS OF RELATIONSHIPS**</p>
+
+&nbsp;
+
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+require(GGally); require(ggplot2)
+g = ggpairs(human_own, lower = list(continuous = wrap("smooth", method = "lm", color="red")), upper = list(continuous = wrap("density", color = "blue")))
+g
 ```
 
 
 
+&nbsp;
+
+&nbsp;
+
+<p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
+
+
+
+Here I'm going to explore the linear relationships between different variables more closely to get a better understanding of the data.
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse); library(knitr)
+cor_matrix <- cor(human_own) %>% round(digits = 2)
+kable(cor_matrix, format = "pandoc", digits = 2,  align="c")
+```
+
+
+&nbsp;
+
+<p class="text-success">**PLOTTING THE CORRELATION MATRIX**</p>
+
+
+```{r}
+library(corrplot)
+cor(human_own) %>% corrplot()
+```
+
+
+&nbsp;
 
