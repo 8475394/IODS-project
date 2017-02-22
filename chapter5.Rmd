@@ -63,7 +63,7 @@ For additional information you can find [here](http://hdr.undp.org/en/composite/
 
 &nbsp;
 
-<p class="text-danger">**ACTUAL DATASET**</p>
+<p class="text-danger">**COMBINED DATASET**</p>
 
 You can find the combined dataset from my GutHub respitory: https://github.com/8475394/IODS-project/blob/master/data/human_1.txt
 
@@ -110,6 +110,14 @@ According to the [Technical notes](http://hdr.undp.org/sites/default/files/hdr20
 
 I can't help myself to wonder the minimum value of Expected life years at birth per country (Elife). 49 years seem so low even though the mean and median values are much greater. 
 
+I think the distribution of Gross National Income per capita PPP emphasizes the huge distinctions between countries and of their wealth. Note that GNI per capita in PPP measures purchasing power parity which is useful for making comparisons between countries, [PPP](https://en.wikipedia.org/wiki/Purchasing_power_parity). However, there is a but when measuring the Human Development Index. If you look at [the table of HDI](http://hdr.undp.org/en/composite/HDI)(as seen earlier in this chapter), you can perceive that the GNI is not necessary the most critical measure in terms of well-being. For example the GNI of Montenegro is lower than average but the Human Development Index in very high. Note also that this was kind of an additional information since the actual HD index is not a part of this examination.
+
+Based on the technical notes the Maternal Mortality rate represent the maternal health, the higher the rate the poorer the maternal health. If you look at [the table of GII](http://hdr.undp.org/en/composite/GII)(as seen earlier in this chapter), you can perceive that the maximum value of the maternal mortality among countries with very high human development is 69. This is just to give you some understanding of this scale. 
+
+Adolescent birth rate represents the rate of births per 1000 women between ages 15 and 19. I think this scale varies also a lot. However the distribution is skewed to the right (positive skewness) suggesting that there are more lower than higher values in this scale. 
+
+The distribution of seats represents the share (%) of seats in parliament held by women in each country. Here you can see for example that it is not common to have more females than males in parliaments as the median and mean values are both close to 20 %. Also there are just few countries where the women are in majority.   
+
 
 
 &nbsp;
@@ -121,21 +129,21 @@ kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
 
 &nbsp;
 
-<p class="text-success">**HISTOGRAMS OF SCHOOLING, LABOUR FORCE AND LIFESPAN**</p>
+<p class="text-success">**HISTOGRAMS OF EDUCATION, LABOUR FORCE, YEARS OF SCHOOLING AND LIFESPAN**</p>
 
 
-```{r, fig.height=8, fig.width=8, message=FALSE, warning=FALSE}
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra);library(dygraphs)
 
 # INITIALIZING THE PLOTS
 
-h1 <- qplot(human_own$SFM_edu, geom = "histogram", binwidth = 0.1, main = "Population with at least sec. school", xlab = "education", col = I("grey"), fill = I("chartreuse3"))
+h1 <- qplot(human_own$SFM_edu, geom = "histogram", binwidth = 0.1, main = "Population with at least sec. school", xlab = "ratio of education, female/male", ylab = "number of countries", col = I("grey"), fill = I("chartreuse3"))
 
-h2 <- qplot(human_own$FMlabour, geom = "histogram", binwidth = 0.08, main = "Labour force participation rate", xlab = "labour", col = I("grey"), fill = I("orange"))
+h2 <- qplot(human_own$FMlabour, geom = "histogram", binwidth = 0.08, main = "Labour force participation rate", xlab = "ratio of labour force, female/male", ylab = "number of countries", col = I("grey"), fill = I("orange"))
 
-h3 <- qplot(human_own$Eedu, geom = "histogram", binwidth = 1.2, main = "Expected years of schooling per country", xlab = "schooling", col = I("grey"), fill = I("mediumorchid"))
+h3 <- qplot(human_own$Eedu, geom = "histogram", binwidth = 1.2, main = "Expected years of schooling per country", xlab = "years per country", ylab = "number of countries", col = I("grey"), fill = I("mediumorchid"))
 
-h4 <- qplot(human_own$Elife, geom = "histogram", binwidth = 4, main = "Expected life years at birth per country", xlab = "years", col = I("grey"), fill = I("blue"))
+h4 <- qplot(human_own$Elife, geom = "histogram", binwidth = 4, main = "Expected life years at birth per country", xlab = "years per country", ylab = "number of countries", col = I("grey"), fill = I("blue"))
 
 # Combining the plots using the function grid.arrange()
 
@@ -145,9 +153,39 @@ grid.arrange(h1, h2, h3, h4, ncol=2, nrow =2)
 
 &nbsp;
 
+<p class="text-success">**HISTOGRAMS OF GNI, MATERNAL MORTALITY, ADOLESCENT BIRTH RATE AND SHARE OF SEATS**</p>
+
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+library(ggplot2); library(gridExtra); library(dygraphs)
+
+# INITIALIZING THE PLOTS
+
+h5 <- qplot(human_own$GNIpc, geom = "histogram", binwidth = 10000, main = "Gross National Income, GNI", xlab = "GNI per capita PPP", ylab = "number of countries", col = I("grey"), fill = I("red"))
+
+h6 <- qplot(human_own$mort_ratio, geom = "histogram", binwidth = 50, main = "Maternal mortality ratio", xlab = "deaths per 100 000 live births", ylab = "number of countries", col = I("grey"), fill = I("cornflowerblue"))
+
+h7 <- qplot(human_own$ad_birth, geom = "histogram", binwidth = 10, main = "Adolescent birth rate", xlab = "births per 1000 women ages 15-19", ylab = "number of countries", col = I("grey"), fill = I("yellow"))
+
+h8 <- qplot(human_own$seats, geom = "histogram", binwidth = 3, main = "Share of seats in parliament", xlab = "% held by women", ylab = "number of countries", col = I("grey"), fill = I("violetred2"))
+
+# Combining the plots using the function grid.arrange()
+
+grid.arrange(h5, h6, h7, h8, ncol=2, nrow =2)
+```
+
+&nbsp;
+
+
+
+<p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
+
+&nbsp;
 
 ```{r}
 
 ```
+
+
 
 
