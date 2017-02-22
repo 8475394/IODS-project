@@ -131,6 +131,7 @@ kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
 <p class="text-success">**HISTOGRAMS OF EDUCATION, LABOUR FORCE, YEARS OF SCHOOLING AND LIFESPAN**</p>
 
 <br>
+
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra);library(dygraphs)
 
@@ -155,6 +156,7 @@ grid.arrange(h1, h2, h3, h4, ncol=2, nrow =2)
 <p class="text-success">**HISTOGRAMS OF GNI, MATERNAL MORTALITY, ADOLESCENT BIRTH RATE AND SHARE OF SEATS**</p>
 
 <br>
+
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra); library(dygraphs)
 
@@ -185,8 +187,9 @@ grid.arrange(h5, h6, h7, h8, ncol=2, nrow =2)
 Here you can have an initial look at the relationships between human data variables. I added a regression line into each scatterplot to better perceive the direction of the relationships. Next we can take a closer look at the actual values of correlations. 
 
 <br>
+
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
-require(GGally); require(ggplot2)
+library(GGally); library(ggplot2)
 g = ggpairs(human_own, lower = list(continuous = wrap("smooth", method = "lm", color="red")), upper = list(continuous = wrap("density", color = "blue")))
 g
 ```
@@ -204,7 +207,7 @@ Here I'm going to explore more closely the linear relationships between variable
 
 Interestingly the Gross National Income per capita (GNIpc) has a positive relationship with Expected years of schooling per country (Eedu) and Expected life years at birth per country (Elife). It may be a natural consequence that if a country is wealthy they can invest more for education. But I think there might be some other components affecting to the lifespan of population even though there is a positive correlation between GNI and life years. 
 
-If you look at the "Seats" column (or row), i.e. Share of seats in parliament (% held by women), there are no high correlation values while it has relationships with FMlabour and Eedu in to some extent. The former may suggest that when the ratio of female labour force participation is high the number of seats in parliament (held by women) can also be high and vice versa. The latter can imply that when the Expected years of schooling per country is high the number of seats in parliament (held by women) can also be high. Here I can imagine that if there are high amount of schooling years in some country there would be also more educated women among the population to be voted to the parliament. Note that the latter view point was just "an educated guess"! :D 
+If you look at the "Seats" column (or row), i.e. Share of seats in parliament (% held by women), there are no high correlation values while it has relationships with FMlabour and Eedu in to some extent. The former may suggest that when the ratio of female labour force participation is high the number of seats in parliament (held by women) can also be high and vice versa. The latter can imply that when the Expected years of schooling per country is high the number of seats in parliament (held by women) can also be high. Here I can imagine that if there are high amount of schooling years in some country there would be also more educated women among the population to be voted to the parliament. Note that the latter view point was just "an educated guess"!
 
 After the correlation matrix you can see a more visual "correlation matrix".
 
@@ -222,7 +225,9 @@ kable(cor_matrix, format = "pandoc", digits = 2,  align="c")
 &nbsp;
 
 <p class="text-success">**PLOTTING THE CORRELATION MATRIX**</p>
+
 <br>
+
 ```{r, fig.height=8, fig.width=8, message=FALSE, warning=FALSE}
 library(corrplot)
 corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
@@ -230,4 +235,30 @@ corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
 
 
 &nbsp;
+
+
+## Principal Component Analysis, PCA, with the NOT standardized data
+
+&nbsp;
+
+
+```{r}
+
+```
+
+
+
+
+&nbsp;
+
+
+
+## Repeating the PCA with standardiez data
+
+
+&nbsp;
+
+
+
+
 
