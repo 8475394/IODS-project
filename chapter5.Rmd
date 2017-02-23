@@ -109,9 +109,9 @@ According to the [Technical notes](http://hdr.undp.org/sites/default/files/hdr20
 
 I can't help myself to wonder the minimum value of Expected life years at birth per country (Elife). 49 years seem so low even though the mean and median values are much greater. 
 
-I think the distribution of Gross National Income per capita PPP emphasizes the huge distinctions between countries and of their wealth. Note that GNI per capita in PPP measures purchasing power parity which is useful for making comparisons between countries, [PPP](https://en.wikipedia.org/wiki/Purchasing_power_parity). However, there is a but when measuring the Human Development Index. If you look at [the table of HDI](http://hdr.undp.org/en/composite/HDI)(as seen earlier in this chapter), you can perceive that the GNI is not necessary the most critical measure in terms of well-being. For example the GNI of Montenegro is lower than average but the Human Development Index in very high. Note also that this was kind of an additional information since the actual HD index is not a part of this examination.
+I think the distribution of Gross National Income per capita PPP emphasizes the huge distinctions between countries and of their wealth. Note that GNI per capita in PPP measures purchasing power parity which is useful for making comparisons between countries, [PPP](https://en.wikipedia.org/wiki/Purchasing_power_parity). However, there is a but when measuring the Human Development Index. If you look at [the table of HDI](http://hdr.undp.org/en/composite/HDI) (as seen earlier in this chapter), you can perceive that the GNI is not necessary the most critical measure in terms of well-being. For example the GNI of Montenegro is lower than average but the Human Development Index in very high. Note also that this was kind of an additional information since the actual HD index is not a part of this examination.
 
-Based on the technical notes the Maternal Mortality rate represent the maternal health, the higher the rate the poorer the maternal health. If you look at [the table of GII](http://hdr.undp.org/en/composite/GII)(as seen earlier in this chapter), you can perceive that the maximum value of the maternal mortality among countries with very high human development is 69. This is just to give you some understanding of this scale. 
+Based on the technical notes the Maternal Mortality rate represent the maternal health, the higher the rate the poorer the maternal health. If you look at [the table of GII](http://hdr.undp.org/en/composite/GII) (as seen earlier in this chapter), you can perceive that the maximum value of the maternal mortality among countries with very high human development is 69. This is just to give you some understanding of this scale. 
 
 Adolescent birth rate represents the rate of births per 1000 women between ages 15 and 19. I think this scale varies also a lot. However the distribution is skewed to the right (positive skewness) suggesting that there are more lower than higher values in this scale. 
 
@@ -132,7 +132,7 @@ kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
 
 <br>
 
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+```{r, fig.height=8, fig.width=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra);library(dygraphs)
 
 # INITIALIZING THE PLOTS
@@ -157,7 +157,7 @@ grid.arrange(h1, h2, h3, h4, ncol=2, nrow =2)
 
 <br>
 
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+```{r, fig.height=8, fig.width=8, message=FALSE, warning=FALSE}
 library(ggplot2); library(gridExtra); library(dygraphs)
 
 # INITIALIZING THE PLOTS
@@ -241,9 +241,57 @@ corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
 
 &nbsp;
 
+Here I'm going to perform principal component analysis (PCA) without standardizing the Human data. Note that the PCA is performed again within the next chapter but with standardized data. Thus the purpose is to perceive and interpret if there are any differences between these methods or models and my guess is that the actual purpose is to show and justify why the data has to be standardized. So let's take a look my the first model.
+
+There are to slightly different methods to perform the PCA: the Eigenvalue Decomposition and the Singular Value Decomposition. According to our instructions in DataCamp the latter is preferred.
+
+&nbsp;
+
+<p class="text-primary">**SUMMARY TABLE AS A REMINDER AND FOR COMPARING THESE RESULTS WITH RESULTS OF THE NEXT CHAPTER**</p>
 
 ```{r}
+library(knitr)
+kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
+```
 
+
+&nbsp;
+
+<p class="text-primary">**PERFORMING PCA WITH SINGULAR VALUE DECOMPOSITION METHOD**</p>
+
+&nbsp;
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+
+# Performing the PCA with Singular Value Decomposition (SVD) method
+pca_human1 <- prcomp(human_own)
+s1 <- summary(pca_human1)
+s1
+
+# Drawing a biplot of the principal component representation and the original variables
+biplot(pca_human1, choices = 1:2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"))
+```
+
+&nbsp;
+
+
+<p class="text-primary">**ADJUSTING THE CODE TO GET THE PERCENTAGES OF VARIANCE BY EACH PCA**</p>
+
+&nbsp;
+
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+
+# rounded percetanges of variance captured by each PCA
+pca_pr1 <- round(100*s1$importance[2, ], digits = 1)
+print(pca_pr1)
+
+# creating object pc_lab to be used as axis labels
+pc_lab1 <- paste0(names(pca_pr1), " (", pca_pr1, "%)")
+pc_lab1
+
+# drawing the biplot again with captions
+biplot(pca_human1, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "100%", ylab = "0%")
 ```
 
 
@@ -253,12 +301,61 @@ corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
 
 
 
-## Repeating the PCA with standardiez data
+## Repeating the PCA with standardized data
 
 
 &nbsp;
 
+WRITING HERE
+
+&nbsp;
+
+<p class="text-warning">**SUMMARY TABLE OF THE STANDARDIZED HUMAN DATA**</p>
+
+```{r}
+# Standardizing the Human data
+std_human <- scale(human_own)
+
+library(knitr)
+kable(summary(std_human), format = "pandoc", digits = 2,  align="l")
+```
+
+&nbsp;
+
+<p class="text-warning">**PERFORMING PCA WITH SINGULAR VALUE DECOMPOSITION METHOD**</p>
+
+&nbsp;
 
 
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 
+# Performing the PCA with Singular Value Decomposition (SVD) method
+pca_human2 <- prcomp(std_human)
+s2 <- summary(pca_human2)
+s2
+
+# Drawing a biplot of the principal component representation and the original variables
+biplot(pca_human2, choices = 1:2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"))
+```
+
+&nbsp;
+
+<p class="text-warning">**ADJUSTING THE CODE TO GET THE PERCENTAGES OF VARIANCE BY EACH PCA**</p>
+
+&nbsp;
+
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+
+# rounded percetanges of variance captured by each PCA
+pca_pr2 <- round(100*s2$importance[2, ], digits = 1)
+print(pca_pr2)
+
+# creating object pc_lab to be used as axis labels
+pc_lab2 <- paste0(names(pca_pr2), " (", pca_pr2, "%)")
+pc_lab2
+
+# drawing the biplot again with captions
+biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "100%", ylab = "0%")
+```
 
