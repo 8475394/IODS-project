@@ -4,7 +4,7 @@
 
 In this chapter the purpose is to get familiar with some of the Dimensionality Reduction Techniques including Principal Component Analysis (PCA) and Multiple Correspondece Analysis (MCA). 
 
-Principal Component Analysis is way of identifying patterns in data, and expressing the data in such a way as to highlight their similarities and differences. PCA is a procedure After founding the patterns PCA has the tools of compressing the data by reducing the number of dimensions, without much loss of information. [Additional info of PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)
+Principal Component Analysis is way of identifying patterns in data, and expressing the data in such a way as to highlight their similarities and differences. After founding the patterns PCA has the tools of compressing the data by reducing the number of dimensions, without much loss of information. [Additional info of PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)
 
 Multiple Correspondence Analysis is used for the same purpose as PCA but it can be utilized if the data contains categorical variables. [Additional info of MCA](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis)
 
@@ -184,7 +184,13 @@ grid.arrange(h5, h6, h7, h8, ncol=2, nrow =2)
 <p class="text-success">**INITIAL RESULTS OF THE RELATIONSHIPS**</p>
 
 
-Here you can have an initial look at the relationships between human data variables. I added a regression line into each scatterplot to better perceive the direction of the relationships. Next we can take a closer look at the actual values of correlations. 
+Here you can have an initial look at the relationships between human data variables. I added a regression line into each scatterplot to better perceive the direction of the relationships. 
+
+
+**NOTE**, According to James, Witten, Hastie & Tibshirani (2013, 375) these two-dimenional scatterplots are most likely not so informative when we want to explore the total information of the data. This is the case especially if we have a lot of variables. Futhermore these two-dimensional plots contain just a small fraction of the total information present in the dataset. 
+
+However I will explore also the correlations between the variables before continuing the dimensionality reduction part. Correlation matrix and plot are seen after thesen initial results.
+
 
 <br>
 
@@ -237,17 +243,22 @@ corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
 &nbsp;
 
 
-## Principal Component Analysis, PCA, with the NOT standardized data
+## Principal Component Analysis, PCA, with the NON-standardized data
 
 &nbsp;
 
-Here I'm going to perform principal component analysis (PCA) without standardizing the Human data. Note that the PCA is performed again within the next chapter but with standardized data. Thus the purpose is to perceive and interpret if there are any differences between these methods or models and my guess is that the actual purpose is to show and justify why the data has to be standardized. So let's take a look my the first model.
+When we have a large set of correlated variables, Principal Component Analysis allows us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in our dataset. PCA is an unsupervised learning algorithm which means that there is no outcome to be predicted but instead it tries to find patterns in the data. This can be done by data visualizing as seen in this and the next chapter.
 
-There are to slightly different methods to perform the PCA: the Eigenvalue Decomposition and the Singular Value Decomposition. According to our instructions in DataCamp the latter is preferred.
+First I'm going to perform principal component analysis (PCA) without standardizing the Human data. Note that the PCA is performed again within the next chapter but with standardized dataset. Thus the purpose is to perceive and interpret if there are any differences between these methods or models and my guess is that the actual purpose is to show and justify why the data has to be standardized. 
+
 
 &nbsp;
 
 <p class="text-primary">**SUMMARY TABLE AS A REMINDER AND FOR COMPARING THESE RESULTS WITH RESULTS OF THE NEXT CHAPTER**</p>
+
+Here you can see the same summary table of Human dataset as seen in the beginning of this chapter. It is shown again for the practical reasons to better compare the results between PCAs with non-standardized and standardized datasets.
+
+&nbsp;
 
 ```{r}
 library(knitr)
@@ -259,6 +270,12 @@ kable(summary(human_own), format = "pandoc", digits = 2,  align="l")
 
 <p class="text-primary">**PERFORMING PCA WITH SINGULAR VALUE DECOMPOSITION METHOD**</p>
 
+There are two slightly different methods to perform the PCA: the Eigenvalue Decomposition and the Singular Value Decomposition. According to our instructions in DataCamp the latter is preferred.
+
+From the tables and biplot below you can see the results of Principal Component Analysis with non-standardized Human data. Since PCA is based capturing the biggest variation of the dataset, you can perceive that the method captures only the variance of Gross National Income (GNI). This is because the GNI has a largest range of its scale and the other variables are not comparable with this scale. Thus, we can have such a misleading results if we forget to standardize our data. 
+ 
+
+
 &nbsp;
 
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
@@ -268,20 +285,6 @@ pca_human1 <- prcomp(human_own)
 s1 <- summary(pca_human1)
 s1
 
-# Drawing a biplot of the principal component representation and the original variables
-biplot(pca_human1, choices = 1:2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"))
-```
-
-&nbsp;
-
-
-<p class="text-primary">**ADJUSTING THE CODE TO GET THE PERCENTAGES OF VARIANCE BY EACH PCA**</p>
-
-&nbsp;
-
-
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
-
 # rounded percetanges of variance captured by each PCA
 pca_pr1 <- round(100*s1$importance[2, ], digits = 1)
 print(pca_pr1)
@@ -290,12 +293,9 @@ print(pca_pr1)
 pc_lab1 <- paste0(names(pca_pr1), " (", pca_pr1, "%)")
 pc_lab1
 
-# drawing the biplot again with captions
-biplot(pca_human1, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "100%", ylab = "0%")
+# drawing the biplot with captions
+biplot(pca_human1, cex = c(0.8, 1), col = c("dimgrey", "darkorange"), xlab = "100%", ylab = "0%")
 ```
-
-
-
 
 &nbsp;
 
@@ -306,11 +306,17 @@ biplot(pca_human1, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "100%
 
 &nbsp;
 
-WRITING HERE
+Here I provide some additional information of PCA. The purpose of PCA is to find a low-dimensional representation of a dataset that contains as much as possible of the variation. It is very important to realize that not all of these dimensions, i.e. pricipal components, are equally interesting. Furthermore it is known that the first pricipal component captures the most of the variance in the **normalized** (standardized) dataset. The second principal component captures the maximal variance of the dataset that are uncorrelated with the first component and so on.(James, Witten, Hastie & Tibshirani, 2013, 375-376.) 
+
 
 &nbsp;
 
 <p class="text-warning">**SUMMARY TABLE OF THE STANDARDIZED HUMAN DATA**</p>
+
+As you can see from the table below, the distributions of the variables changed after stardardizing the dataset. Now the mean of every variable is zero and the observations varies on both sides of zero. This means that the different distributions are now more comparable for the further purpose.
+
+&nbsp;
+
 
 ```{r}
 # Standardizing the Human data
@@ -326,36 +332,42 @@ kable(summary(std_human), format = "pandoc", digits = 2,  align="l")
 
 &nbsp;
 
+The tables and biplot below tell a huge different story about principal components of the Human data compared with earlier findings. The tables suggest that the first principal component has captured 53.6% of the variance from the Human data. The second component has captured 16.2% and so on. As you can see, these shares are diminishing quite fast implying that the first principal components actually captures the most of the variance. 
 
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+
+
+
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
 
 # Performing the PCA with Singular Value Decomposition (SVD) method
 pca_human2 <- prcomp(std_human)
 s2 <- summary(pca_human2)
 s2
 
-# Drawing a biplot of the principal component representation and the original variables
-biplot(pca_human2, choices = 1:2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"))
-```
-
-&nbsp;
-
-<p class="text-warning">**ADJUSTING THE CODE TO GET THE PERCENTAGES OF VARIANCE BY EACH PCA**</p>
-
-&nbsp;
-
-
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
-
 # rounded percetanges of variance captured by each PCA
 pca_pr2 <- round(100*s2$importance[2, ], digits = 1)
 print(pca_pr2)
 
+```
+
+&nbsp;
+
+The pricipal components are illustrated in the biplot below. Just to remind that there are 155 countries and 8 variables thus the principal component score vectors have lenght n=155, and the pricipal component loading vectors have lenght p=8. Figure below plots the first two pricipal components of the data and represents both the principal component scores and the loading vectors.
+
+&nbsp;
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 # creating object pc_lab to be used as axis labels
 pc_lab2 <- paste0(names(pca_pr2), " (", pca_pr2, "%)")
 pc_lab2
 
 # drawing the biplot again with captions
-biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "100%", ylab = "0%")
+biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "53.6%", ylab = "16.2%")
 ```
+
+
+&nbsp;
 
