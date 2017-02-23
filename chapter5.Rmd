@@ -352,25 +352,29 @@ print(pca_pr2)
 
 &nbsp;
 
+<p class="text-warning">**ILLUSTRATING AND INTERPRETING THE RESULTS WITH A BIPLOT**</p>
+
 The pricipal components are illustrated in the biplot below. Just to remind that there are 155 countries and 8 variables thus the principal component score vectors have lenght n=155, and the pricipal component loading vectors have lenght p=8. Figure below plots the first two pricipal components of the data and represents both the principal component scores and the loading vectors.
 
 From the biplot we can see that the first principal component places approximately equal weight on mort_ratio and ad_birth corresponding to their high reciprocal and positive correlation. Accordingly The first pricipal component places approximately equal weight on SFM_edu, Eedu, Elife and GNIpc which also corresponds with the high positive correlations between eahc of these variables. Note that each of the former variables correlate negatively with each of the latter variables". This means that these variables belong into the same principal component, i.e. representing the same phenomenon but from the opposite angles. 
 
 Now I have to think what could be the common nominator for all of the variables listed so far. I think I will call the first principal component as the **National well-being index** since the component consists features like level and lenght of education, the lifespan and the Gross National Income combined with maternal mortality ratio and adolescent's birth rate. Let's take some examples from the biplot. Countries like Qatar, Australia and Norway seem to have a high index of wellbeing since they have high negative scores on the first component, i.e. low scores in terms of mortality and adolescent's birth rate and "high opposite scores". Accordingly countries like Chad, Niger and Sierra Leone seem to have a low index of wellbeing since they have high positive scores on the first component, i.e. high scores in terms of mortality and adolescent's birth rate and "low opposite scores". 
 
-I think, in certain terms, I could compare the scale of the first principal component to Osgood's scale which attemps to measure some polarities or contrasts.
+I think, in certain terms, I could compare the scale of the the first principal component to Osgood's scale which attemps to measure some polarities or contrasts but usually with opposite adjectives. But if we wanted to combine the variable for example by summing, we could translate the scale direction of either set of variables.
 
-Then we can take a look the other axis i.e. the second principal component. From the biplot we can see that the second component places approximately equal weight on FMlabour and seats also corresponding to their high positive correlation. Both of the variables could represent the rate of females at "work", even though the share of seats in parliament can be seen as a public "job". Nevertheless the variables could represent also some forms of equality and inequality. I think I will name the second component as **National Index of Equal Employment**. 
+Then we can take a look at the other axis i.e. the second principal component. From the biplot we can see that the second component places approximately equal weight on FMlabour and seats also corresponding to their high positive correlation. Both of the variables could represent the rate of females at "work", even though the share of seats in parliament can be seen as a public "job". Nevertheless the variables could represent also some forms of equality and inequality. I think I will name the second component as **National Index of Equal Employment**. 
+
+Let's take some examples from the biplot in terms of the second component. Countries like Iceland, Bolivia, Mozambique and especially the Rwanda have high positive scores on our "National Index of Equal Employment" while countries like Iran, Lebanon and Yemen have very low scores. 
+
+But since the biplot is a "fourfold table", we can find more interpretations. We can start from the upper left corner where we can find Finland, earlier mentioned Island and Denmark, i.e. Scandinavia and some other European countries. These countries represent the ideal places considering both our indices, i.e. high in employment equality and well-being. Upper right corner has high in equality but low in well-being, e.g. Mozambigue. Lower right corner has low both in well-being and equality and there you can find for exmple Niger and Afghanistan. Finally we have lower left corner which represent countries with high in well-being but low with employment equality. There are countries like Qatar, Kuwait and Saudi-Arabia.
 
 &nbsp;
 
 ```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
-# creating object pc_lab to be used as axis labels
-pc_lab2 <- paste0(names(pca_pr2), " (", pca_pr2, "%)")
-pc_lab2
 
 # drawing the biplot again with captions
-biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "53.6%", ylab = "16.2%")
+
+biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "National well-being index", ylab = "National Index of Equal Employment")
 ```
 
 
