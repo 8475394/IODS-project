@@ -484,9 +484,7 @@ library(FactoMineR)
 
 # Not yet plotting
 mca <- MCA(my_tea, graph = FALSE)
-
 summary(mca)
-
 ```
 
 &nbsp;
