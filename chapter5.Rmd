@@ -384,7 +384,9 @@ biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "Nati
 
 &nbsp;
 
-Here the purpose is to get familiar with Multiple Correspondece Analysis, MCA. For this purpose I have to download a new dataset since MCA can be utilized when the data contains categorical variables and my earlier dataset contained only continuous variables. 
+Here the purpose is to get familiar with Multiple Correspondece Analysis, MCA. It is a dimensions reducing method and it represents the data in 2- or 3-dimensional space.  [Here](https://github.com/gabi493/ADEI/blob/master/Husson%20F.%20et%20al.%20-%20Exploratory%20Multivariate%20Analysis%20by%20Example%20-%20Using%20R%20-%202011.pdf) you can find additional information concerning the MCA.
+
+For the purpose of Multiple Correspondence Analysis I have to download a new dataset since MCA can be utilized when the data contains categorical variables and my earlier dataset contained only continuous variables. 
 
 I'm going to download the **Tea dataset** from the **FactoMineR** packages.  
 
@@ -392,7 +394,7 @@ I'm going to download the **Tea dataset** from the **FactoMineR** packages.
 
 <p class="text-danger">**STRUCTURE OF THE TEA DATASET**</p>
 
-As you can imagine the data concern a questionnaire on tea consumption. There are 300 individuals who where asked how they drink tea, 18 questions. Then there are supplementary variables like age and sex. Note that the age is the only continuous variable in the dataset. 12 questions concern about individuals' product perception and 4 guestions consis some personal details.  
+As you can imagine the data concern a questionnaire on tea consumption. There are 300 individuals who where asked how they drink tea, 18 questions. Then there are supplementary variables like age and sex. Note that the age is the only continuous variable in the dataset. 12 questions concern about individuals' product perception and 4 guestions consis some personal details. You can see the whole structure from table below.
 
 &nbsp;
 
@@ -407,18 +409,24 @@ str(tea)
 
 <p class="text-danger">**VARIABLES TO KEEP**</p>
 
-I'm going to reduce the number of variables and choose some specific ones:
+I'm going to reduce the number of variables and choose some specific active variables, including:
 
-1. breakfast
-2. evening
-3. lunch
-4. dinner
-5. Tea
-6. How
-7. sugar
-8. how
-9. where
-10. price
+
+**The time of the day when the tea in drunk**
+
+1. breakfast - Do you drink tea at breakfast (yes, no)?
+2. evening - Do you drink tea in the evening (yes, no)?
+3. lunch - Do you drink tea after lunch (yes, no)?
+4. dinner - Do you drink tea after dinner (yes, no)?
+
+**Tea-drinking behaviour**
+
+5. Tea - What kind of tea do you drink the most (black tea, green team flavoured tea)?
+6. How - How do you take your tea (nothing added, with lemon, with milk, other)? 
+7. sugar - Do you add sugar to your tea (yes, no)?
+8. how - What kind of tea do you buy (tea bags, loose tea, both)?
+9. where - Where do you buy your tea (in the supermarket, in specialist shops, both)?
+10. price - What kind of tea do you buy (cheapest, supermarket brand, well-known brand, luxury, it varies, I don't know)?
 
 Additionally I'm going to call this new data as **my_tea**
 
@@ -444,6 +452,7 @@ From the table below you can perceive that there are 300 observations, i.e. indi
 
 ```{r}
 str(my_tea)
+head(my_tea)
 ```
 
 
@@ -478,19 +487,75 @@ gather(my_tea) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geo
 
 <p class="text-danger">**MULTIPLE CORRESPONDENCE ANALYSIS WITH MY_TEA DATASET**</p>
 
+This dataset could be studied according to the individuals, the variables and/or the categories. If studying the individuals, it mean to understand similarities between the individuals in terms of all variables. For example, two tea drinker are considered similar if they have answered the questions in the same way. 
+
+When studying variables and categories the aim is to summarise the relationships between all of the variables. Thus we are looking for a "synthetic" variables which sum up the information contained within a number of variables. This information can be studied in terms of the categories.
+
+In MCA the main focus is on studying categories, as they represent both variables and a group of individuals.
+
+Here the MCA is performed on the active individuals/variables
+
+&nbsp;
 
 ```{r}
 library(FactoMineR)
 
 # Not yet plotting
 mca <- MCA(my_tea, graph = FALSE)
-summary(mca)
+
+print(mca) # Contains results as lists
 ```
+
+&nbsp;
+
+<p class="text-danger">**SUMMARY TABLES OF MCA**</p>
+
+The MCA summary contains 4 tables including:
+
+* **Table 1** - Eigenvalues: this table contains the variances and the percentage of variances retained by each dimensions.
+* **Table 2** contains the coordinates, the contribution and the cos2 (quality of representation[in 0-1]) of the first 10 active individuals on the dimensions.
+* **Table 3** contains the coordinates, the contribution and the cos2 (quality of representation[in 0-1]) of the first 10 active variable categories on the dimensions. This table contains also a column called v.test. The value of the v.test is generally comprised between 2 and -2. For a given variable category, if the absolute value of the v.test on superior to 2, this means that the coordinate is significantly different from 0.
+* **Table 4** - categorical variables (eta2): contains the squared correlation between each variable and the dimensions.
+
+&nbsp;
+
+```{r}
+summary(mca, nb.dec = 2)
+```
+
+&nbsp;
+
+
+```{r}
+library(factoextra)
+
+# http://www.sthda.com/english/wiki/correspondence-analysis-in-r-the-ultimate-guide-for-the-analysis-the-visualization-and-the-interpretation-r-software-and-data-mining
+eig <- get_eigenvalue(mca)
+trace <- sum(eig$eigenvalue)
+cor.coef <- sqrt(trace)
+cor.coef
+```
+
+&nbsp;
+
+
+```{r}
+library(factoextra)
+# http://www.sthda.com/english/wiki/multiple-correspondence-analysis-essentials-interpretation-and-application-to-investigate-the-associations-between-categories-of-multiple-qualitative-variables-r-software-and-data-mining
+
+eigenvalues <- get_eigenvalue(mca)
+head(round(eigenvalues, 2))
+
+# scree plot
+fviz_screeplot(mca)
+```
+
 
 &nbsp;
 
 ```{r, fig.height=8, fig.width=10}
 plot(mca, invisible = c("ind"), habillage = "quali")
+plot(mca, habillage = "quali")
 ```
 
 
@@ -498,6 +563,10 @@ plot(mca, invisible = c("ind"), habillage = "quali")
 &nbsp;
 
 
+```{r, fig.height=8, fig.width=10}
+library(factoextra)
+fviz_mca_biplot(mca)
+```
 
 
 
