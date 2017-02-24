@@ -615,3 +615,68 @@ table_coord
 fviz_mca_var(mca)
 ```
 
+&nbsp;
+
+<p class="text-danger">**CONTRIBUTION OF VARIABLES TO FIRST DIMENSION**</p>
+
+Below you can see the barplot of contributors to the first dimension. If the contribution of variable categories were uniform, the expected value would be 1/ number of categories = 1/29 = 3.4%. The red dashed line on the graph below actually indicates this expected average contribution. Additionally for a given dimension, any category with a contribution larger than the dashed line could be considerer as important in contributing to that dimension.
+
+Thus we can see that the categories "tea shop", "p_upscale", "unpackaged", "chain store", "tea bag" and "p_branded" are the most important in terms of the first dimension. Next we can take a look at the second dimension. This is somewhat consistent with my initial interpretation earlier. 
+
+
+&nbsp;
+
+```{r, fig.height=6, fig.width=10}
+library(factoextra)
+
+# Contributions of variables on first dimension
+fviz_contrib(mca, choice = "var", axes = 1)
+```
+
+
+&nbsp;
+
+
+
+<p class="text-danger">**CONTRIBUTION OF VARIABLES TO SECOND DIMENSION**</p>
+
+From the plot of second dimension we can see that the most important contributors are "chain store+tea shop", "tea bag+unpackaged", "p_variable", "tea shop (again)", "lunch" and "green". Here it is more obvious that the second dimension captures the kind of categories which are "unclear". In other words, there are categories with multiple options (e.g. by tea from the chain store or tea shop), and the category (p_variable) which indicates that the price preferencies varies (e.g. sometimes cheapest, sometimes luxury, etc.). 
+
+&nbsp;
+
+
+```{r, fig.height=6, fig.width=10}
+# Contributions of rows on second dimension
+fviz_contrib(mca, choice = "var", axes = 2)
+```
+
+
+&nbsp;
+
+<p class="text-danger">**TOTAL CONTRIBUTION OF VARIABLES TO FIRST AND SECOND DIMENSIONS**</p>
+
+This is certainly very consistent with the first and second plot but we can print a biplot containing the contributions.  
+
+&nbsp;
+
+
+```{r, fig.height=6, fig.width=10}
+# Total contribution on both dimensions
+fviz_contrib(mca, choice = "var", axes = 1:2)
+```
+
+&nbsp;
+
+<p class="text-danger">**BIPLOT OF TOTAL CONTRIBUTION**</p>
+
+This is nice and much more informative than the earlier biplots. Now I think I have to stop the exploring even if [here](http://www.sthda.com/english/wiki/multiple-correspondence-analysis-essentials-interpretation-and-application-to-investigate-the-associations-between-categories-of-multiple-qualitative-variables-r-software-and-data-mining#summary-of-mca-outputs) would be a lot of interesting functions and ways to go further on this analysis. However, I don't think the additional attempts of dimension reduction would generate any new information or change on the results as seen this far.
+
+&nbsp;
+
+```{r, fig.height=6, fig.width=10}
+library(factoextra)
+fviz_mca_var(mca, col.var = "contrib") + scale_color_gradient2(low="white", mid="blue", high="red", midpoint=2)
+```
+
+&nbsp;
+
