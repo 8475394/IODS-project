@@ -493,7 +493,7 @@ When studying variables and categories the aim is to summarise the relationships
 
 In MCA the main focus is on studying categories, as they represent both variables and a group of individuals.
 
-Here the MCA is performed on the active individuals/variables
+Here the MCA is performed on the active individuals/variables.
 
 &nbsp;
 
@@ -517,6 +517,7 @@ The MCA summary contains 4 tables including:
 * **Table 3** contains the coordinates, the contribution and the cos2 (quality of representation[in 0-1]) of the first 10 active variable categories on the dimensions. This table contains also a column called v.test. The value of the v.test is generally comprised between 2 and -2. For a given variable category, if the absolute value of the v.test on superior to 2, this means that the coordinate is significantly different from 0.
 * **Table 4** - categorical variables (eta2): contains the squared correlation between each variable and the dimensions.
 
+
 &nbsp;
 
 ```{r}
@@ -525,16 +526,9 @@ summary(mca, nb.dec = 2)
 
 &nbsp;
 
+<p class="text-danger">**EIGENVALUES**</p>
 
-```{r}
-library(factoextra)
-
-# http://www.sthda.com/english/wiki/correspondence-analysis-in-r-the-ultimate-guide-for-the-analysis-the-visualization-and-the-interpretation-r-software-and-data-mining
-eig <- get_eigenvalue(mca)
-trace <- sum(eig$eigenvalue)
-cor.coef <- sqrt(trace)
-cor.coef
-```
+The proportion of variance retained by different dimension (axes) can be extracted using the function "get_eigenvalue". Note that the eigenvalues were shown also in the table above but here I'm going to show also a screeplot of eigenvalues. All of these tables and plots are telling that the first two dimensions are capturing only approximately 21% of the variance.
 
 &nbsp;
 
@@ -551,22 +545,46 @@ fviz_screeplot(mca)
 ```
 
 
-&nbsp;
-
-```{r, fig.height=8, fig.width=10}
-plot(mca, invisible = c("ind"), habillage = "quali")
-plot(mca, habillage = "quali")
-```
-
 
 
 &nbsp;
 
+
+<p class="text-danger">**BIPLOT OF VARIABLES/CATEGORIES INCLUDING INDIVIDUALS**</p>
+
+This biplot shows a global patter within the data. Rows, i.e. individuals, are shown by blue points and number, whereas the columns (variable categories) by red triangles. The distance between any row points or column points gives a measure of their similarity or dissimilarity. Thus row/column points with similar profile are closed on the factor map.
+
+&nbsp;
 
 ```{r, fig.height=8, fig.width=10}
 library(factoextra)
 fviz_mca_biplot(mca)
 ```
+
+
+<p class="text-danger">**BIPLOT OF VARIABLES/ CATEGORIES**</p>
+
+Here I show the biplot of variables and their categories. We can say that the first dimension or component opposes for example the categories "tea shop" with the category "chain store", "unpackaged" with the "tea bag", "p_upscale" with the categories "p_unknown", "p_private label", "p_branded" and "p-cheap". Thus it seems that the first component opposes at least sum luxury features with those of the more regular or ordinary features. 
+
+The second component distinguishes for example the categories "breakfast" with "Not breakfast", "alone" with "lemon" and "milk", "lunch" with "not lunch" and the category "green" with categories "Earl grey" and "black". Thus it seems that second component opposes some features of timing and flavour. 
+
+
+
+&nbsp;
+
+
+```{r, fig.height=8, fig.width=10}
+plot(mca, invisible = c("ind"), habillage = "quali")
+
+```
+
+&nbsp;
+
+
+
+&nbsp;
+
+
 
 
 
