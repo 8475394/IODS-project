@@ -380,7 +380,7 @@ biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "Nati
 
 &nbsp;
 
-## Multiple Correspondece Analysis, MCA
+## Multiple Correspondence Analysis, MCA
 
 &nbsp;
 
@@ -568,23 +568,50 @@ Here I show the biplot of variables and their categories. We can say that the fi
 
 The second component distinguishes for example the categories "breakfast" with "Not breakfast", "alone" with "lemon" and "milk", "lunch" with "not lunch" and the category "green" with categories "Earl grey" and "black". Thus it seems that second component opposes some features of timing and flavour. 
 
+But it is important to note there are not so powerful (varianle/category) distinctions in the data as a whole. This was also apparent when exploring the eigenvalues. The first and the second dimension didn't stand out considering the other dimensions. I think that those variables with clear categories distinct the most. For example the variables "how" and "when" and their categories of "both", i.e. "chain store+tea shop" and "tea bag+unpackages" cause some problems in terms of the clear differences.
+
 
 
 &nbsp;
 
 
 ```{r, fig.height=8, fig.width=10}
+
 plot(mca, invisible = c("ind"), habillage = "quali")
 
 ```
 
 &nbsp;
 
+<p class="text-danger">**VARIABLES CATEGORIES**</p>
 
+The function "get_mca_var" is used to extract the results for variable categories. It returns a list containing the coordinates, the cos2 and the contribution of variable categories.
+
+The plot below attempts to show the (squred) correlations between variables and principal dimensions. it is not so clear which variables are correlated with the first dimension and which are with second. My interpretation is that the variables "where", "how" and "price" could correlate with the first dimension while the other variables may correlate more with the second dimensions.  
 
 &nbsp;
 
+```{r, fig.height=5, fig.width=8}
+var <- get_mca_var(mca)
+var # MCA results for variables
 
+plot(mca, choix = "var")
 
+```
 
+&nbsp;
+
+<p class="text-danger">**COORDINATES OF VARIABLES CATEGORIES**</p>
+
+Hmmm.. This is actually the same biplot as before but with the different function. I'll keep it here to recall the alternatives. But I also printed all of the coordinates to take a numerical look at the variable positioning. 
+
+&nbsp;
+
+```{r, fig.height=8, fig.width=10}
+library(factoextra)
+table_coord <- (round(var$coord, 2))
+table_coord
+
+fviz_mca_var(mca)
+```
 
