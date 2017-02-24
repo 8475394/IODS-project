@@ -2,11 +2,11 @@
 
 &nbsp;
 
-In this chapter the purpose is to get familiar with some of the Dimensionality Reduction Techniques including Principal Component Analysis (PCA) and Multiple Correspondece Analysis (MCA). 
+In this chapter the purpose is to get familiar with some Dimensionality Reduction Techniques including Principal Component Analysis (PCA) and Multiple Correspondece Analysis (MCA). 
 
-Principal Component Analysis is way of identifying patterns in data, and expressing the data in such a way as to highlight their similarities and differences. After founding the patterns PCA has the tools of compressing the data by reducing the number of dimensions, without much loss of information. [Additional info of PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)
+Principal Component Analysis is a way of identifying patterns in data, and expressing the data in such a way as to highlight their similarities and differences. After founding the patterns PCA has the tools of compressing the data by reducing the number of dimensions, without much loss of information. [Additional info of PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)
 
-Multiple Correspondence Analysis is used for the same purpose as PCA but it can be utilized if the data contains categorical variables. [Additional info of MCA](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis)
+Multiple Correspondence Analysis is used for the same purposes as PCA but it can be utilized if the data contains categorical variables. [Additional info of MCA](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis)
 
 
 &nbsp;
@@ -78,7 +78,7 @@ human_own <- read.table(file.path("C:/Users/heidi/Documents/YLIOPISTO/TILASTOTIE
 
 <p class="text-danger">**STRUCTURE OF THE HUMAN DATASET**</p>
 
-From the structure table you can notice that there are 155 observation and 8 variables. Note that the country is a rowname and it doesn't appear to variable list.
+From the structure table you can notice that there are 155 observation and 8 variables. Note that the country is actaully a rowname and it doesn't appear to variable list.
 
 &nbsp;
 
@@ -109,11 +109,11 @@ According to the [Technical notes](http://hdr.undp.org/sites/default/files/hdr20
 
 I can't help myself to wonder the minimum value of Expected life years at birth per country (Elife). 49 years seem so low even though the mean and median values are much greater. 
 
-I think the distribution of Gross National Income per capita PPP emphasizes the huge distinctions between countries and of their wealth. Note that GNI per capita in PPP measures purchasing power parity which is useful for making comparisons between countries, [PPP](https://en.wikipedia.org/wiki/Purchasing_power_parity). However, there is a but when measuring the Human Development Index. If you look at [the table of HDI](http://hdr.undp.org/en/composite/HDI) (as seen earlier in this chapter), you can perceive that the GNI is not necessary the most critical measure in terms of well-being. For example the GNI of Montenegro is lower than average but the Human Development Index in very high. Note also that this was kind of an additional information since the actual HD index is not a part of this examination.
+I think the distribution of Gross National Income per capita PPP emphasizes the huge distinctions between countries and of their wealth. Note that GNI per capita in PPP measures purchasing power parity which is useful for making comparisons between countries, [PPP](https://en.wikipedia.org/wiki/Purchasing_power_parity). However, there is a but when measuring the Human Development Index. If you look at [the table of HDI](http://hdr.undp.org/en/composite/HDI) (as seen earlier), you can perceive that the GNI is not necessary the most critical measure in terms of well-being. For example the GNI of Montenegro is lower than average but the Human Development Index is very high. Note also that this was kind of an additional information since the actual HD index is not a part of this examination.
 
-Based on the technical notes the Maternal Mortality rate represent the maternal health, the higher the rate the poorer the maternal health. If you look at [the table of GII](http://hdr.undp.org/en/composite/GII) (as seen earlier in this chapter), you can perceive that the maximum value of the maternal mortality among countries with very high human development is 69. This is just to give you some understanding of this scale. 
+Based on the technical notes the Maternal Mortality rate represent the maternal health, the higher the rate the poorer the maternal health. If you look at [the table of GII](http://hdr.undp.org/en/composite/GII) (as seen earlier), you can perceive that the maximum value of the maternal mortality among countries with very high human development is 69. This is just to give you some understanding of this scale. 
 
-Adolescent birth rate represents the rate of births per 1000 women between ages 15 and 19. I think this scale varies also a lot. However the distribution is skewed to the right (positive skewness) suggesting that there are more lower than higher values in this scale. 
+Adolescent birth rate represents the rate of births per 1000 women between ages between 15 and 19. I think this scale varies also a lot. However the distribution is skewed to the right (positive skewness) suggesting that there are more lower than higher values in this scale. 
 
 The distribution of seats represents the share (%) of seats in parliament held by women in each country. Here you can see for example that it is not common to have more females than males in parliaments as the median and mean values are both close to 20 %. Also there are just few countries where the women are in majority.   
 
@@ -189,7 +189,7 @@ Here you can have an initial look at the relationships between human data variab
 
 **NOTE**, According to James, Witten, Hastie & Tibshirani (2013, 375) these two-dimenional scatterplots are most likely not so informative when we want to explore the total information of the data. This is the case especially if we have a lot of variables. Futhermore these two-dimensional plots contain just a small fraction of the total information present in the dataset. 
 
-However I will explore also the correlations between the variables before continuing the dimensionality reduction part. Correlation matrix and plot are seen after thesen initial results.
+However I will explore also the correlations between the variables before continuing the dimensionality reduction part. Correlation matrix and plot are seen after the initial results.
 
 
 <br>
@@ -209,11 +209,11 @@ g
 <p class="text-success">**CORRELATION MATRIX BETWEEN DATA VARIABLES**</p>
 
 
-Here I'm going to explore more closely the linear relationships between variables to get a better understanding of the data. You can see correlation coefficients of each pair from table below. It is interesting that there is almost zero correlation between SFM_edu (ratio of education, F/M) and FMlabour (ratio of labour force, F/M). Initially I thought that there may be a linear relationship between these variables at least to some extent. However, the SFM_Edu has some other interesting relationships for example with Maternal mortality ratio (mort_ratio) and Adolescent birth rate (ad_birth). These relationships are negative suggesting that when the ratio of Female Education is high the ratios of Maternal mortality and Adolecent's birth are respectively low. You can perceive the same logic also between Expected years of schooling per country (Eedu) and the mort_ratio/ad_birth as well as between Expected life years at birth per country (Elife) and the mort_ratio/ad_birth.
+Here I'm going to explore more closely the linear relationships between variables to get a better understanding of the data. You can see the correlation coefficients of each pair from table below. It is interesting that there is almost zero correlation between SFM_edu (ratio of education, F/M) and FMlabour (ratio of labour force, F/M). Initially I thought that there may be a linear relationship between these variables at least to some extent. However, the SFM_Edu has some other interesting relationships for example with Maternal mortality ratio (mort_ratio) and Adolescent birth rate (ad_birth). These relationships are negative, suggesting that when the ratio of Female Education is high the ratios of Maternal mortality and Adolecent's birth are respectively low. You can perceive the same logic also between Expected years of schooling per country (Eedu) and the mort_ratio/ad_birth as well as between Expected life years at birth per country (Elife) and the mort_ratio/ad_birth.
 
 Interestingly the Gross National Income per capita (GNIpc) has a positive relationship with Expected years of schooling per country (Eedu) and Expected life years at birth per country (Elife). It may be a natural consequence that if a country is wealthy they can invest more for education. But I think there might be some other components affecting to the lifespan of population even though there is a positive correlation between GNI and life years. 
 
-If you look at the "Seats" column (or row), i.e. Share of seats in parliament (% held by women), there are no high correlation values while it has relationships with FMlabour and Eedu in to some extent. The former may suggest that when the ratio of female labour force participation is high the number of seats in parliament (held by women) can also be high and vice versa. The latter can imply that when the Expected years of schooling per country is high the number of seats in parliament (held by women) can also be high. Here I can imagine that if there are high amount of schooling years in some country there would be also more educated women among the population to be voted to the parliament. Note that the latter view point was just "an educated guess"!
+If you look at the "Seats" column (or row), i.e. Share of seats in parliament (% held by women), there are no high correlation values while it has relationships with FMlabour and Eedu in to some extent. The former may suggest that when the ratio of female labour force participation is high the number of seats in parliament (held by women) can also be high and vice versa. The latter can imply that when the Expected years of schooling per country is high the number of seats in parliament (held by women) can also be high. Here I can imagine that if there are high amount of schooling years in some country there would be also more educated women among the population to be voted to the parliament. Note that the latter point of view was just "an educated guess"!
 
 After the correlation matrix you can see a more visual "correlation matrix".
 
@@ -247,14 +247,14 @@ corrplot(cor_matrix, method = "circle", tl.cex = 0.8, addCoef.col = "black")
 
 &nbsp;
 
-When we have a large set of correlated variables, Principal Component Analysis allows us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in our dataset. PCA is an unsupervised learning algorithm which means that there is no outcome to be predicted but instead it tries to find patterns in the data. This can be done by data visualizing as seen in this and the next chapter.
+When we have a large set of correlated variables, Principal Component Analysis allows us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in our dataset. PCA is an unsupervised learning algorithm which means that there is no outcome to be predicted but instead it tries to find patterns in the data. This can be done by data visualizing as seen in this and will be seen in the next chapter.
 
 First I'm going to perform principal component analysis (PCA) without standardizing the Human data. Note that the PCA is performed again within the next chapter but with standardized dataset. Thus the purpose is to perceive and interpret if there are any differences between these methods or models and my guess is that the actual purpose is to show and justify why the data has to be standardized. 
 
 
 &nbsp;
 
-<p class="text-primary">**SUMMARY TABLE AS A REMINDER AND FOR COMPARING THESE RESULTS WITH RESULTS OF THE NEXT CHAPTER**</p>
+<p class="text-primary">**SUMMARY TABLE OF NON-STANDARDIZED DATA**</p>
 
 Here you can see the same summary table of Human dataset as seen in the beginning of this chapter. It is shown again for the practical reasons to better compare the results between PCAs with non-standardized and standardized datasets.
 
@@ -306,14 +306,14 @@ biplot(pca_human1, cex = c(0.8, 1), col = c("dimgrey", "darkorange"), xlab = "10
 
 &nbsp;
 
-Here I provide some additional information of PCA. The purpose of PCA is to find a low-dimensional representation of a dataset that contains as much as possible of the variation. It is very important to realize that not all of these dimensions, i.e. pricipal components, are equally interesting. Furthermore it is known that the first pricipal component captures the most of the variance in the **normalized** (standardized) dataset. The second principal component captures the maximal variance of the dataset that are uncorrelated with the first component and so on.(James, Witten, Hastie & Tibshirani, 2013, 375-376.) 
+Here I provide some additional information of PCA. The purpose of PCA is to find a low-dimensional representation of a dataset that contains as much as possible of the variation. It is very important to realize that not all of these dimensions, i.e. principal components, are equally interesting. Furthermore it is known that the first principal component captures the most of the variance in the **normalized** (standardized) dataset. The second principal component captures the maximal variance of the dataset that are uncorrelated with the first component and so on.(James, Witten, Hastie & Tibshirani, 2013, 375-376.) 
 
 
 &nbsp;
 
 <p class="text-warning">**SUMMARY TABLE OF THE STANDARDIZED HUMAN DATA**</p>
 
-As you can see from the table below, the distributions of the variables changed after stardardizing the dataset. Now the mean of every variable is zero and the observations varies on both sides of zero. This means that the different distributions are now more comparable for the further purpose.
+As you can see from the table below, the distributions of the variables changed after stardardizing the dataset. Now the mean of every variable is zero and the observations varies on both sides of zero. This means that the different distributions are now more comparable for the further purposes.
 
 &nbsp;
 
@@ -332,7 +332,7 @@ kable(summary(std_human), format = "pandoc", digits = 2,  align="l")
 
 &nbsp;
 
-The tables and biplot below tell a huge different story about principal components of the Human data compared with earlier findings. The tables suggest that the first principal component has captured 53.6% of the total variance from the Human data. The second component has captured 16.2% and so on. As you can see, these shares are diminishing quite fast implying that the first principal components actually captures the most of the variance. 
+The tables and biplot below tell a huge different story about principal components in the Human data compared with earlier findings. The tables suggest that the first principal component has captured 53.6% of the total variance from the Human data. The second component has captured 16.2% and so on. As you can see, these shares are diminishing quite fast implying that the first principal components actually captures the most of the variance. 
 
 
 &nbsp;
@@ -356,9 +356,9 @@ print(pca_pr2)
 
 The pricipal components are illustrated in the biplot below. Just to remind that there are 155 countries and 8 variables thus the principal component score vectors have lenght n=155, and the pricipal component loading vectors have lenght p=8. Figure below plots the first two pricipal components of the data and represents both the principal component scores and the loading vectors.
 
-From the biplot we can see that the first principal component places approximately equal weight on mort_ratio and ad_birth corresponding to their high reciprocal and positive correlation. Accordingly The first pricipal component places approximately equal weight on SFM_edu, Eedu, Elife and GNIpc which also corresponds with the high positive correlations between eahc of these variables. Note that each of the former variables correlate negatively with each of the latter variables". This means that these variables belong into the same principal component, i.e. representing the same phenomenon but from the opposite angles. 
+From the biplot we can see that the first principal component places approximately equal weight on mort_ratio and ad_birth corresponding to their high reciprocal and positive correlation. Accordingly The first pricipal component places approximately equal weight on SFM_edu, Eedu, Elife and GNIpc which also corresponds with the high positive correlations between each of these variables. Note that each of the former variables correlate negatively with each of the latter variables". This means that these variables belong into the same principal component, i.e. representing the same phenomenon but from the opposite angles. 
 
-Now I have to think what could be the common nominator for all of the variables listed so far. I think I will call the first principal component as the **National well-being index** since the component consists features like level and lenght of education, the lifespan and the Gross National Income combined with maternal mortality ratio and adolescent's birth rate. Let's take some examples from the biplot. Countries like Qatar, Australia and Norway seem to have a high index of wellbeing since they have high negative scores on the first component, i.e. low scores in terms of mortality and adolescent's birth rate and "high opposite scores". Accordingly countries like Chad, Niger and Sierra Leone seem to have a low index of wellbeing since they have high positive scores on the first component, i.e. high scores in terms of mortality and adolescent's birth rate and "low opposite scores". 
+Now I have to think what could be the common nominator for all of the variables listed so far. I think I will call the first principal component as the **National well-being index** since the component consists features like level and lenght of education, the lifespan and the Gross National Income combined with maternal mortality ratio and adolescent's birth rate. Let's take some examples from the biplot. Countries like Qatar, Australia and Norway seem to have a high index of wellbeing since they have high negative scores on the first component, i.e. low scores in terms of mortality and adolescent's birth rate and "high opposite scores". Accordingly countries like Chad, Niger and Sierra Leone seem to have a low index of well-being since they have high positive scores on the first component, i.e. high scores in terms of mortality and adolescent's birth rate and "low opposite scores". 
 
 I think, in certain terms, I could compare the scale of the the first principal component to Osgood's scale which attemps to measure some polarities or contrasts but usually with opposite adjectives. But if we wanted to combine the variable for example by summing, we could translate the scale direction of either set of variables.
 
@@ -366,7 +366,7 @@ Then we can take a look at the other axis i.e. the second principal component. F
 
 Let's take some examples from the biplot in terms of the second component. Countries like Iceland, Bolivia, Mozambique and especially the Rwanda have high positive scores on our "National Index of Equal Employment" while countries like Iran, Lebanon and Yemen have very low scores. 
 
-But since the biplot is a "fourfold table", we can find more interpretations. We can start from the upper left corner where we can find Finland, earlier mentioned Island and Denmark, i.e. Scandinavia and some other European countries. These countries represent the ideal places considering both our indices, i.e. high in employment equality and well-being. Upper right corner has high in equality but low in well-being, e.g. Mozambigue. Lower right corner has low both in well-being and equality and there you can find for exmple Niger and Afghanistan. Finally we have lower left corner which represent countries with high in well-being but low with employment equality. There are countries like Qatar, Kuwait and Saudi-Arabia.
+But since the biplot is a "fourfold table", we can find more interpretations. We can start from the upper left corner where we can find Finland, earlier mentioned Iceland and Denmark, i.e. Scandinavia and some other European countries. These countries represent the ideal places considering both our indices, i.e. high in employment equality and well-being. Upper right corner has high in equality but low in well-being, e.g. Mozambigue. Lower right corner has low both in well-being and equality and there you can find for exmple Niger and Afghanistan. Finally we have lower left corner which represent countries with high in well-being but low with employment equality. There are countries like Qatar, Kuwait and Saudi-Arabia.
 
 &nbsp;
 
@@ -379,4 +379,127 @@ biplot(pca_human2, cex = c(0.8, 1), col = c("dimgrey", "deeppink"), xlab = "Nati
 
 
 &nbsp;
+
+## Multiple Correspondece Analysis, MCA
+
+&nbsp;
+
+Here the purpose is to get familiar with Multiple Correspondece Analysis, MCA. For this purpose I have to download a new dataset since MCA can be utilized when the data contains categorical variables and my earlier dataset contained only continuous variables. 
+
+I'm going to download the **Tea dataset** from the **FactoMineR** packages.  
+
+&nbsp;
+
+<p class="text-danger">**STRUCTURE OF THE TEA DATASET**</p>
+
+As you can imagine the data concern a questionnaire on tea consumption. There are 300 individuals who where asked how they drink tea, 18 questions. Then there are supplementary variables like age and sex. Note that the age is the only continuous variable in the dataset. 12 questions concern about individuals' product perception and 4 guestions consis some personal details.  
+
+&nbsp;
+
+```{r, message=FALSE, warning=FALSE}
+library(FactoMineR) # https://cran.r-project.org/web/packages/FactoMineR/index.html
+data("tea")
+str(tea)
+```
+
+
+&nbsp;
+
+<p class="text-danger">**VARIABLES TO KEEP**</p>
+
+I'm going to reduce the number of variables and choose some specific ones:
+
+1. breakfast
+2. evening
+3. lunch
+4. dinner
+5. Tea
+6. How
+7. sugar
+8. how
+9. where
+10. price
+
+Additionally I'm going to call this new data as **my_tea**
+
+&nbsp;
+
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+
+# identifying the columns to keep
+keep_columns <- c("breakfast", "evening", "lunch", "dinner", "Tea", "How", "sugar", "how", "where", "price")
+
+# selecting the columns
+my_tea <- dplyr::select(tea, one_of(keep_columns))
+```
+
+&nbsp;
+
+<p class="text-danger">**STRUCTURE OF MY_TEA DATASET**</p>
+
+From the table below you can perceive that there are 300 observations, i.e. individuals, and 11 variables which all are categorical. 
+
+
+```{r}
+str(my_tea)
+```
+
+
+&nbsp;
+
+<p class="text-danger">**SUMMARY TABLE OF THE MY_TEA DATASET**</p>
+
+From the table below you can have closer look at the categories of the kept variables. 
+
+
+```{r}
+summary(my_tea)
+```
+
+
+&nbsp;
+
+
+<p class="text-danger">**VISUALIZING THE STRUCTURES OF DATASET**</p>
+
+
+&nbsp;
+
+
+```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+library(tidyr); library(ggplot2)
+gather(my_tea) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar(fill = "darkorchid1") + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+```
+
+
+&nbsp;
+
+<p class="text-danger">**MULTIPLE CORRESPONDENCE ANALYSIS WITH MY_TEA DATASET**</p>
+
+
+```{r}
+library(FactoMineR)
+
+# Not yet plotting
+mca <- MCA(my_tea, graph = FALSE)
+
+summary(mca)
+
+```
+
+&nbsp;
+
+```{r, fig.height=8, fig.width=10}
+plot(mca, invisible = c("ind"), habillage = "quali")
+```
+
+
+
+&nbsp;
+
+
+
+
 
